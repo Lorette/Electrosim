@@ -12,10 +12,10 @@
 
 /*!
  * \file mapp.h
- * \brief Interface Homme Machine
+ * \brief Interface Homme Machine, Contrôleur
  * \author SALMON PAUL
- *          MONLOUIS Kevyn
- *          DUREUIL Brice
+ *         MONLOUIS Kevyn
+ *         DUREUIL Brice
  * \version 1.0
  * \date 12 mai 2011
  */
@@ -112,13 +112,6 @@ private slots:
      *  Lance la simulation du circuit.
      */
     void on_Simulate_clicked();
-    /*!
-     *  \brief Slot pour un clic sur l'éntrée spn_rotate.
-     *  \param arg1 : Orientation
-     *
-     *  Modifie l'orientation du composant selectionné.
-     */
-    void on_spn_rotate_valueChanged(int arg1);
     /*!
      *  \brief Slot pour un clic sur le bouton Place.
      *

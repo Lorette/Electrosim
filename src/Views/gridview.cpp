@@ -27,7 +27,6 @@ void GridView::enableTracking(bool enable) {
 void GridView::paintEvent(QPaintEvent *event) {
     // call QTableView's paint event first so we can draw over it
     QTableView::paintEvent(event);
-
     QPen pen(Qt::black, 2);
     QPainter painter(viewport());
     painter.setPen(pen);
@@ -38,7 +37,7 @@ void GridView::paintEvent(QPaintEvent *event) {
         {
             QModelIndex index = this->model()->index(i,j);
 
-            QVariant v = this->model()->data(index,Qt::UserRole + 1);
+            QVariant v = this->model()->data(index,Qt::UserRole);
             if(!v.isNull())
             {
                 QList < QVariant > list = v.toList();

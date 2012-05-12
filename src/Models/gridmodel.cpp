@@ -49,13 +49,10 @@ QVariant GridModel::data(const QModelIndex &index, int role) const {
             return "#00FF00";
     }
 
-    if(role == Qt::UserRole && ((c = this->items.at(index.row()).at(index.column())) != NULL))
-        return c->getRotation();
-
     if(role == Qt::ToolTipRole && ((c = this->items.at(index.row()).at(index.column())) != NULL))
         return c->getDescription();
 
-    if(role == (Qt::UserRole + 1) && ((c = this->items.at(index.row()).at(index.column())) != NULL))
+    if(role == (Qt::UserRole) && ((c = this->items.at(index.row()).at(index.column())) != NULL))
         return c->getIndexOutputs();
 
     return QVariant();

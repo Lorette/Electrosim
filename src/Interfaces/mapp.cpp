@@ -63,13 +63,9 @@ void MApp::on_tableView_clicked(const QModelIndex &index)
     case VIEW :
         if((this->currentItem = this->model->at(index)) != NULL) {
             this->ui->name->setText(this->currentItem->getName());
-            this->ui->spn_rotate->setEnabled(true);
-            this->ui->spn_rotate->setValue(this->currentItem->getRotation());
         }
         else {
             this->ui->name->setText("");
-            this->ui->spn_rotate->setEnabled(false);
-            this->ui->spn_rotate->setValue(0);
         }
         break;
     case PLACE :
@@ -102,7 +98,7 @@ void MApp::on_tableView_clicked(const QModelIndex &index)
 
             if(conn != NULL) {
                 if(this->model->connexion(conn)) {
-                    this->ui->pushButton->setText("Connect");
+                    this->ui->connect->setText("Connect");
                     this->currentAction = VIEW;
                 }
                 else
@@ -129,11 +125,11 @@ void MApp::on_connect_clicked()
     this->currentItem = NULL;
     if(this->currentAction == CONNECT1 || this->currentAction == CONNECT2) {
         this->currentAction = VIEW;
-        this->ui->pushButton->setText("Connect");
+        this->ui->connect->setText("Connect");
     }
     else {
         this->currentAction = CONNECT1;
-        this->ui->pushButton->setText("Cancel");
+        this->ui->connect->setText("Cancel");
         this->ui->Place->setText("Place");
     }
 
@@ -219,19 +215,6 @@ void MApp::on_Simulate_clicked()
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       MApp::on_spn_rotate_valueChanged(int arg1)
-// Purpose:    Implementation of MApp::on_spn_rotate_valueChanged()
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-void MApp::on_spn_rotate_valueChanged(int arg1)
-{
-    if(this->currentItem != NULL)
-        this->currentItem->setRotation(arg1);
-    this->ui->tableView->update(this->currentIndex);
-}
-
-////////////////////////////////////////////////////////////////////////
 // Name:       void MApp::on_Place_clicked()
 // Purpose:    Implementation of void MApp::on_Place_clicked()
 // Return:     void
@@ -250,7 +233,7 @@ void MApp::on_Place_clicked()
 
     this->currentAction = PLACE;
     this->currentItem = NULL;
-    this->ui->pushButton->setText("Connect");
+    this->ui->connect->setText("Connect");
     this->ui->Place->setText("Cancel");
     this->ui->tableView->enableTracking(true);
 

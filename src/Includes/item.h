@@ -28,8 +28,6 @@ public:
     virtual inline bool checkAllValueReceived() { for(int i = 0; i < this->inputs.size(); ++i) if(this->inputs.at(i) == NULL || this->inputs.at(i)->value == NULL ) return false; return true; }
     virtual inline QVector<s_connect *> getOutputs() { return this->outputs; }
     virtual inline QVector<s_connect *> getInputs() { return this->inputs; }
-    virtual inline qreal getRotation() { return this->rotation; }
-    virtual inline bool setRotation(qreal rotation) { if(rotation > 360 || rotation < 0) return false; this->rotation = rotation; return true; }
     virtual QString getDescription() { return this->description; }
     virtual inline s_connect* deleteInput(int input) { s_connect *conn; if(input < 0 || input > inputs.size()) return NULL; conn = inputs.at(input); inputs[input] = NULL; return conn; }
     virtual inline s_connect* deleteOutput(int output) { s_connect *conn; if(output < 0 || output > outputs.size()) return NULL; conn = outputs.at(output); outputs[output] = NULL; return conn; }
@@ -38,6 +36,7 @@ public:
     void setIndex(const QModelIndex &i);
     s_index getIndex() const;
     QList< QVariant > getIndexOutputs() const;
+    QList<Item::s_connect *> * getOutputsConnexions();
 
 protected :
     virtual bool _do() = 0;
@@ -55,7 +54,6 @@ protected :
     QString image_connected;
     QVector<s_connect *> outputs;
     QVector<s_connect *> inputs;
-    qreal rotation;
 private :
     bool deleted;
     QModelIndex index;

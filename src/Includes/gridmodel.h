@@ -14,8 +14,8 @@
  * \file gridmodel.h
  * \brief Modèle de la grille
  * \author SALMON PAUL
- *          MONLOUIS Kevyn
- *          DUREUIL Brice
+ *         MONLOUIS Kevyn
+ *         DUREUIL Brice
  * \version 1.0
  * \date 12 mai 2011
  */

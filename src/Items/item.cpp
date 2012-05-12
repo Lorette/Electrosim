@@ -6,7 +6,6 @@ Item::Item(QObject *parent) : QObject(parent)
     this->description = "Item";
     this->image = ":/Images/item.png";
     this->image_connected = ":/Images/item_connected.png";
-    this->rotation = 0;
     this->inputs.resize(0);
     this->outputs.resize(0);
     this->deleted = true;
