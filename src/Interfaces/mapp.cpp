@@ -1,10 +1,22 @@
+/***********************************************************************
+ * Module:  mapp.cpp
+ * Author:  SALMON PAUL
+ *          MONLOUIS Kevyn
+ *          DUREUIL Brice
+ * Modified: samedi 12 mai 2012 17:12:23
+ * Purpose: Implementation of the class MApp
+ ***********************************************************************/
+
 #include "mapp.h"
 #include "ui_mapp.h"
 #include "ui_conn_option.h"
 #include "ui_settings.h"
 
-
-
+////////////////////////////////////////////////////////////////////////
+// Name:       MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
+// Purpose:    Implementation of MApp::MApp()
+// Return:
+////////////////////////////////////////////////////////////////////////
 
 MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
 {
@@ -23,10 +35,22 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
     this->currentAction = VIEW;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       MApp::~MApp()
+// Purpose:    Implementation of MApp::~MApp()
+// Return:
+////////////////////////////////////////////////////////////////////////
+
 MApp::~MApp()
 {
     delete ui;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       MApp::on_tableView_clicked(const QModelIndex &index)
+// Purpose:    Implementation of MApp::on_tableView_clicked()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
 
 void MApp::on_tableView_clicked(const QModelIndex &index)
 {
@@ -94,7 +118,13 @@ void MApp::on_tableView_clicked(const QModelIndex &index)
     this->ui->tableView->update(index);
 }
 
-void MApp::on_pushButton_clicked()
+////////////////////////////////////////////////////////////////////////
+// Name:       MApp::on_connect_clicked()
+// Purpose:    Implementation of MApp::on_connect_clicked()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void MApp::on_connect_clicked()
 {
     this->currentItem = NULL;
     if(this->currentAction == CONNECT1 || this->currentAction == CONNECT2) {
@@ -108,8 +138,13 @@ void MApp::on_pushButton_clicked()
     }
 
     this->ui->tableView->enableTracking(false);
-
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       MApp::autoS_connect(Item* sender, Item* receiver)
+// Purpose:    Implementation of MApp::autoS_connect()
+// Return:     Item::s_connect*
+////////////////////////////////////////////////////////////////////////
 
 Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) {
     Item::s_connect *conn = new Item::s_connect;
@@ -146,6 +181,12 @@ Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) {
     return conn;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       MApp::on_actionSettings_triggered()
+// Purpose:    Implementation of MApp::on_actionSettings_triggered()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
 void MApp::on_actionSettings_triggered()
 {
 
@@ -164,6 +205,12 @@ void MApp::on_actionSettings_triggered()
 
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       MApp::on_Simulate_clicked()
+// Purpose:    Implementation of MApp::on_Simulate_clicked()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
 void MApp::on_Simulate_clicked()
 {
     int *value = new int;
@@ -171,12 +218,24 @@ void MApp::on_Simulate_clicked()
     emit launch(value);
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       MApp::on_spn_rotate_valueChanged(int arg1)
+// Purpose:    Implementation of MApp::on_spn_rotate_valueChanged()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
 void MApp::on_spn_rotate_valueChanged(int arg1)
 {
     if(this->currentItem != NULL)
         this->currentItem->setRotation(arg1);
     this->ui->tableView->update(this->currentIndex);
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       void MApp::on_Place_clicked()
+// Purpose:    Implementation of void MApp::on_Place_clicked()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
 
 void MApp::on_Place_clicked()
 {
@@ -208,19 +267,4 @@ void MApp::on_Place_clicked()
     }
 
     emit this->ui->tableView->setFocus();
-}
-
-void MApp::on_listWidget_activated(const QModelIndex &index)
-{
-
-}
-
-void MApp::on_tableView_activated(const QModelIndex &index)
-{
-
-}
-
-void MApp::on_tableView_viewportEntered()
-{
-
 }

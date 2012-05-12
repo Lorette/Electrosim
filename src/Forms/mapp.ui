@@ -117,7 +117,7 @@
      </widget>
     </item>
     <item row="0" column="3">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="connect">
       <property name="text">
        <string>Connect</string>
       </property>
@@ -241,7 +241,7 @@
      <x>0</x>
      <y>0</y>
      <width>997</width>
-     <height>18</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
