@@ -77,6 +77,8 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
                 this->model->addItem(index, this->currentItem); // On le rajoute ua model
                 if(this->currentItem->getClass() == Item::Input0) // Si l'item est une entrée
                     QObject::connect(this, SIGNAL(launch(int*)), this->currentItem, SLOT(recvSignal(int*))); // On crée une connexion entre lui et le controlleur pour la simulation
+                if(this->currentItem->getClass() == Item::Output1) // Si l'item est une entrée
+                    QObject::connect(this->currentItem, SIGNAL(sendSignal(int*)), this, SLOT(finish(int*))); // On crée une connexion entre lui et le controlleur pour la simulation
                 this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
                 this->currentItem = NULL; // Plus d'item en cours de placement
                 this->currentAction = VIEW; // Action remise par defaut à la vue
@@ -250,4 +252,17 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
     }
 
     emit this->ui->tableView->setFocus(); // On met le focus sur la grille (provoque une mise a jour visuelle)
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       void MApp::finish(int *value)
+// Purpose:    Implementation of void MApp::finish()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void MApp::finish(int *value) {
+    if(value == NULL)
+        return;
+
+    QMessageBox::critical(this,"Result",QString::number(*value));
 }

@@ -136,6 +136,15 @@ signals:
      *  Lance la simulation.
      */
     void launch(int *value);
+
+public slots:
+    /*!
+     *  \brief Slot executé lors d'une de l'arrivé à un Output.
+     *  \param value : valeur d'arrivée.
+     *
+     *  Recoit une valeur de fin.
+     */
+    void finish(int *value);
 };
 
 #endif // MAPP_H

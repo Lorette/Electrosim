@@ -10,7 +10,8 @@ Output::Output() : Item()
 
 bool Output::_do() // A refaire ici
 {
-    QMessageBox::critical(0,"Output :::", QString::number(*this->inputs.at(0)->value));
+    emit sendSignal(this->inputs.at(0)->value);
+
     return false;
 }
 
