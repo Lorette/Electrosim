@@ -1,22 +1,21 @@
 #include "item.h"
 
-Item::Item(QObject *parent) : QObject(parent)
+Item::Item(QObject *parent) : QObject(parent) // Constructeur
 {
     this->name = "";
-    this->description = "Item";
-    this->image = ":/Images/item.png";
-    this->image_connected = ":/Images/item_connected.png";
-    this->inputs.resize(0);
-    this->outputs.resize(0);
+    this->description = "Item"; // Nom par default
+    this->image = ":/Images/item.png"; // Image par default
+    this->inputs.resize(0); // Pas d'entrée ...
+    this->outputs.resize(0); // et de sortie par default
     this->deleted = true;
 }
 
 void Item::setIndex(const QModelIndex &i)
 {
-    index = i;
+    index = i; // !!!!!!!!!!!! @@@@@@@@@
 }
 
-Item::s_index Item::getIndex() const
+Item::s_index Item::getIndex() const // !!!!!!!!!! @@@@@@@@@@@@
 {
     s_index resultat;
     resultat.c = index.column();
@@ -25,7 +24,7 @@ Item::s_index Item::getIndex() const
     return resultat;
 }
 
-QList< QVariant > Item::getIndexOutputs() const {
+QList< QVariant > Item::getIndexOutputs() const { // Paul !!!!!!!!! @@@@@@@@
     int s = outputs.size();
     QList< QVariant > resultat;
     for(int i=0; i<s; ++i)

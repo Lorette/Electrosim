@@ -55,7 +55,7 @@ protected :
     QVector<s_connect *> outputs;
     QVector<s_connect *> inputs;
 private :
-    bool deleted;
+    bool deleted; // Cette variable évite de reparcourir toutes les entrées et les sorties pour la suppression des connections
     QModelIndex index;
 
 };

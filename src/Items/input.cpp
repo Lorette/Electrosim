@@ -2,10 +2,9 @@
 
 Input::Input() : Item()
 {
-    this->image = ":/Images/input.png";
-    this->image_connected = ":/Images/input_connected.png";
-    this->description = "Input";
-    this->outputs.resize(1);
+    this->image = ":/Images/input.png"; // Image du composant
+    this->description = "Input"; // Description à la con
+    this->outputs.resize(1); // Inidque 1 sortie
 }
 
 bool Input::_do()

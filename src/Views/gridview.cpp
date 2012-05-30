@@ -2,29 +2,29 @@
 #include <QMessageBox>
 #include <QToolTip>
 
-GridView::GridView(QWidget *parent) : QTableView(parent)
+GridView::GridView(QWidget *parent) : QTableView(parent) // Constructeur
 {
-    this->setMouseTracking(true);
-    this->tracking = false;
+    this->setMouseTracking(true); // Active la traque de la souris
+    this->tracking = false; // Désactive le suivi de la souris pour MouseMoveEvent
 
 }
 
 
-void GridView::mouseMoveEvent(QMouseEvent *event) {
-    const QModelIndex index = this->indexAt(event->pos());
+void GridView::mouseMoveEvent(QMouseEvent *event) { // Des que la souris bouge, cette fonction est appelée
+    const QModelIndex index = this->indexAt(event->pos()); // Recupère l'index à la position de la souris
 
-    if(this->tracking)
-        this->model()->setData(index, 0);
+    if(this->tracking) // Si la suivi est activée
+        this->model()->setData(index, 0); // On l'indique au modèle
 
 }
 
-void GridView::enableTracking(bool enable) {
+void GridView::enableTracking(bool enable) { // Active/désactive le suivi de la souris
     this->tracking = enable;
 
     this->model()->setData(QModelIndex(),0);
 }
 
-void GridView::paintEvent(QPaintEvent *event) {
+void GridView::paintEvent(QPaintEvent *event) { // !!!!!!!!! @@@@@@@@@@@ Paul
     // call QTableView's paint event first so we can draw over it
     QTableView::paintEvent(event);
     QPen pen(Qt::black, 2);
