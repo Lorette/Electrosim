@@ -9,7 +9,12 @@ Input::Input() : Item()
 
 bool Input::_do()
 {
-    /* A IMPLEMENTER */
+    if(this->outputs.at(0) == NULL) // Si il y'a pas de connection sur la premeire sortie
+        return false; // Ba c'est pas bon ...
+
+    this->outputs.at(0)->value = new int; // Sinon on réserve de la place pour la valeur de sortie
+    *(this->outputs.at(0)->value) = this->def_value;
+
     return true;
 }
 

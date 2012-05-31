@@ -8,6 +8,7 @@ Item::Item(QObject *parent) : QObject(parent) // Constructeur
     this->inputs.resize(0); // Pas d'entrée ...
     this->outputs.resize(0); // et de sortie par default
     this->deleted = true;
+    this->def_value = 0;
 }
 
 void Item::setIndex(const QModelIndex &i)

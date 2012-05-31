@@ -32,6 +32,7 @@
 #include "input.h"
 #include "output.h"
 #include "not.h"
+#include "and.h"
 #include "gridmodel.h"
 #include "imagedelegate.h"
 
@@ -131,6 +132,8 @@ private slots:
      */
     void on_actionQuit_triggered();
 
+    void on_def_value_valueChanged(int arg1);
+
 private:
     Ui::MApp *ui; /*!< Interface de la classe*/
     GridModel *model; /*!< Instance du modele courant*/
@@ -141,11 +144,10 @@ private:
 signals:
     /*!
      *  \brief Signal émis pour lancer la simulation.
-     *  \param value : valeur de départ.
      *
      *  Lance la simulation.
      */
-    void launch(int *value);
+    void launch();
 
 public slots:
     /*!

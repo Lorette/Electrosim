@@ -15,9 +15,14 @@ void ImageDelegate::paint(QPainter * painter, const QStyleOptionViewItem & optio
 {
     QVariant decoration = index.data(Qt::DecorationRole); // Recupère une information pour l'affichage
     QVariant background = index.data(Qt::BackgroundRole); // Recupère une information pour l'arrière plan
+    QVariant user1 = index.data(Qt::UserRole +1);
+
 
     if(!background.isNull()) // Si c'est différent de NULL
         painter->fillRect(option.rect, QBrush(QColor(background.toString()))); // On colorie l'arrière plan de la case
     if(!decoration.isNull()) // Si c'est différent de NULL
         painter->drawPixmap(option.rect,QPixmap(decoration.toString())); // On affiche une image
+    if(!user1.isNull())
+        painter->drawText(option.rect.adjusted(5,5,6,6), user1.toString());
+
 }

@@ -16,7 +16,7 @@ class Item : public QObject
 public:
     typedef struct {int c; int r; int num_max_input; } s_index;
     typedef struct {Item* sender; int output; Item* receiver; int input; int* value; } s_connect;
-    enum Items { Input0, Output1, Not2, Wire3 };
+    enum Items { Input0, Output1, Not2, And3 };
 
 public:
     explicit Item(QObject *parent = 0);
@@ -32,6 +32,8 @@ public:
     virtual inline s_connect* deleteInput(int input) { s_connect *conn; if(input < 0 || input > inputs.size()) return NULL; conn = inputs.at(input); inputs[input] = NULL; return conn; }
     virtual inline s_connect* deleteOutput(int output) { s_connect *conn; if(output < 0 || output > outputs.size()) return NULL; conn = outputs.at(output); outputs[output] = NULL; return conn; }
     virtual inline bool deleteAllConnexion() { if(this->deleted) return true; for(int i = 0; i < inputs.size(); i++) if(inputs.at(i) != NULL){ inputs.at(i)->sender->deleteOutput(i); delete inputs.at(i); inputs[i] = NULL; } for(int i = 0; i < outputs.size(); i++) if(outputs.at(i) != NULL) { outputs.at(i)->receiver->deleteInput(i); delete outputs.at(i); outputs[i] = NULL; } this->deleted = true; return true; }
+    virtual inline bool setDefaultValue(int value) { if(this->getClass() != Item::Input0) return false; this->def_value = value; return true; }
+    virtual int getDefaultValue() { return this->def_value; }
     virtual int getClass() = 0;
     void setIndex(const QModelIndex &i);
     s_index getIndex() const;
@@ -45,14 +47,16 @@ signals :
     void sendSignal(int *value = NULL);
 
 public slots:
-    virtual inline void recvSignal(int *value = NULL) { if(value != NULL) { for(int i = 0; i < this->outputs.size(); i++) if(this->outputs.at(i) != NULL) this->outputs.at(i)->value = value; } if(this->checkAllValueReceived()) if(this->_do()) emit sendSignal(); }
+    virtual inline void recvSignal() { if(this->checkAllValueReceived()) if(this->_do()) emit sendSignal(); }
 
 protected :
+    int def_value;
     QString name;
     QString description;
     QString image;
     QVector<s_connect *> outputs;
     QVector<s_connect *> inputs;
+
 private :
     bool deleted; // Cette variable évite de reparcourir toutes les entrées et les sorties pour la suppression des connections
     QModelIndex index;

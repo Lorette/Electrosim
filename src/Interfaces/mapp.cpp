@@ -30,6 +30,7 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
     ui->listWidget->addItem(new QListWidgetItem("Input")); // Rajoute une entrée à la liste des composants
     ui->listWidget->addItem(new QListWidgetItem("Output")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("Not")); // Idem
+    ui->listWidget->addItem(new QListWidgetItem("And")); // Idem
 
     this->currentItem = NULL; // Indique qu'aucune sélection n'est faite ...
     this->currentAction = VIEW; // Indique que l'action est la vue simple
@@ -64,10 +65,13 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
         if((this->currentItem = this->model->at(index)) != NULL) { // Et que l'Item séléctionné dans la grille existe
             this->ui->name->setText(this->currentItem->getName()); // On met son nom dans la partie Informations
             this->ui->Delete->setEnabled(true); // On active la suppression
+            (this->currentItem->getClass() == Item::Input0) ? this->ui->def_value->setEnabled(true) : this->ui->def_value->setEnabled(false);
+            this->ui->def_value->setValue(this->currentItem->getDefaultValue());
         }
         else {
             this->ui->name->setText(""); // Sinon on ne met pas de nom ...
             this->ui->Delete->setEnabled(false); // On désactive la suppression
+            this->ui->def_value->setEnabled(false);
         }
         break;
     case PLACE : // Si l'action est le placement d'un nouvel Item
@@ -78,7 +82,7 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
                 this->currentItem->setName(name); // On met le nom à l'Item en cours de placement
                 this->model->addItem(index, this->currentItem); // On le rajoute ua model
                 if(this->currentItem->getClass() == Item::Input0) // Si l'item est une entrée
-                    QObject::connect(this, SIGNAL(launch(int*)), this->currentItem, SLOT(recvSignal(int*))); // On crée une connexion entre lui et le controlleur pour la simulation
+                    QObject::connect(this, SIGNAL(launch()), this->currentItem, SLOT(recvSignal())); // On crée une connexion entre lui et le controlleur pour la simulation
                 if(this->currentItem->getClass() == Item::Output1) // Si l'item est une entrée
                     QObject::connect(this->currentItem, SIGNAL(sendSignal(int*)), this, SLOT(finish(int*))); // On crée une connexion entre lui et le controlleur pour la simulation
                 this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
@@ -228,9 +232,7 @@ void MApp::on_actionSettings_triggered() // Fenetre des options pour l'applicati
 
 void MApp::on_Simulate_clicked() // Si on clic sur le bouton simulate
 {
-    int *value = new int; // Valeur par default (ici non configurable par l'utilisateur
-    *value = 1;
-    emit launch(value); // On execute les fonctions des Inputs avec la valeur par default
+    emit launch(); // On execute les fonctions des Inputs avec la valeur par default
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -264,6 +266,8 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
             break;
     case Item::Not2 : this->currentItem = new Not(); // Nouveau composant de type Not
           break;
+    case Item::And3 : this->currentItem = new And();
+        break;
 
         default : this->ui->tableView->enableTracking(false); // Sinon On annule ...
             this->currentAction = VIEW; // le placement
@@ -296,7 +300,6 @@ void MApp::on_Delete_clicked()
     if(this->currentIndex.isValid()) // On vérifie que l'index est valide
         this->model->removeItem(this->currentIndex); // Et on supprime l'item du modele
 
-    this->ui->tableView->update(this->currentIndex); // On met à jour la grille
     this->on_tableView_clicked(this->currentIndex); // Mise à jour des infos ...
 }
 
@@ -309,4 +312,9 @@ void MApp::on_Delete_clicked()
 void MApp::on_actionQuit_triggered()
 {
     QApplication::quit();
+}
+
+void MApp::on_def_value_valueChanged(int arg1)
+{
+    this->model->at(this->currentIndex)->setDefaultValue(arg1);
 }

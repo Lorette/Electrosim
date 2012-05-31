@@ -57,6 +57,9 @@ QVariant GridModel::data(const QModelIndex &index, int role) const { // Retourne
     if(role == (Qt::UserRole) && ((c = this->items.at(index.row()).at(index.column())) != NULL)) // Paul !!!!! @@@@@ Retourne qqch ...
         return c->getIndexOutputs();
 
+    if(role == Qt::UserRole+1 && ((c = this->items.at(index.row()).at(index.column())) != NULL) && c->getClass() == Item::Input0)
+        return c->getDefaultValue();
+
     return QVariant();
 }
 
