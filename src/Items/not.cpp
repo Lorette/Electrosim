@@ -3,7 +3,6 @@
 Not::Not() : Item()
 {
     this->image = ":/Images/not.png";
-    this->image_connected = ":/Images/not_connected.png";
     this->description = "Not";
     this->inputs.resize(1); // 1 entrée ...
     this->outputs.resize(1); // ... et 1 sortie ... logique

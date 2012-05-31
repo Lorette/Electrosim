@@ -61,35 +61,139 @@ QVariant GridModel::data(const QModelIndex &index, int role) const { // Retourne
 }
 
 bool GridModel::insertColumn(int column, const QModelIndex &parent) { // Insertion d'une colonne
-    ++this->column_count;
+    this->beginInsertColumns(parent,this->column_count, this->column_count);
 
     for(int i = 0; i < this->row_count; i++)
-        this->items[i].resize(this->column_count);
+        this->items[i].resize(this->column_count +1);
+
+
+    this->endInsertColumns();
+
+    ++this->column_count;
+
+    return true;
+}
+
+bool GridModel::removeColumn(int column, const QModelIndex &parent) { // Suppression d'une colonne
+    if(this->column_count == 0)
+        return false;
+
+    this->beginRemoveColumns(parent,this->column_count -1, this->column_count -1);
+
+    for(int i = 0; i < this->row_count; i++) {
+        if(this->items[i][this->column_count -1] != NULL)
+            delete this->items[i][this->column_count -1];
+        this->items[i].resize(this->column_count -1);
+    }
+
+    this->endRemoveColumns();
+
+    --this->column_count;
 
     return true;
 }
 
 bool GridModel::insertRow(int row, const QModelIndex &parent) { // insertion d'une ligne
+    this->beginInsertRows(parent, this->row_count, this->row_count);
+
+    this->items.resize(this->row_count +1);
+    this->items[this->row_count].resize(column_count);
+
+    this->endInsertRows();
+
     ++this->row_count;
 
-    this->items.resize(this->row_count);
+    return true;
+}
+
+bool GridModel::removeRow(int row, const QModelIndex &parent) { // Suppression d'une ligne
+    if(this->row_count == 0)
+        return false;
+
+    this->beginRemoveRows(parent, this->row_count -1, this->row_count -1);
+
+    for(int i = 0; i < this->column_count; i++)
+        if(this->items[row_count -1][i] != NULL)
+            delete this->items[row_count -1][i];
+    this->items.resize(this->row_count -1);
+
+    this->endRemoveRows();
+
+    --this->row_count;
 
     return true;
 }
 
 bool GridModel::insertColumns(int column, int count, const QModelIndex &parent) { // Insertion de plusieurs colonnes
-    this->column_count += count;
+    if(count == 0)
+        return false;
+
+    this->beginInsertColumns(parent,this->column_count, this->column_count + count - 1);
 
     for(int i = 0; i < this->row_count; i++)
-        this->items[i].resize(this->column_count);
+        this->items[i].resize(this->column_count + count);
+
+
+    this->endInsertColumns();
+
+    this->column_count += count;
+
+    return true;
+}
+
+bool GridModel::removeColumns(int column, int count, const QModelIndex &parent) {
+    if(this->column_count - count < 0 || count == 0)
+        return false;
+
+    this->beginRemoveColumns(parent,this->column_count - count, this->column_count - 1);
+
+    for(int i = 0; i < this->row_count; i++) {
+        for(int j = 0; j < count; j++)
+            if(this->items[i][this->column_count -1 - j] != NULL)
+                delete this->items[i][this->column_count -1 - j];
+        this->items[i].resize(this->column_count -count);
+    }
+
+    this->endRemoveColumns();
+
+    this->column_count -= count;
 
     return true;
 }
 
 bool GridModel::insertRows(int row, int count, const QModelIndex &parent) { // Insertion de plusieurs lignes
+    if(count == 0)
+        return false;
+
+    this->beginInsertRows(parent, this->row_count, this->row_count + count - 1);
+
+    this->items.resize(this->row_count + count);
+
+    for(int i = 0; i < count; i++)
+        this->items[this->row_count + i].resize(column_count);
+
+    this->endInsertRows();
+
     this->row_count += count;
 
-    this->items.resize(this->row_count);
+    return true;
+}
+
+bool GridModel::removeRows(int row, int count, const QModelIndex &parent) {
+    if(this->row_count - count < 0 || count == 0)
+        return false;
+
+    this->beginRemoveRows(parent, this->row_count - count, this->row_count - 1);
+
+    for(int i = 0; i < this->column_count; i++)
+        for(int j = 0; j < count; j++)
+        if(this->items[row_count -1 - j][i] != NULL)
+            delete this->items[row_count -1 - j][i];
+    this->items.resize(this->row_count - count);
+
+    this->endRemoveRows();
+
+    this->row_count -= count;
 
     return true;
 }
@@ -120,4 +224,14 @@ bool GridModel::setData ( const QModelIndex & index, const QVariant & value, int
 
 bool GridModel::connexion(Item::s_connect* conn) { // Rajoute une connection à l'emetteur
     return conn->sender->addNext(conn);
+}
+
+bool GridModel::removeItem(const QModelIndex &index) { // Supprime un item à l'index indiqué
+    if(index.row() < 0 || index.row() > this->row_count || index.column() < 0 || index.column() > this->column_count || this->items.at(index.row()).at(index.column()) == NULL)
+        return false;
+
+    delete this->items[index.row()][index.column()];
+    this->items[index.row()][index.column()] = NULL;
+
+    return true;
 }

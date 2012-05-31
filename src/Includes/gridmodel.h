@@ -108,6 +108,15 @@ public:
     bool insertColumn(int column, const QModelIndex &parent = QModelIndex());
 
     /*!
+     *  \brief Supprime une colonne à partir d'une position
+     *  \param column : position où supprimer la colonne
+     *  \parem parent : index du parent
+     *
+     *  \return true si l'action s'est correctement terminée sinon false.
+     */
+    bool removeColumn(int column, const QModelIndex &parent = QModelIndex());
+
+    /*!
      *  \brief Insert une ligne à partir d'une position
      *  \param row : position où insérer une ligne
      *  \parem parent : index du parent
@@ -115,6 +124,15 @@ public:
      *  \return true si l'action s'est correctement terminée sinon false.
      */
     bool insertRow(int row, const QModelIndex &parent = QModelIndex());
+
+    /*!
+     *  \brief Supprime une ligne à partir d'une position
+     *  \param row : position où supprimer la ligne
+     *  \parem parent : index du parent
+     *
+     *  \return true si l'action s'est correctement terminée sinon false.
+     */
+    bool removeRow(int row, const QModelIndex &parent = QModelIndex());
 
     /*!
      *  \brief Insert des colonnes à partir d'une position
@@ -127,6 +145,16 @@ public:
     bool insertColumns(int column, int count, const QModelIndex &parent = QModelIndex());
 
     /*!
+     *  \brief Supprime des colonnes à partir d'une position
+     *  \param column : position où supprimer les colonnes
+     *  \param count : nombre de colonnes
+     *  \parem parent : index du parent
+     *
+     *  \return true si l'action s'est correctement terminée sinon false.
+     */
+    bool removeColumns(int column, int count, const QModelIndex &parent = QModelIndex());
+
+    /*!
      *  \brief Insert des lignes à partir d'une position
      *  \param rows : position où insérer les lignes
      *  \param count : nombre de lignes
@@ -135,6 +163,16 @@ public:
      *  \return true si l'action s'est correctement terminée sinon false.
      */
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
+
+    /*!
+     *  \brief Supprime des lignes à partir d'une position
+     *  \param rows : position où supprimer les lignes
+     *  \param count : nombre de lignes
+     *  \parem parent : index du parent
+     *
+     *  \return true si l'action s'est correctement terminée sinon false.
+     */
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
     /*!
      *  \brief Renvoie l'item situé dans le modèle
@@ -160,6 +198,14 @@ public:
      *  \return true si l'action s'est correctement terminée sinon false.
      */
     bool connexion(Item::s_connect* conn);
+
+    /*!
+     *  \brief Supprime un item à un index donné
+     *  \parem index : index
+     *
+     *  \return true si l'action s'est correctement terminée sinon false.
+     */
+    bool removeItem(const QModelIndex &index);
 
 private :
     int column_count; /*!< Nombre de colonnes*/

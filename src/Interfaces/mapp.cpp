@@ -20,7 +20,7 @@
 
 MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
 {
-    model = new GridModel(9,14); // Initialise le model de 9x14 par defaut
+    model = new GridModel(0,0); // Initialise le model de 9x14 par defaut
 
     ui->setupUi(this); // Relie l'interface à cet objet
 
@@ -63,9 +63,11 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
     case VIEW : // SI l'action courante est la vue
         if((this->currentItem = this->model->at(index)) != NULL) { // Et que l'Item séléctionné dans la grille existe
             this->ui->name->setText(this->currentItem->getName()); // On met son nom dans la partie Informations
+            this->ui->Delete->setEnabled(true); // On active la suppression
         }
         else {
             this->ui->name->setText(""); // Sinon on ne met pas de nom ...
+            this->ui->Delete->setEnabled(false); // On désactive la suppression
         }
         break;
     case PLACE : // Si l'action est le placement d'un nouvel Item
@@ -193,14 +195,29 @@ void MApp::on_actionSettings_triggered() // Fenetre des options pour l'applicati
     uSettings->setupUi(wSettings); // ... et on les lie
 
     uSettings->grid->setChecked(this->ui->tableView->showGrid()); // si la grille est visible alors on coche la case
+    uSettings->row_count->setValue(this->model->rowCount());
+    uSettings->column_count->setValue(this->model->columnCount());
 
-    wSettings->exec(); // Fenetre bloquante
+    if(wSettings->exec() == QDialog::Accepted) { // Fenetre bloquante
 
-    this->ui->tableView->setShowGrid(uSettings->grid->isChecked()); // on active/désactive la grille en fonction de la case cochée
+        this->ui->tableView->setShowGrid(uSettings->grid->isChecked()); // on active/désactive la grille en fonction de la case cochée
+
+        if(uSettings->row_count->value() < this->model->rowCount())
+            this->model->removeRows(0,this->model->rowCount() - uSettings->row_count->value());
+        else
+            this->model->insertRows(0, uSettings->row_count->value() - this->model->rowCount());
+
+        if(uSettings->column_count->value() < this->model->columnCount())
+            this->model->removeColumns(0,this->model->columnCount() - uSettings->column_count->value());
+        else
+            this->model->insertColumns(0, uSettings->column_count->value() - this->model->columnCount());
+
+        this->ui->row_count->setText(QString::number(uSettings->row_count->value()));
+        this->ui->column_count->setText(QString::number(uSettings->column_count->value()));
+    }
 
     delete uSettings; // On détruit l'interface ...
     delete wSettings; // ... et la fenetre
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -229,6 +246,7 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
     if(this->currentAction == PLACE) { // Si l'action est déjà le placement
         this->currentAction = VIEW; // On l'annule et on revient à la vue
         this->currentItem = NULL; // Pas d'item séléctionné
+        this->ui->Place->setText("Place"); // On indique qu'on peut refaire un placement
         this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placemen
         return;
     }
@@ -265,4 +283,30 @@ void MApp::finish(int *value) {
         return;
 
     QMessageBox::critical(this,"Result",QString::number(*value));
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       void MApp::on_Delete_clicked()
+// Purpose:    Implementation of void MApp::on_Delete_clicked()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void MApp::on_Delete_clicked()
+{
+    if(this->currentIndex.isValid()) // On vérifie que l'index est valide
+        this->model->removeItem(this->currentIndex); // Et on supprime l'item du modele
+
+    this->ui->tableView->update(this->currentIndex); // On met à jour la grille
+    this->on_tableView_clicked(this->currentIndex); // Mise à jour des infos ...
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       void MApp::on_actionQuit_triggered()
+// Purpose:    Implementation of void MApp::on_actionQuit_triggered()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void MApp::on_actionQuit_triggered()
+{
+    QApplication::quit();
 }

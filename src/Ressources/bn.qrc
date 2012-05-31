@@ -1,14 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>Images/wire.png</file>
         <file>Images/input.png</file>
         <file>Images/output.png</file>
         <file>Images/not.png</file>
-        <file>Images/input_connected.png</file>
-        <file>Images/item_connected.png</file>
         <file>Images/item.png</file>
-        <file>Images/not_connected.png</file>
-        <file>Images/output_connected.png</file>
-        <file>Images/wire_connected.png</file>
     </qresource>
 </RCC>

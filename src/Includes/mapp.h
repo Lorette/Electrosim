@@ -118,8 +118,18 @@ private slots:
      *  Place (ou annule l'action) un item selectionné dans la liste.
      */
     void on_Place_clicked();
-
-
+    /*!
+     *  \brief Slot pour un clic sur le bouton Delete.
+     *
+     *  Supprime un élément de la grille.
+     */
+    void on_Delete_clicked();
+    /*!
+     *  \brief Slot pour un clic sur l'entrée Quit.
+     *
+     *  Quitte l'application.
+     */
+    void on_actionQuit_triggered();
 
 private:
     Ui::MApp *ui; /*!< Interface de la classe*/

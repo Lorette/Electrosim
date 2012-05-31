@@ -3,7 +3,6 @@
 Output::Output() : Item()
 {
     this->image = ":/Images/output.png";
-    this->image_connected = ":/Images/output_connected.png";
     this->description = "Output";
     this->inputs.resize(1); // 1 entrée
 }

@@ -51,7 +51,6 @@ protected :
     QString name;
     QString description;
     QString image;
-    QString image_connected;
     QVector<s_connect *> outputs;
     QVector<s_connect *> inputs;
 private :
