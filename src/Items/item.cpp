@@ -11,6 +11,11 @@ Item::Item(QObject *parent) : QObject(parent) // Constructeur
     this->def_value = 0;
 }
 
+Item::~Item() // Destructeur
+{
+    this->deleteAllConnexion();
+}
+
 void Item::setIndex(const QModelIndex &i)
 {
     index = i; // !!!!!!!!!!!! @@@@@@@@@

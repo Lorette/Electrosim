@@ -11,6 +11,7 @@
 #include "ui_mapp.h"
 #include "ui_conn_option.h"
 #include "ui_settings.h"
+#include "ui_modify.h"
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
@@ -30,6 +31,7 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
     ui->listWidget->addItem(new QListWidgetItem("Input")); // Rajoute une entrée à la liste des composants
     ui->listWidget->addItem(new QListWidgetItem("Output")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("Not")); // Idem
+    ui->listWidget->addItem(new QListWidgetItem("Or")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("And")); // Idem
 
     this->currentItem = NULL; // Indique qu'aucune sélection n'est faite ...
@@ -65,13 +67,15 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
         if((this->currentItem = this->model->at(index)) != NULL) { // Et que l'Item séléctionné dans la grille existe
             this->ui->name->setText(this->currentItem->getName()); // On met son nom dans la partie Informations
             this->ui->Delete->setEnabled(true); // On active la suppression
-            (this->currentItem->getClass() == Item::Input0) ? this->ui->def_value->setEnabled(true) : this->ui->def_value->setEnabled(false);
+            this->ui->modify->setEnabled(true); // On active la modification
+            (this->currentItem->getClass() == Item::Input0) ? this->ui->def_value->setEnabled(true) : this->ui->def_value->setEnabled(false); // Activation/désactivation valeur par default
             this->ui->def_value->setValue(this->currentItem->getDefaultValue());
         }
         else {
             this->ui->name->setText(""); // Sinon on ne met pas de nom ...
             this->ui->Delete->setEnabled(false); // On désactive la suppression
-            this->ui->def_value->setEnabled(false);
+            this->ui->def_value->setEnabled(false); // Désactivation valeur par default
+            this->ui->modify->setEnabled(false);
         }
         break;
     case PLACE : // Si l'action est le placement d'un nouvel Item
@@ -112,6 +116,8 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
                 else // Sinon
                     QMessageBox::critical(this,"Erreur","Impossible de connecter ces 2 objets"); // On indique une erreur
             }
+            else
+                    QMessageBox::critical(this,"Erreur","Impossible de connecter ces 2 objets"); // On indique une erreur
         }
         else
             QMessageBox::critical(this,"Enculé","Vous deevez selectionner au moins un objet différent");
@@ -131,6 +137,8 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
 void MApp::on_connect_clicked() // SI on clic sur le bouton connect
 {
     this->currentItem = NULL; // On reinitialise l'Item courant
+    this->ui->Delete->setEnabled(false);
+    this->ui->modify->setEnabled(false);
     if(this->currentAction == CONNECT1 || this->currentAction == CONNECT2) { // Si l'action courante est une connection de n'importe quel phase
         this->currentAction = VIEW; // On annule l'action de connection et on remet l'action à la Vue
         this->ui->connect->setText("Connect"); // Indique qu'une nouvelle connection est possible
@@ -172,6 +180,9 @@ Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) { // Affichag
             uConnOpt->chk_inputs->addItem(QString::number(i)); // ... pour le 2eme Item (Récepteur)
 
     wConnOpt->exec(); // On affiche la fenetre (exec va bloquer l'application sur cette fenetre)
+
+    if(uConnOpt->chk_inputs->currentText() == "" || uConnOpt->chk_outputs->currentText() == "")
+        return NULL;
 
     conn->sender = sender; // On indique l'emetteur
     conn->output = uConnOpt->chk_outputs->currentText().toInt(); // la sortie
@@ -232,6 +243,7 @@ void MApp::on_actionSettings_triggered() // Fenetre des options pour l'applicati
 
 void MApp::on_Simulate_clicked() // Si on clic sur le bouton simulate
 {
+    this->model->resetAllConnexions();
     emit launch(); // On execute les fonctions des Inputs avec la valeur par default
 }
 
@@ -255,6 +267,8 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
 
     this->currentAction = PLACE; // On active le placement
     this->currentItem = NULL; // Pas d'item selectionné
+    this->ui->Delete->setEnabled(false);
+    this->ui->modify->setEnabled(false);
     this->ui->connect->setText("Connect"); // On indique que la connection est possible
     this->ui->Place->setText("Cancel"); // On indique qu'on peut annuler le placement
     this->ui->tableView->enableTracking(true); // On active la coloration des cases
@@ -266,7 +280,9 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
             break;
     case Item::Not2 : this->currentItem = new Not(); // Nouveau composant de type Not
           break;
-    case Item::And3 : this->currentItem = new And();
+    case Item::Or3 : this->currentItem = new Or();
+        break;
+    case Item::And4 : this->currentItem = new And();
         break;
 
         default : this->ui->tableView->enableTracking(false); // Sinon On annule ...
@@ -317,4 +333,23 @@ void MApp::on_actionQuit_triggered()
 void MApp::on_def_value_valueChanged(int arg1)
 {
     this->model->at(this->currentIndex)->setDefaultValue(arg1);
+}
+
+void MApp::on_modify_clicked()
+{
+    QDialog *wModify = new QDialog(this); // On initialise la fenetre ...
+    Ui::Modify *uModify = new Ui::Modify; // ... l'interface ...
+    Item *it = this->currentItem;
+
+    uModify->setupUi(wModify); // ... et on les lie
+    wModify->setWindowTitle("Modifying "+it->getName());
+
+    uModify->name->setText(it->getName());
+
+    if(wModify->exec() == QDialog::Accepted) { // Fenetre bloquante
+        it->setName(uModify->name->text());
+    }
+
+    delete uModify; // On détruit l'interface ...
+    delete wModify; // ... et la fenetre
 }

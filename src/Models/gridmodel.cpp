@@ -226,7 +226,13 @@ bool GridModel::setData ( const QModelIndex & index, const QVariant & value, int
 }
 
 bool GridModel::connexion(Item::s_connect* conn) { // Rajoute une connection à l'emetteur
-    return conn->sender->addNext(conn);
+     if(!conn->sender->addNext(conn))
+         return false;
+
+     this->connexions << conn;
+
+     return true;
+
 }
 
 bool GridModel::removeItem(const QModelIndex &index) { // Supprime un item à l'index indiqué
@@ -237,4 +243,17 @@ bool GridModel::removeItem(const QModelIndex &index) { // Supprime un item à l'i
     this->items[index.row()][index.column()] = NULL;
 
     return true;
+}
+
+bool GridModel::resetAllConnexions() { // Réinitialise toutes les connexions
+    int n = this->connexions.size();
+
+    for(int i = 0; i < n; i++)
+        if(this->connexions.at(i) == NULL)
+            this->connexions.removeAt(i);
+        else
+            this->connexions.at(i)->value = NULL;
+
+    return true;
+
 }

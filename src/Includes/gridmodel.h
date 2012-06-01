@@ -207,11 +207,19 @@ public:
      */
     bool removeItem(const QModelIndex &index);
 
+    /*!
+     *  \brief Réinitialise toutes les connexions à NULL
+     *
+     *  \return true si l'action s'est correctement terminée sinon false.
+     */
+    bool resetAllConnexions();
+
 private :
     int column_count; /*!< Nombre de colonnes*/
     int row_count; /*!< Nombre de lignes*/
     QVector< QVector<Item*> > items; /*!< Données du modèle*/
     QModelIndex current_modelIndex; /*!< Index courant*/
+    QList <Item::s_connect *> connexions; /*!< Connexions du modèle*/
 
 };
 

@@ -5,5 +5,7 @@
         <file>Images/not.png</file>
         <file>Images/item.png</file>
         <file>Images/and.png</file>
+        <file>Images/or.png</file>
+        <file>Images/modify.png</file>
     </qresource>
 </RCC>

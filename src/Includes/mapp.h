@@ -32,6 +32,7 @@
 #include "input.h"
 #include "output.h"
 #include "not.h"
+#include "or.h"
 #include "and.h"
 #include "gridmodel.h"
 #include "imagedelegate.h"
@@ -50,6 +51,7 @@ namespace Ui {
     class MApp;
     class ConnOpt;
     class Settings;
+    class Modify;
 }
 
 /*! \class MApp
@@ -133,6 +135,8 @@ private slots:
     void on_actionQuit_triggered();
 
     void on_def_value_valueChanged(int arg1);
+
+    void on_modify_clicked();
 
 private:
     Ui::MApp *ui; /*!< Interface de la classe*/

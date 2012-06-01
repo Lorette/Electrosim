@@ -25,11 +25,13 @@ HEADERS += Includes/gridmodel.h \
             Includes/not.h \
     Includes/imagedelegate.h \
     Includes/item.h \
+    Includes/or.h \
     Includes/and.h
 		   
 FORMS += Forms/mapp.ui \
     Forms/conn_option.ui \
-    Forms/settings.ui
+    Forms/settings.ui \
+    Forms/modify.ui
 
 SOURCES += main.cpp \
            Interfaces/mapp.cpp \
@@ -40,6 +42,7 @@ SOURCES += main.cpp \
                    Views/gridview.cpp \
                 Items/not.cpp \
     Models/imagedelegate.cpp \
+    Items/or.cpp \
     Items/and.cpp
 
 RESOURCES += Ressources/bn.qrc
