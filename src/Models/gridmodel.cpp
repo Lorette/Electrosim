@@ -281,17 +281,76 @@ bool GridModel::resetAllConnexions() { // Réinitialise toutes les connexions
 void GridModel::simulate() {
     this->resetAllConnexions();
     emit launch();
-    QMessageBox::critical(0,"Bpouyaaaaaaa","fdfdsfsdfdsfsjdgjdsfgjhsdggsfsjfghjscbvcxcvcvxjfgsjfgds");
 }
 
 QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
-    int n = this->inputs.size();
-    QPair <QVector < QString >, QVector<QVector<int> > > aux;
+    QPair <QVector < QString >, QVector<QVector<int> > > resultat;
+    int nb_inputs = this->inputs.size();
+    int nb_lignes = pow(2.0,nb_inputs); //nombre de lignes de la table de vérité = 2^(nombre d'entrées)
+    int nb_colonnes = nb_inputs+this->outputs.size(); //nombre de colonne = nombre d'entrées + nombre de sorties
 
+    //met les tableaux à la bonne taille
+    resultat.first.resize(nb_colonnes); //il y a un nom de collonne pour chaque colonne.
+    resultat.second.resize(nb_lignes);
+    for(int i=0; i<nb_lignes; ++i)
+        resultat.second[i].resize(nb_colonnes);
 
-    // TODO
+    //rempli la légende
+    int i=0;
+    for(QList<Item*>::iterator it = this->inputs.begin(); it != this->inputs.end(); ++it)
+    {
+        resultat.first[i] = (*it)->getName();
+        ++i;
+    }
+    for(QList<Item*>::iterator it = this->outputs.begin(); it != this->outputs.end(); ++it)
+    {
+        resultat.first[i] = (*it)->getName();
+        ++i;
+    }
 
-    this->simulate();
-    return aux;
+    //rempli la partie des entrées
+    for(int c=0; c<nb_inputs; ++c)
+    {
+        int n = pow(2.0,c); //calcul de 2^c
+        int val = 1;
+        for(int l=0; l<nb_lignes; ++l)
+        {
+            //toutes les 2^c lignes, on inverse val
+            if(l%n == 0)
+            {
+                if(val == 0)
+                    val = 1;
+                else
+                    val = 0;
+            }
 
+            //enregistre la valeur (val)
+            resultat.second[l][c] = val;
+        }
+    }
+
+    //pour chaque ligne, remplie la partie des sorties
+    for(int l=0; l<nb_lignes; ++l)
+    {
+        //initialise les entrées
+        i=0;
+        for(QList<Item*>::iterator it = this->inputs.begin(); it != this->inputs.end(); ++it)
+        {
+            (*it)->setDefaultValue(resultat.second[l][i]); //initialise l'input numéro i avec la valeur présente dans la case (l,i)
+            ++i;
+        }
+
+        //lance la simulation
+        this->simulate();
+
+        //récupère les valeurs des sorties et rempli le tableau
+        i=0;
+        for(QList<Item*>::iterator it = this->outputs.begin(); it != this->outputs.end(); ++it)
+        {
+            resultat.second[l][nb_inputs+i] = (*it)->getDefaultValue();
+            ++i;
+        }
+    }
+
+    return resultat;
 }

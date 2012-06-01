@@ -138,6 +138,8 @@ private slots:
 
     void on_modify_clicked();
 
+    void on_TableDeVerite_clicked();
+
 private:
     Ui::MApp *ui; /*!< Interface de la classe*/
     GridModel *model; /*!< Instance du modele courant*/

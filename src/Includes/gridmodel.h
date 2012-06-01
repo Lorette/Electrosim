@@ -20,6 +20,7 @@
  * \date 12 mai 2011
  */
 
+#include <cmath>
 #include <QAbstractItemModel>
 #include <QVector>
 #include <QMessageBox>
@@ -225,7 +226,15 @@ public:
      */
     void simulate();
 
+    /*! \brief Donne la table de vérité du circuit.
+     *
+     *  \return une paire dont le premier élément est la légende
+     *          (un tableau donnant pour chaque colonne le nom du
+     *          composant correspondant) et le deuxième élément est
+     *          la table de vérité du circuit.
+     */
     QPair <QVector < QString >, QVector< QVector < int > > >  verite();
+
 signals:
     /*!
      *  \brief Signal émis pour lancer la simulation.

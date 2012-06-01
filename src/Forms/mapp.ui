@@ -18,7 +18,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="1" rowspan="2" colspan="10">
+    <item row="2" column="1" rowspan="2" colspan="11">
      <widget class="GridView" name="tableView">
       <property name="enabled">
        <bool>true</bool>
@@ -94,7 +94,7 @@
       </attribute>
      </widget>
     </item>
-    <item row="0" column="0" rowspan="2">
+    <item row="1" column="0" rowspan="2">
      <widget class="QListWidget" name="listWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -116,21 +116,21 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="9">
+    <item row="1" column="10">
      <widget class="QPushButton" name="connect">
       <property name="text">
        <string>Connect</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="8">
+    <item row="1" column="9">
      <widget class="QPushButton" name="Simulate">
       <property name="text">
        <string>Simulate</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="11" rowspan="3">
+    <item row="1" column="12" rowspan="3">
      <widget class="QGroupBox" name="groupBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
@@ -242,42 +242,42 @@
       </layout>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="3" column="0">
      <widget class="QPushButton" name="Place">
       <property name="text">
        <string>Place</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
+    <item row="1" column="2">
      <widget class="QLabel" name="label">
       <property name="text">
        <string>Rows :</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="3">
+    <item row="1" column="3">
      <widget class="QLabel" name="row_count">
       <property name="text">
        <string>0</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="4">
+    <item row="1" column="4">
      <widget class="QLabel" name="label_3">
       <property name="text">
        <string>Colmuns :</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="5">
+    <item row="1" column="5">
      <widget class="QLabel" name="column_count">
       <property name="text">
        <string>0</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="1" column="1">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -290,7 +290,7 @@
       </property>
      </spacer>
     </item>
-    <item row="0" column="7">
+    <item row="1" column="7">
      <spacer name="horizontalSpacer_2">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -302,6 +302,13 @@
        </size>
       </property>
      </spacer>
+    </item>
+    <item row="1" column="8">
+     <widget class="QPushButton" name="TableDeVerite">
+      <property name="text">
+       <string>Table de vérité</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

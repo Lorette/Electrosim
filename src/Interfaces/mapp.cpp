@@ -335,3 +335,42 @@ void MApp::on_modify_clicked()
     delete uModify; // On détruit l'interface ...
     delete wModify; // ... et la fenetre
 }
+
+void MApp::on_TableDeVerite_clicked()
+{
+    QPair <QVector < QString >, QVector< QVector < int > > > table_de_verite = this->model->verite();
+
+    // Affichage temporaire de la table dans une message box
+    int nb_lignes = table_de_verite.second.size();
+    int nb_colonnes = table_de_verite.first.size();
+
+    if(nb_colonnes <= 0) //table vide
+    {
+        QMessageBox::information(0, "Table de vérité", "");
+        return;
+    }
+
+    QString s = table_de_verite.first[0];
+    for(int c = 1; c < nb_colonnes; ++c)
+        s += " | " + table_de_verite.first[c];
+
+    s += "\n";
+
+    for(int l=0; l<nb_lignes; ++l)
+    {
+        QString num;
+        num.setNum(table_de_verite.second[l][0]);
+        s += num;
+        for(int c=1; c<nb_colonnes; ++c)
+        {
+            for(int i=0; i<table_de_verite.first[c-1].size(); ++i)
+                s += " ";
+
+            num.setNum(table_de_verite.second[l][c]);
+            s += " | " + num;
+        }
+        s += "\n";
+    }
+
+    QMessageBox::information(0, "Table de vérité", s);
+}
