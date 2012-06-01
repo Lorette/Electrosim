@@ -1,5 +1,6 @@
 #include "gridmodel.h"
 
+#include <QMessageBox>
 
 GridModel::GridModel(int rows, int columns) //Constructeur
 {
@@ -210,6 +211,15 @@ Item* GridModel::at(const QModelIndex &index) { // Retourne l'élément à l'index 
 
 bool GridModel::addItem(const QModelIndex &index, Item* item) { // Rajoute un item à l'index indiqué
     this->items[index.row()][index.column()] = item;
+
+    if(item->getClass() == Item::Input0) {
+        this->inputs << item;
+        QObject::connect(this, SIGNAL(launch()), item, SLOT(recvSignal())); // On crée une connexion entre lui et le controlleur pour la simulation
+    }
+
+    if(item->getClass() == Item::Output1)
+        this->outputs << item;
+
     item->setIndex(index);
 
     return true;
@@ -235,11 +245,21 @@ bool GridModel::connexion(Item::s_connect* conn) { // Rajoute une connection à l
 
 }
 
+
 bool GridModel::removeItem(const QModelIndex &index) { // Supprime un item à l'index indiqué
+    Item *i = NULL;
+
     if(index.row() < 0 || index.row() > this->row_count || index.column() < 0 || index.column() > this->column_count || this->items.at(index.row()).at(index.column()) == NULL)
         return false;
 
-    delete this->items[index.row()][index.column()];
+    i = this->items[index.row()][index.column()];
+
+    if(i->getClass() == Item::Input0)
+        this->inputs.removeOne(i);
+    if(i->getClass() == Item::Output1)
+        this->outputs.removeOne(i);
+
+    delete i;
     this->items[index.row()][index.column()] = NULL;
 
     return true;
@@ -255,5 +275,23 @@ bool GridModel::resetAllConnexions() { // Réinitialise toutes les connexions
             this->connexions.at(i)->value = NULL;
 
     return true;
+
+}
+
+void GridModel::simulate() {
+    this->resetAllConnexions();
+    emit launch();
+    QMessageBox::critical(0,"Bpouyaaaaaaa","fdfdsfsdfdsfsjdgjdsfgjhsdggsfsjfghjscbvcxcvcvxjfgsjfgds");
+}
+
+QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
+    int n = this->inputs.size();
+    QPair <QVector < QString >, QVector<QVector<int> > > aux;
+
+
+    // TODO
+
+    this->simulate();
+    return aux;
 
 }

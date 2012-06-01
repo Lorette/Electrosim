@@ -24,6 +24,10 @@
 #include <QVector>
 #include <QMessageBox>
 #include <QIcon>
+#include <QPair>
+
+#include "input.h"
+#include "output.h"
 #include "item.h"
 
 /*! \class GridModel
@@ -35,6 +39,7 @@
 class GridModel : public QAbstractItemModel
 {
 
+    Q_OBJECT
 public:
     /*!
      *  \brief Constructeur.
@@ -82,7 +87,7 @@ public:
     /*!
      *  \brief Renvoie une information en fonction d'un index et d'un rôle.
      *  \param index : index
-     *  \parem role : role
+     *  \param role : role
      *
      *  \return l'information.
      */
@@ -91,8 +96,8 @@ public:
     /*!
      *  \brief Ajoute une valeur au modèle en fonction d'un index et d'un rôle
      *  \param index : index
-     *  \parem value : valeur
-     *  \parem role : role
+     *  \param value : valeur
+     *  \param role : role
      *
      *  \return true si l'action s'est correctement terminée sinon false.
      */
@@ -101,7 +106,7 @@ public:
     /*!
      *  \brief Insert une colonne à partir d'une position
      *  \param column : position où insérer une colonne
-     *  \parem parent : index du parent
+     *  \param parent : index du parent
      *
      *  \return true si l'action s'est correctement terminée sinon false.
      */
@@ -110,7 +115,7 @@ public:
     /*!
      *  \brief Supprime une colonne à partir d'une position
      *  \param column : position où supprimer la colonne
-     *  \parem parent : index du parent
+     *  \param parent : index du parent
      *
      *  \return true si l'action s'est correctement terminée sinon false.
      */
@@ -119,7 +124,7 @@ public:
     /*!
      *  \brief Insert une ligne à partir d'une position
      *  \param row : position où insérer une ligne
-     *  \parem parent : index du parent
+     *  \param parent : index du parent
      *
      *  \return true si l'action s'est correctement terminée sinon false.
      */
@@ -128,7 +133,7 @@ public:
     /*!
      *  \brief Supprime une ligne à partir d'une position
      *  \param row : position où supprimer la ligne
-     *  \parem parent : index du parent
+     *  \param parent : index du parent
      *
      *  \return true si l'action s'est correctement terminée sinon false.
      */
@@ -138,7 +143,7 @@ public:
      *  \brief Insert des colonnes à partir d'une position
      *  \param column : position où insérer les colonnes
      *  \param count : nombre de colonnes
-     *  \parem parent : index du parent
+     *  \param parent : index du parent
      *
      *  \return true si l'action s'est correctement terminée sinon false.
      */
@@ -148,7 +153,7 @@ public:
      *  \brief Supprime des colonnes à partir d'une position
      *  \param column : position où supprimer les colonnes
      *  \param count : nombre de colonnes
-     *  \parem parent : index du parent
+     *  \param parent : index du parent
      *
      *  \return true si l'action s'est correctement terminée sinon false.
      */
@@ -158,7 +163,7 @@ public:
      *  \brief Insert des lignes à partir d'une position
      *  \param rows : position où insérer les lignes
      *  \param count : nombre de lignes
-     *  \parem parent : index du parent
+     *  \param parent : index du parent
      *
      *  \return true si l'action s'est correctement terminée sinon false.
      */
@@ -168,7 +173,7 @@ public:
      *  \brief Supprime des lignes à partir d'une position
      *  \param rows : position où supprimer les lignes
      *  \param count : nombre de lignes
-     *  \parem parent : index du parent
+     *  \param parent : index du parent
      *
      *  \return true si l'action s'est correctement terminée sinon false.
      */
@@ -176,7 +181,7 @@ public:
 
     /*!
      *  \brief Renvoie l'item situé dans le modèle
-     *  \parem index : index
+     *  \param index : index
      *
      *  \return l'item ou NULL.
      */
@@ -184,7 +189,7 @@ public:
 
     /*!
      *  \brief Rajoute un item à un index donné
-     *  \parem index : index
+     *  \param index : index
      *  \item : item à rajouter
      *
      *  \return true si l'action s'est correctement terminée sinon false.
@@ -193,7 +198,7 @@ public:
 
     /*!
      *  \brief Rajoute une connexion
-     *  \parem conn : connexion
+     *  \param conn : connexion
      *
      *  \return true si l'action s'est correctement terminée sinon false.
      */
@@ -201,7 +206,7 @@ public:
 
     /*!
      *  \brief Supprime un item à un index donné
-     *  \parem index : index
+     *  \param index : index
      *
      *  \return true si l'action s'est correctement terminée sinon false.
      */
@@ -214,13 +219,29 @@ public:
      */
     bool resetAllConnexions();
 
+    /*!
+     *  \brief Lance la simulation
+     *
+     */
+    void simulate();
+
+    QPair <QVector < QString >, QVector< QVector < int > > >  verite();
+signals:
+    /*!
+     *  \brief Signal émis pour lancer la simulation.
+     *
+     *  Lance la simulation.
+     */
+    void launch();
+
 private :
     int column_count; /*!< Nombre de colonnes*/
     int row_count; /*!< Nombre de lignes*/
     QVector< QVector<Item*> > items; /*!< Données du modèle*/
+    QList <Item *> inputs;
+    QList <Item *> outputs;
     QModelIndex current_modelIndex; /*!< Index courant*/
     QList <Item::s_connect *> connexions; /*!< Connexions du modèle*/
-
 };
 
 #endif // GRIDMODEL_H

@@ -145,22 +145,6 @@ private:
     QModelIndex currentIndex; /*!< Instance de la case dans la grille sélectionné*/
     int currentAction; /*!< Action courante*/
 
-signals:
-    /*!
-     *  \brief Signal émis pour lancer la simulation.
-     *
-     *  Lance la simulation.
-     */
-    void launch();
-
-public slots:
-    /*!
-     *  \brief Slot executé lors d'une de l'arrivé à un Output.
-     *  \param value : valeur d'arrivée.
-     *
-     *  Recoit une valeur de fin.
-     */
-    void finish(int *value);
 };
 
 #endif // MAPP_H

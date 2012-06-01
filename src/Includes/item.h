@@ -45,7 +45,7 @@ protected :
     virtual bool _do() = 0;
 
 signals :
-    void sendSignal(int *value = NULL);
+    void sendSignal();
 
 public slots:
     virtual inline void recvSignal() { if(this->checkAllValueReceived()) if(this->_do()) emit sendSignal(); }

@@ -85,10 +85,6 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
             else if((name = QInputDialog::getText(this,"Entrez un nom","Entre un nom fils de pute", QLineEdit::Normal, "Item")) != "") { // Sinon on demande un nom
                 this->currentItem->setName(name); // On met le nom à l'Item en cours de placement
                 this->model->addItem(index, this->currentItem); // On le rajoute ua model
-                if(this->currentItem->getClass() == Item::Input0) // Si l'item est une entrée
-                    QObject::connect(this, SIGNAL(launch()), this->currentItem, SLOT(recvSignal())); // On crée une connexion entre lui et le controlleur pour la simulation
-                if(this->currentItem->getClass() == Item::Output1) // Si l'item est une entrée
-                    QObject::connect(this->currentItem, SIGNAL(sendSignal(int*)), this, SLOT(finish(int*))); // On crée une connexion entre lui et le controlleur pour la simulation
                 this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
                 this->currentItem = NULL; // Plus d'item en cours de placement
                 this->currentAction = VIEW; // Action remise par defaut à la vue
@@ -149,7 +145,7 @@ void MApp::on_connect_clicked() // SI on clic sur le bouton connect
         this->ui->Place->setText("Place"); // On annule l'action de placement si il y en avait une
     }
 
-    this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placemen
+    this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -243,8 +239,7 @@ void MApp::on_actionSettings_triggered() // Fenetre des options pour l'applicati
 
 void MApp::on_Simulate_clicked() // Si on clic sur le bouton simulate
 {
-    this->model->resetAllConnexions();
-    emit launch(); // On execute les fonctions des Inputs avec la valeur par default
+    this->model->simulate();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -290,19 +285,6 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
     }
 
     emit this->ui->tableView->setFocus(); // On met le focus sur la grille (provoque une mise a jour visuelle)
-}
-
-////////////////////////////////////////////////////////////////////////
-// Name:       void MApp::finish(int *value)
-// Purpose:    Implementation of void MApp::finish()
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-void MApp::finish(int *value) {
-    if(value == NULL)
-        return;
-
-    QMessageBox::critical(this,"Result",QString::number(*value));
 }
 
 ////////////////////////////////////////////////////////////////////////

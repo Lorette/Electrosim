@@ -9,7 +9,7 @@ Output::Output() : Item()
 
 bool Output::_do() // A refaire ici
 {
-    emit sendSignal(this->inputs.at(0)->value);
+    this->def_value = *(this->inputs.at(0)->value);
 
     return false;
 }
