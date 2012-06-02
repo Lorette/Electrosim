@@ -240,27 +240,19 @@ void MApp::on_actionSettings_triggered() // Fenetre des options pour l'applicati
 
 void MApp::on_actionCharger_un_Fichier_triggered()
 {
-
-    QString s = QFileDialog::getOpenFileName(
-                    this,
-                    tr("Choississez un Fichier"),
-                    "/home",
-                    tr("Fichiers Textes (*.txt);;Elec Files (*.elec)")
-                    );
+    QString s = QFileDialog::getOpenFileName(this,tr("Choississez un Fichier"),QString(),tr("Fichiers Textes (*.txt);;Elec Files (*.elec)"));
 
     QFile file(s);
 
     if( !file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        QMessageBox msgBox;
-        msgBox.setText("Fichier Inutilisable !!");
-        msgBox.exec();
+        QMessageBox::critical(this,"Error","Fichier Inutilisable !!");
         return;
     }
 
     this->model->loadFromFile(&file);
 
-
+    file.close();
 
 }
 
@@ -273,26 +265,17 @@ void MApp::on_actionCharger_un_Fichier_triggered()
 
 void MApp::on_actionSauvegarder_un_Fichier_triggered()
 {
-    QString s = QFileDialog::getSaveFileName(
-                    this,
-                    tr("Choississez un Fichier"),
-                    "/home",
-                    tr("Fichiers Textes (*.txt);;Elec Files (*.elec)")
-                    );
+    QString s = QFileDialog::getSaveFileName(this,tr("Choississez un Fichier"),QString(),tr("Fichiers Textes (*.txt);;Elec Files (*.elec)"));
 
     QFile file(s);
 
     if( !file.open(QIODevice::Append))
     {
-        QMessageBox msgBox;
-        msgBox.setText("Fichier Inutilisable !!");
-        msgBox.exec();
+        QMessageBox::critical(this,"Error","Fichier Inutilisable !!");
         return;
     }
     this->model->saveInFile(&file);
-
     file.close();
-
 }
 
 ////////////////////////////////////////////////////////////////////////

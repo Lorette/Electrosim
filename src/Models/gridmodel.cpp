@@ -376,54 +376,32 @@ bool GridModel::saveInFile(QFile* file){
     QTextStream out(file);
 
     // ajout du nombre de lignes et de colonnes sur les 2 premieres lignes du fichier
-    out << row_count << "\n";
-    out << column_count << "\n";
+    out << this->row_count << "\n";
+    out << this->column_count << "\n";
 
-    // on conserve la liste des composants qu'on utilisera pour
-    // la liste des composants (début du fichier de sauvegarde
-    // la liste des liaisons vu qu'on connait les connections à l'aide de chaque Item
-    QVector<Item*> composants(0);
+    for(int i = 0 ; i < this->row_count ; i++)
+        for(int j = 0 ; j < this->column_count ; j++)
+          if(this->items.at(i).at(j) != NULL) {
+                out << "composant\t" << this->items.at(i).at(j)->getName();
 
-    for(int i = 0 ; i < row_count ; i++)
-    {
-        for(int j = 0 ; j < column_count ; j++)
-        {
-            if(this->items[i][j] != NULL)
-                composants.append(this->items[i][j]);
-        }
-    }
+                switch (this->items.at(i).at(j)->getClass()) {
+                case Item::Input0 :  out << "\tIN\t";
+                    break;
+                case Item::Output1 : out << "\tOUT\t";
+                    break;
+                case Item::Not2 : out << "\tNOT\t";
+                    break;
+                case Item::Or3 : out << "\tOR\t";
+                    break;
+                case Item::And4 : out << "\tAND\t";
+                }
 
-    // Ecriture de la liste des composants
-    for(int i = 0 ; i < composants.size() ; i++)
-    {
-        if( composants[i]->getDescription() == "Input" )
-        {
-            out << "composant\t" << composants[i]->getName() << "\tIN\t" << composants[i]->getIndex().r << "\t" << composants[i]->getIndex().c << "\n";
-        }
-        else if( composants[i]->getDescription() == "Output" )
-        {
-            out << "composant\t" << composants[i]->getName() << "\tOUT\t" << composants[i]->getIndex().r << "\t" << composants[i]->getIndex().c  << "\n";
-        }
-        else if( composants[i]->getDescription() == "Not" )
-        {
-            out << "composant\t" << composants[i]->getName() << "\tNOT\t" << composants[i]->getIndex().r << "\t" << composants[i]->getIndex().c  << "\n";
-        }
-        else if( composants[i]->getDescription() == "Or" )
-        {
-            out << "composant\t" << composants[i]->getName() << "\tOR\t" << composants[i]->getIndex().r << "\t" << composants[i]->getIndex().c  << "\n";
-        }
-        else if( composants[i]->getDescription() == "And" )
-        {
-            out << "composant\t" << composants[i]->getName() << "\tAND\t" << composants[i]->getIndex().r << "\t" << composants[i]->getIndex().c << "\n";
-        }
-    }
-
+                out << i << "\t" << j << "\n";
+            }
 
     //Liste des liaisons
-    for( int i = 0 ; i < connexions.size() ; i++)
-    {
-        out << "liaison\t" << connexions.at(i)->sender->getName() << "\t" <<  connexions.at(i)->output << "\t" <<  connexions.at(i)->receiver->getName() << "\t" <<  connexions.at(i)->input << "\n";
-    }
+    for( int i = 0 ; i < this->connexions.size() ; i++)
+        out << "liaison\t" << this->connexions.at(i)->sender->getName() << "\t" <<  this->connexions.at(i)->output << "\t" <<  this->connexions.at(i)->receiver->getName() << "\t" <<  this->connexions.at(i)->input << "\n";
 
     return true;
 }
