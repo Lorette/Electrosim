@@ -242,6 +242,10 @@ void MApp::on_actionCharger_un_Fichier_triggered()
 {
     QString s = QFileDialog::getOpenFileName(this,tr("Choississez un Fichier"),QString(),tr("Fichiers Textes (*.txt);;Elec Files (*.elec)"));
     GridModel *gModel;
+
+    if(s == "") //cancel
+        return;
+
     QFile file(s);
 
     if( !file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -273,6 +277,9 @@ void MApp::on_actionCharger_un_Fichier_triggered()
 void MApp::on_actionSauvegarder_un_Fichier_triggered()
 {
     QString s = QFileDialog::getSaveFileName(this,tr("Choississez un Fichier"),QString(),tr("Fichiers Textes (*.txt);;Elec Files (*.elec)"));
+
+    if(s == "") //cancel
+        return;
 
     QFile file(s);
 
