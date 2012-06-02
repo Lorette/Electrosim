@@ -85,7 +85,8 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
                 QMessageBox::critical(0,"Enculé","Hey, fils de pute, ta pas le droit ici"); // On indique que l'endroit est déjà pris
             else if((name = QInputDialog::getText(this,"Entrez un nom","Entre un nom fils de pute", QLineEdit::Normal, "Item")) != "") { // Sinon on demande un nom
                 this->currentItem->setName(name); // On met le nom à l'Item en cours de placement
-                this->model->addItem(index, this->currentItem); // On le rajoute ua model
+                if(!this->model->addItem(index, this->currentItem)) // On le rajoute au model
+                    QMessageBox::critical(0,"Erreur", "Nom déjà utilisé par un autre composant"); //le nom doit etre unique
                 this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
                 this->currentItem = NULL; // Plus d'item en cours de placement
                 this->currentAction = VIEW; // Action remise par defaut à la vue

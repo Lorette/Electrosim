@@ -217,6 +217,27 @@ Item* GridModel::at(const QModelIndex &index) { // Retourne l'élément à l'index 
 }
 
 bool GridModel::addItem(const QModelIndex &index, Item* item) { // Rajoute un item à l'index indiqué
+    if(!item)
+        return false;
+
+    //vérification qu'il ny a pas déjà un composant à cet emplacement
+    if(this->items[index.row()][index.column()])
+        return false;
+
+    //Vérification de l'unicité du nom
+    for(int r=0; r<this->rowCount(); ++r)
+    {
+        for(int c=0; c<this->columnCount(); ++c)
+        {
+            if(this->items[r][c])
+            {
+                if(this->items[r][c]->getName() == item->getName())
+                    return false;
+            }
+        }
+    }
+
+    //ajout de l'objet
     this->items[index.row()][index.column()] = item;
 
     if(item->getClass() == Item::Input0) {
@@ -444,31 +465,36 @@ GridModel* GridModel::loadFromFile(QFile* file) {
             {
                 Input* in = new Input();
                 in->setName( list[1] );
-                model->addItem(model->createIndex(i,j), in);
+                if(!model->addItem(model->createIndex(i,j), in))
+                    return NULL;
             }
             else if( list[2] == "OUT" )
             {
                 Output* out = new Output();
                 out->setName( list[1] );
-                model->addItem(model->createIndex(i,j), out);
+                if(!model->addItem(model->createIndex(i,j), out))
+                    return NULL;
             }
             else if( list[2] == "NOT" )
             {
                 Not* no = new Not();
                 no->setName( list[1] );
-                model->addItem(model->createIndex(i,j), no);
+                if(!model->addItem(model->createIndex(i,j), no))
+                    return NULL;
             }
             else if( list[2] == "AND" )
             {
                 And* et = new And();
                 et->setName( list[1] );
-                model->addItem(model->createIndex(i,j), et);
+                if(!model->addItem(model->createIndex(i,j), et))
+                    return NULL;
             }
             else if( list[2] == "OR" )
             {
                 Or* ou = new Or();
                 ou->setName( list[1] );
-                model->addItem(model->createIndex(i,j), ou);
+                if(!model->addItem(model->createIndex(i,j), ou))
+                    return NULL;
             }
 
         }
