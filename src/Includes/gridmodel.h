@@ -253,7 +253,7 @@ public:
 
     /*!
     *  \brief Sauvegarde le circuit dans le fichier file
-    *  \parem file : fichier de sauvegarde
+    *  \param file : fichier de sauvegarde
     *
     *  \return true si la sauvegarde a eu lieu false sinon
     */
@@ -261,7 +261,7 @@ public:
 
     /*!
     *  \brief Charge le circuit à partir le fichier file
-    *  \parem file : fichier elec ou txt
+    *  \param file : fichier elec ou txt
     *
     *  \return le modele du fichier
     */
@@ -269,11 +269,20 @@ public:
 
     /*!
     *  \brief Renvoi l'item à partir d'un nom
-    *  \parem name : nom de l'item recherché
+    *  \param name : nom de l'item recherché
     *
     *  \return l'item recherché, NULL si l'item n'existe pas
     */
     Item* findChildByName(QString name);
+
+    /*!
+     *  \brief Indique si un nom est déjà utilisé par un composant.
+     *
+     *  \param name : nom à tester.
+     *
+     *  \return true si le nom est déjà utilisé, false sinon.
+     */
+    bool nameIsUsed(QString& name) const;
 
 
 signals:

@@ -225,17 +225,8 @@ bool GridModel::addItem(const QModelIndex &index, Item* item) { // Rajoute un it
         return false;
 
     //Vérification de l'unicité du nom
-    for(int r=0; r<this->rowCount(); ++r)
-    {
-        for(int c=0; c<this->columnCount(); ++c)
-        {
-            if(this->items[r][c])
-            {
-                if(this->items[r][c]->getName() == item->getName())
-                    return false;
-            }
-        }
-    }
+    if(this->nameIsUsed(item->getName()))
+        return false;
 
     //ajout de l'objet
     this->items[index.row()][index.column()] = item;
@@ -538,4 +529,21 @@ Item* GridModel::findChildByName(QString name)
 
     return NULL;
 
+}
+
+bool GridModel::nameIsUsed(QString& name) const
+{
+    for(int r=0; r<this->rowCount(); ++r)
+    {
+        for(int c=0; c<this->columnCount(); ++c)
+        {
+            if(this->items[r][c])
+            {
+                if(this->items[r][c]->getName() == name)
+                    return true;
+            }
+        }
+    }
+
+    return false;
 }

@@ -381,7 +381,10 @@ void MApp::on_modify_clicked()
     uModify->name->setText(it->getName());
 
     if(wModify->exec() == QDialog::Accepted) { // Fenetre bloquante
-        it->setName(uModify->name->text());
+        if(this->model->nameIsUsed(uModify->name->text()))
+            QMessageBox::critical(0,"Erreur", "Nom déjà utilisé par un autre composant");
+        else
+            it->setName(uModify->name->text());
     }
 
     delete uModify; // On détruit l'interface ...
