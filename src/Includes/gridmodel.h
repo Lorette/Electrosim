@@ -57,6 +57,15 @@ public:
     explicit GridModel(int rows = 0, int columns = 0);
 
     /*!
+     *  \brief Destructeur.
+     *
+     *  Destructeur de la classe GridModel.
+     *  \param rows : nombre de lignes
+     *  \param columns : nombre de colonnes
+     */
+    ~GridModel();
+
+    /*!
      *  \brief Crée un index.
      *  \param row : numéro de la ligne
      *  \param column : numéro de la colonne
@@ -256,7 +265,7 @@ public:
     *
     *  \return le modele du fichier
     */
-    bool loadFromFile(QFile* file);
+    static GridModel* loadFromFile(QFile* file);
 
     /*!
     *  \brief Renvoi l'item à partir d'un nom

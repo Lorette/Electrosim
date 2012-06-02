@@ -241,7 +241,7 @@ void MApp::on_actionSettings_triggered() // Fenetre des options pour l'applicati
 void MApp::on_actionCharger_un_Fichier_triggered()
 {
     QString s = QFileDialog::getOpenFileName(this,tr("Choississez un Fichier"),QString(),tr("Fichiers Textes (*.txt);;Elec Files (*.elec)"));
-
+    GridModel *gModel;
     QFile file(s);
 
     if( !file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -250,7 +250,14 @@ void MApp::on_actionCharger_un_Fichier_triggered()
         return;
     }
 
-    this->model->loadFromFile(&file);
+    if((gModel = GridModel::loadFromFile(&file)) != NULL) {
+        delete this->model;
+        this->ui->tableView->setModel(this->model = gModel);
+        this->ui->row_count->setText(QString::number(model->rowCount()));
+        this->ui->column_count->setText(QString::number(model->columnCount()));
+    }
+    else
+        QMessageBox::critical(0, "Error", "Fichier Corrompu");
 
     file.close();
 

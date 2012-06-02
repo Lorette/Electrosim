@@ -16,6 +16,10 @@ GridModel::GridModel(int rows, int columns) //Constructeur
         this->items[i].resize(this->column_count); // ... ainsi que toutes les colonnes
 }
 
+GridModel::~GridModel() {
+// A IMPLEMENTER :: tout détruire !!
+}
+
 QModelIndex GridModel::index(int row, int column, const QModelIndex &parent) const { // Créer un index correct avec les bonnes coorodnnées
     QModelIndex index = this->createIndex(row,column);
 
@@ -406,39 +410,21 @@ bool GridModel::saveInFile(QFile* file){
     return true;
 }
 
-bool GridModel::loadFromFile(QFile* file) {
-
-    QMessageBox erreur;
+GridModel* GridModel::loadFromFile(QFile* file) {
+    GridModel *model;
     QTextStream stream(file);
     QString line;
     line = stream.readLine();
+
     if( line.isNull() )
-    {
-        erreur.setText("Erreur Fichier non valide.Le fichier n'est pas compatible.");
-        erreur.exec();
-        return false;
-    }
-
-    //on vide l'ancienne grille
-    this->removeRows(0,this->rowCount());
-    this->removeColumns(0,this->columnCount());
-
-    //on vide les Lists
-    this->inputs.clear();
-    this->outputs.clear();
-    this->connexions.clear();
+        return NULL;
 
     //on redimensionne la grille avec les valeurs du fichiers
     int n_row = line.toInt();
     line = stream.readLine();
     int n_column = line.toInt();
 
-    this->insertRows(0, n_row);
-    this->insertColumns(0, n_column);
-
-    //on raffraichis l'affichage
-    //this->setData( QModelIndex(), QVariant(), 0 );
-
+    model = new GridModel(n_row, n_column);
 
     int i,j;
 
@@ -458,31 +444,31 @@ bool GridModel::loadFromFile(QFile* file) {
             {
                 Input* in = new Input();
                 in->setName( list[1] );
-                addItem(this->createIndex(i,j), in);
+                model->addItem(model->createIndex(i,j), in);
             }
             else if( list[2] == "OUT" )
             {
                 Output* out = new Output();
                 out->setName( list[1] );
-                addItem(this->createIndex(i,j), out);
+                model->addItem(model->createIndex(i,j), out);
             }
             else if( list[2] == "NOT" )
             {
                 Not* no = new Not();
                 no->setName( list[1] );
-                addItem(this->createIndex(i,j), no);
+                model->addItem(model->createIndex(i,j), no);
             }
             else if( list[2] == "AND" )
             {
                 And* et = new And();
                 et->setName( list[1] );
-                addItem(this->createIndex(i,j), et);
+                model->addItem(model->createIndex(i,j), et);
             }
             else if( list[2] == "OR" )
             {
                 Or* ou = new Or();
                 ou->setName( list[1] );
-                addItem(this->createIndex(i,j), ou);
+                model->addItem(model->createIndex(i,j), ou);
             }
 
         }
@@ -491,28 +477,22 @@ bool GridModel::loadFromFile(QFile* file) {
         else if( list[0] == "liaison" )
         {
             Item::s_connect *link = new Item::s_connect;
-            link->sender = this->findChildByName( list[1] );
+            link->sender = model->findChildByName( list[1] );
             link->output = (list[2]).toInt();
-            link->receiver = this->findChildByName( list[3] );
+            link->receiver = model->findChildByName( list[3] );
             link->input = (list[4]).toInt();
             link->value = NULL;
 
 
 
-            if( !this->connexion(link) )
-            {
-                erreur.setText("Liaison invalide detecter dans le fichier.\n Ligne: \n"+line);
-                erreur.exec();
-            }
+            if( !model->connexion(link) )
+                return NULL;
         }
 
         line = stream.readLine();
     }
 
-    //on raffraichis l'affichage
-    this->setData( QModelIndex(), QVariant(), 0 );
-
-    return true;
+    return model;
 
 
 }
