@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>997</width>
+    <width>1007</width>
     <height>538</height>
    </rect>
   </property>
@@ -310,8 +310,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>997</width>
-     <height>20</height>
+     <width>1007</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -319,6 +319,8 @@
      <string>File</string>
     </property>
     <addaction name="separator"/>
+    <addaction name="actionCharger_un_Fichier"/>
+    <addaction name="actionSauvegarder_un_Fichier"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuOptions">
@@ -339,6 +341,16 @@
   <action name="actionQuit">
    <property name="text">
     <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionCharger_un_Fichier">
+   <property name="text">
+    <string>Charger un Fichier</string>
+   </property>
+  </action>
+  <action name="actionSauvegarder_un_Fichier">
+   <property name="text">
+    <string>Sauvegarder un Fichier</string>
    </property>
   </action>
  </widget>

@@ -26,10 +26,15 @@
 #include <QIcon>
 #include <QPair>
 #include <qmath.h>
+#include <QFile>
+#include <QTextStream>
 
 #include "input.h"
 #include "output.h"
 #include "item.h"
+#include "not.h"
+#include "and.h"
+#include "or.h"
 
 /*! \class GridModel
   * \brief Classe GridModel :
@@ -236,6 +241,32 @@ public:
     QPair <QVector < QString >, QVector< QVector < int > > >  verite();
 
     bool setDefValueOnInput(Item *item, int value);
+
+    /*!
+    *  \brief Sauvegarde le circuit dans le fichier file
+    *  \parem file : fichier de sauvegarde
+    *
+    *  \return true si la sauvegarde a eu lieu false sinon
+    */
+    bool saveInFile(QFile* file);
+
+    /*!
+    *  \brief Charge le circuit à partir le fichier file
+    *  \parem file : fichier elec ou txt
+    *
+    *  \return le modele du fichier
+    */
+    bool loadFromFile(QFile* file);
+
+    /*!
+    *  \brief Renvoi l'item à partir d'un nom
+    *  \parem name : nom de l'item recherché
+    *
+    *  \return l'item recherché, NULL si l'item n'existe pas
+    */
+    Item* findChildByName(QString name);
+
+
 signals:
     /*!
      *  \brief Signal émis pour lancer la simulation.

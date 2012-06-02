@@ -370,3 +370,205 @@ bool GridModel::setDefValueOnInput(Item *item, int value) {
 
     return true;
 }
+
+bool GridModel::saveInFile(QFile* file){
+
+    QTextStream out(file);
+
+    // ajout du nombre de lignes et de colonnes sur les 2 premieres lignes du fichier
+    out << row_count << "\n";
+    out << column_count << "\n";
+
+    // on conserve la liste des composants qu'on utilisera pour
+    // la liste des composants (début du fichier de sauvegarde
+    // la liste des liaisons vu qu'on connait les connections à l'aide de chaque Item
+    QVector<Item*> composants(0);
+
+    for(int i = 0 ; i < row_count ; i++)
+    {
+        for(int j = 0 ; j < column_count ; j++)
+        {
+            if(this->items[i][j] != NULL)
+                composants.append(this->items[i][j]);
+        }
+    }
+
+    // Ecriture de la liste des composants
+    for(int i = 0 ; i < composants.size() ; i++)
+    {
+        if( composants[i]->getDescription() == "Input" )
+        {
+            out << "composant\t" << composants[i]->getName() << "\tIN\t" << composants[i]->getIndex().r << "\t" << composants[i]->getIndex().c << "\n";
+        }
+        else if( composants[i]->getDescription() == "Output" )
+        {
+            out << "composant\t" << composants[i]->getName() << "\tOUT\t" << composants[i]->getIndex().r << "\t" << composants[i]->getIndex().c  << "\n";
+        }
+        else if( composants[i]->getDescription() == "Not" )
+        {
+            out << "composant\t" << composants[i]->getName() << "\tNOT\t" << composants[i]->getIndex().r << "\t" << composants[i]->getIndex().c  << "\n";
+        }
+        else if( composants[i]->getDescription() == "Or" )
+        {
+            out << "composant\t" << composants[i]->getName() << "\tOR\t" << composants[i]->getIndex().r << "\t" << composants[i]->getIndex().c  << "\n";
+        }
+        else if( composants[i]->getDescription() == "And" )
+        {
+            out << "composant\t" << composants[i]->getName() << "\tAND\t" << composants[i]->getIndex().r << "\t" << composants[i]->getIndex().c << "\n";
+        }
+    }
+
+
+    //Liste des liaisons
+    for( int i = 0 ; i < connexions.size() ; i++)
+    {
+        out << "liaison\t" << connexions.at(i)->sender->getName() << "\t" <<  connexions.at(i)->output << "\t" <<  connexions.at(i)->receiver->getName() << "\t" <<  connexions.at(i)->input << "\n";
+    }
+
+    return true;
+}
+
+bool GridModel::loadFromFile(QFile* file) {
+
+    QMessageBox erreur;
+    QTextStream stream(file);
+    QString line;
+    line = stream.readLine();
+    if( line.isNull() )
+    {
+        erreur.setText("Erreur Fichier non valide.Le fichier n'est pas compatible.");
+        erreur.exec();
+        return false;
+    }
+
+    //on vide l'ancienne grille
+    this->items.resize(0);
+
+    int n_row = line.toInt();
+    line = stream.readLine();
+    int n_column = line.toInt();
+
+    if( n_row > this->row_count )
+        this->row_count = n_row;
+
+    if( n_column > this->column_count )
+        this->column_count = n_column;
+
+
+    //on redimensionne la grille avec les valeurs du fichiers
+    this->items.resize(this->row_count);
+    for( int i = 0 ; i < this->row_count ; i++)
+    {
+        this->items[i].resize(this->column_count);
+    }
+
+
+    //on vide les Lists
+    this->inputs.clear();
+    this->outputs.clear();
+    this->connexions.clear();
+
+    //on raffraichis l'affichage
+    this->setData( QModelIndex(), QVariant(), 0 );
+
+
+    int i,j;
+
+    line = stream.readLine();
+    while( !line.isNull() )
+    {
+        //On sépare la ligne en liste, le délimiteur étant la tabulation \t
+        QStringList list = line.split("\t" , QString::SkipEmptyParts);
+
+        //si on lit la premiere partie, le premier élément de la liste est "composant"
+        if( list[0] == "composant" )
+        {
+            // on prend les indices de lignes et de colonne (pareil tout composant confondu)
+            i = list[3].toInt();
+            j = list[4].toInt();
+            if( list[2] == "IN" )
+            {
+                Input* in = new Input();
+                in->setName( list[1] );
+                in->setIndex( this->createIndex(i,j) );
+                this->items[i][j] = in;
+                this->inputs.append(in);
+            }
+            else if( list[2] == "OUT" )
+            {
+                Output* out = new Output();
+                out->setName( list[1] );
+                out->setIndex( this->createIndex(i,j) );
+                this->items[i][j] = out;
+                this->outputs.append(out);
+            }
+            else if( list[2] == "NOT" )
+            {
+                Not* no = new Not();
+                no->setName( list[1] );
+                no->setIndex( this->createIndex(i,j) );
+                this->items[i][j] = no;
+            }
+            else if( list[2] == "And" )
+            {
+                And* et = new And();
+                et->setName( list[1] );
+                et->setIndex( this->createIndex(i,j) );
+                this->items[i][j] = et;
+            }
+            else if( list[2] == "OR" )
+            {
+                Or* ou = new Or();
+                ou->setName( list[1] );
+                ou->setIndex( this->createIndex(i,j) );
+                this->items[i][j] = ou;
+            }
+
+        }
+
+        //si le premier élément n'est pas "composant" on voit les liaisons, par verification on rajoute le test
+        if( list[0] == "liaison" )
+        {
+            Item::s_connect *link = new Item::s_connect;
+            link->sender = this->findChildByName( list[1] );
+            link->output = (list[2]).toInt();
+            link->receiver = this->findChildByName( list[3] );
+            link->input = (list[4]).toInt();
+            link->value = NULL;
+
+
+
+            if( !this->connexion(link) )
+            {
+                erreur.setText("Liaison invalide detecter dans le fichier.\n Ligne: \n"+line);
+                erreur.exec();
+            }
+        }
+
+        line = stream.readLine();
+    }
+
+    //on raffraichis l'affichage
+    this->setData( QModelIndex(), QVariant(), 0 );
+
+    return true;
+
+
+}
+
+Item* GridModel::findChildByName(QString name)
+{
+    for( int i = 0 ; i < this->row_count ; i++)
+    {
+        for( int j = 0 ; j < this->column_count ; j++)
+        {
+            if( this->items[i][j] != NULL && this->items[i][j]->getName() == name)
+            {
+                return items[i][j];
+            }
+        }
+    }
+
+    return NULL;
+
+}

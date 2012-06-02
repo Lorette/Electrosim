@@ -233,6 +233,69 @@ void MApp::on_actionSettings_triggered() // Fenetre des options pour l'applicati
 }
 
 ////////////////////////////////////////////////////////////////////////
+// Name:       MApp::on_actionCharger_un_Fichier_triggered()
+// Purpose:    Implementation of MApp::on_actionCharger_Un_Fichier()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void MApp::on_actionCharger_un_Fichier_triggered()
+{
+
+    QString s = QFileDialog::getOpenFileName(
+                    this,
+                    tr("Choississez un Fichier"),
+                    "/home",
+                    tr("Fichiers Textes (*.txt);;Elec Files (*.elec)")
+                    );
+
+    QFile file(s);
+
+    if( !file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Fichier Inutilisable !!");
+        msgBox.exec();
+        return;
+    }
+
+    this->model->loadFromFile(&file);
+
+
+
+}
+
+
+////////////////////////////////////////////////////////////////////////
+// Name:       MApp::on_actionSauvegarder_un_Fichier_triggered()
+// Purpose:    Implementation of MApp::on_actionSauvegarder_Un_Circuit()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void MApp::on_actionSauvegarder_un_Fichier_triggered()
+{
+    QString s = QFileDialog::getSaveFileName(
+                    this,
+                    tr("Choississez un Fichier"),
+                    "/home",
+                    tr("Fichiers Textes (*.txt);;Elec Files (*.elec)")
+                    );
+
+    QFile file(s);
+
+    if( !file.open(QIODevice::Append))
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Fichier Inutilisable !!");
+        msgBox.exec();
+        return;
+    }
+    this->model->saveInFile(&file);
+
+    file.close();
+
+}
+
+////////////////////////////////////////////////////////////////////////
 // Name:       void MApp::on_Place_clicked()
 // Purpose:    Implementation of void MApp::on_Place_clicked()
 // Return:     void

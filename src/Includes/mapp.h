@@ -113,6 +113,19 @@ private slots:
     void on_actionSettings_triggered();
 
     /*!
+    *  \brief Slot pour un clic sur l'entrée "Charger Un Fichier du menu File.
+    *
+    *  Ouvre une fenêtre de configuration.
+    */
+    void on_actionCharger_un_Fichier_triggered();
+    /*!
+    *  \brief Slot pour un clic sur l'entrée "Sauvegarder Un Circuit" du menu File.
+    *
+    *  Ouvre une fenêtre de configuration.
+    */
+    void on_actionSauvegarder_un_Fichier_triggered();
+
+    /*!
      *  \brief Slot pour un clic sur le bouton Place.
      *
      *  Place (ou annule l'action) un item selectionné dans la liste.
