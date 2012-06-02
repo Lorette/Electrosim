@@ -20,12 +20,12 @@
  * \date 12 mai 2011
  */
 
-#include <cmath>
 #include <QAbstractItemModel>
 #include <QVector>
 #include <QMessageBox>
 #include <QIcon>
 #include <QPair>
+#include <qmath.h>
 
 #include "input.h"
 #include "output.h"
@@ -235,6 +235,7 @@ public:
      */
     QPair <QVector < QString >, QVector< QVector < int > > >  verite();
 
+    bool setDefValueOnInput(Item *item, int value);
 signals:
     /*!
      *  \brief Signal émis pour lancer la simulation.

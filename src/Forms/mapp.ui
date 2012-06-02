@@ -18,7 +18,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="1" rowspan="2" colspan="11">
+    <item row="2" column="1" rowspan="2" colspan="10">
      <widget class="GridView" name="tableView">
       <property name="enabled">
        <bool>true</bool>
@@ -116,21 +116,14 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="10">
+    <item row="1" column="9">
      <widget class="QPushButton" name="connect">
       <property name="text">
        <string>Connect</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="9">
-     <widget class="QPushButton" name="Simulate">
-      <property name="text">
-       <string>Simulate</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="12" rowspan="3">
+    <item row="1" column="11" rowspan="3">
      <widget class="QGroupBox" name="groupBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
@@ -346,11 +339,6 @@
   <action name="actionQuit">
    <property name="text">
     <string>Quit</string>
-   </property>
-  </action>
-  <action name="actionLoad">
-   <property name="text">
-    <string>Load</string>
    </property>
   </action>
  </widget>

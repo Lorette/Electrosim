@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QFileDialog>
 
 #include "item.h"
 #include "input.h"
@@ -52,6 +53,7 @@ namespace Ui {
     class ConnOpt;
     class Settings;
     class Modify;
+    class Verite;
 }
 
 /*! \class MApp
@@ -109,12 +111,7 @@ private slots:
      *  Ouvre une fenêtre de configuration.
      */
     void on_actionSettings_triggered();
-    /*!
-     *  \brief Slot pour un clic sur le bouton Simulate.
-     *
-     *  Lance la simulation du circuit.
-     */
-    void on_Simulate_clicked();
+
     /*!
      *  \brief Slot pour un clic sur le bouton Place.
      *

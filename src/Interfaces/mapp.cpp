@@ -12,6 +12,7 @@
 #include "ui_conn_option.h"
 #include "ui_settings.h"
 #include "ui_modify.h"
+#include "ui_verite.h"
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
@@ -232,17 +233,6 @@ void MApp::on_actionSettings_triggered() // Fenetre des options pour l'applicati
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       MApp::on_Simulate_clicked()
-// Purpose:    Implementation of MApp::on_Simulate_clicked()
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-void MApp::on_Simulate_clicked() // Si on clic sur le bouton simulate
-{
-    this->model->simulate();
-}
-
-////////////////////////////////////////////////////////////////////////
 // Name:       void MApp::on_Place_clicked()
 // Purpose:    Implementation of void MApp::on_Place_clicked()
 // Return:     void
@@ -314,7 +304,8 @@ void MApp::on_actionQuit_triggered()
 
 void MApp::on_def_value_valueChanged(int arg1)
 {
-    this->model->at(this->currentIndex)->setDefaultValue(arg1);
+    this->model->setDefValueOnInput(this->model->at(this->currentIndex), arg1);
+    emit this->ui->tableView->setFocus(); // On met le focus sur la grille (provoque une mise a jour visuelle)
 }
 
 void MApp::on_modify_clicked()
@@ -338,39 +329,26 @@ void MApp::on_modify_clicked()
 
 void MApp::on_TableDeVerite_clicked()
 {
-    QPair <QVector < QString >, QVector< QVector < int > > > table_de_verite = this->model->verite();
+    QDialog *wVerite = new QDialog(this); // On initialise la fenetre ...
+    Ui::Verite *uVerite = new Ui::Verite; // ... l'interface ...
 
-    // Affichage temporaire de la table dans une message box
+    QPair <QVector < QString >, QVector< QVector < int > > > table_de_verite = this->model->verite();
+    uVerite->setupUi(wVerite); // ... et on les lie
+
     int nb_lignes = table_de_verite.second.size();
     int nb_colonnes = table_de_verite.first.size();
 
-    if(nb_colonnes <= 0) //table vide
-    {
-        QMessageBox::information(0, "Table de vérité", "");
-        return;
-    }
+    uVerite->tableWidget->setRowCount(nb_lignes);
+    uVerite->tableWidget->setColumnCount(nb_colonnes);
 
-    QString s = table_de_verite.first[0];
-    for(int c = 1; c < nb_colonnes; ++c)
-        s += " | " + table_de_verite.first[c];
+    uVerite->tableWidget->setHorizontalHeaderLabels(table_de_verite.first.toList());
 
-    s += "\n";
+    for(int i = 0; i < nb_lignes; i++)
+        for(int j = 0; j < nb_colonnes; j++)
+            uVerite->tableWidget->setItem(i,j,new QTableWidgetItem(QString::number(table_de_verite.second.at(i).at(j))));
 
-    for(int l=0; l<nb_lignes; ++l)
-    {
-        QString num;
-        num.setNum(table_de_verite.second[l][0]);
-        s += num;
-        for(int c=1; c<nb_colonnes; ++c)
-        {
-            for(int i=0; i<table_de_verite.first[c-1].size(); ++i)
-                s += " ";
+    wVerite->exec();
 
-            num.setNum(table_de_verite.second[l][c]);
-            s += " | " + num;
-        }
-        s += "\n";
-    }
-
-    QMessageBox::information(0, "Table de vérité", s);
+    delete uVerite;
+    delete wVerite;
 }

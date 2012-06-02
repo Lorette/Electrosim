@@ -31,7 +31,8 @@ HEADERS += Includes/gridmodel.h \
 FORMS += Forms/mapp.ui \
     Forms/conn_option.ui \
     Forms/settings.ui \
-    Forms/modify.ui
+    Forms/modify.ui \
+    Forms/verite.ui
 
 SOURCES += main.cpp \
            Interfaces/mapp.cpp \

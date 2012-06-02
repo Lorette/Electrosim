@@ -11,7 +11,7 @@ bool Output::_do() // A refaire ici
 {
     this->def_value = *(this->inputs.at(0)->value);
 
-    return false;
+    return true;
 }
 
 int Output::getClass() {

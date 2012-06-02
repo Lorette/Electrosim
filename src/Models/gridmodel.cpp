@@ -61,6 +61,9 @@ QVariant GridModel::data(const QModelIndex &index, int role) const { // Retourne
     if(role == Qt::UserRole+1 && ((c = this->items.at(index.row()).at(index.column())) != NULL) && c->getClass() == Item::Input0)
         return c->getDefaultValue();
 
+    if(role == Qt::UserRole+2 && ((c = this->items.at(index.row()).at(index.column())) != NULL) && c->getClass() == Item::Output1)
+        return c->getDefaultValue();
+
     return QVariant();
 }
 
@@ -240,7 +243,7 @@ bool GridModel::connexion(Item::s_connect* conn) { // Rajoute une connection à l
          return false;
 
      this->connexions << conn;
-
+     conn->sender->recvSignal();
      return true;
 
 }
@@ -286,7 +289,7 @@ void GridModel::simulate() {
 QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
     QPair <QVector < QString >, QVector<QVector<int> > > resultat;
     int nb_inputs = this->inputs.size();
-    int nb_lignes = pow(2.0,nb_inputs); //nombre de lignes de la table de vérité = 2^(nombre d'entrées)
+    int nb_lignes = qPow(2.0,nb_inputs); //nombre de lignes de la table de vérité = 2^(nombre d'entrées)
     int nb_colonnes = nb_inputs+this->outputs.size(); //nombre de colonne = nombre d'entrées + nombre de sorties
 
     //met les tableaux à la bonne taille
@@ -311,7 +314,7 @@ QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
     //rempli la partie des entrées
     for(int c=0; c<nb_inputs; ++c)
     {
-        int n = pow(2.0,c); //calcul de 2^c
+        int n = qPow(2.0,c); //calcul de 2^c
         int val = 1;
         for(int l=0; l<nb_lignes; ++l)
         {
@@ -353,4 +356,17 @@ QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
     }
 
     return resultat;
+}
+
+bool GridModel::setDefValueOnInput(Item *item, int value) {
+    if(item == NULL)
+        return false;
+
+    if(item->getClass() != Item::Input0)
+        return false;
+
+    item->setDefaultValue(value);
+    item->recvSignal();
+
+    return true;
 }
