@@ -442,34 +442,24 @@ bool GridModel::loadFromFile(QFile* file) {
     }
 
     //on vide l'ancienne grille
-    this->items.resize(0);
-
-    int n_row = line.toInt();
-    line = stream.readLine();
-    int n_column = line.toInt();
-
-    if( n_row > this->row_count )
-        this->row_count = n_row;
-
-    if( n_column > this->column_count )
-        this->column_count = n_column;
-
-
-    //on redimensionne la grille avec les valeurs du fichiers
-    this->items.resize(this->row_count);
-    for( int i = 0 ; i < this->row_count ; i++)
-    {
-        this->items[i].resize(this->column_count);
-    }
-
+    this->removeRows(0,this->rowCount());
+    this->removeColumns(0,this->columnCount());
 
     //on vide les Lists
     this->inputs.clear();
     this->outputs.clear();
     this->connexions.clear();
 
+    //on redimensionne la grille avec les valeurs du fichiers
+    int n_row = line.toInt();
+    line = stream.readLine();
+    int n_column = line.toInt();
+
+    this->insertRows(0, n_row);
+    this->insertColumns(0, n_column);
+
     //on raffraichis l'affichage
-    this->setData( QModelIndex(), QVariant(), 0 );
+    //this->setData( QModelIndex(), QVariant(), 0 );
 
 
     int i,j;
@@ -490,44 +480,37 @@ bool GridModel::loadFromFile(QFile* file) {
             {
                 Input* in = new Input();
                 in->setName( list[1] );
-                in->setIndex( this->createIndex(i,j) );
-                this->items[i][j] = in;
-                this->inputs.append(in);
+                addItem(this->createIndex(i,j), in);
             }
             else if( list[2] == "OUT" )
             {
                 Output* out = new Output();
                 out->setName( list[1] );
-                out->setIndex( this->createIndex(i,j) );
-                this->items[i][j] = out;
-                this->outputs.append(out);
+                addItem(this->createIndex(i,j), out);
             }
             else if( list[2] == "NOT" )
             {
                 Not* no = new Not();
                 no->setName( list[1] );
-                no->setIndex( this->createIndex(i,j) );
-                this->items[i][j] = no;
+                addItem(this->createIndex(i,j), no);
             }
-            else if( list[2] == "And" )
+            else if( list[2] == "AND" )
             {
                 And* et = new And();
                 et->setName( list[1] );
-                et->setIndex( this->createIndex(i,j) );
-                this->items[i][j] = et;
+                addItem(this->createIndex(i,j), et);
             }
             else if( list[2] == "OR" )
             {
                 Or* ou = new Or();
                 ou->setName( list[1] );
-                ou->setIndex( this->createIndex(i,j) );
-                this->items[i][j] = ou;
+                addItem(this->createIndex(i,j), ou);
             }
 
         }
 
         //si le premier élément n'est pas "composant" on voit les liaisons, par verification on rajoute le test
-        if( list[0] == "liaison" )
+        else if( list[0] == "liaison" )
         {
             Item::s_connect *link = new Item::s_connect;
             link->sender = this->findChildByName( list[1] );
