@@ -23,10 +23,11 @@
 MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
 {
     model = new GridModel(9,14); // Initialise le model de 9x14 par defaut
-
     ui->setupUi(this); // Relie l'interface à cet objet
 
     this->on_actionFrench_triggered(); // On le traduit en francais
+    this->ui->row_count->setText(QString::number(this->model->rowCount()));
+    this->ui->column_count->setText(QString::number(this->model->columnCount()));
 
     ui->tableView->setModel(model); //Indique à la vue d'utiliserle model crée
     ui->tableView->setItemDelegate(new ImageDelegate(this)); // Créer un délégué
@@ -36,6 +37,7 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
     ui->listWidget->addItem(new QListWidgetItem("Not")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("Or")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("And")); // Idem
+    ui->listWidget->addItem(new QListWidgetItem("Multiplexer")); // Idem
 
     this->currentItem = NULL; // Indique qu'aucune sélection n'est faite ...
     this->currentAction = VIEW; // Indique que l'action est la vue simple
@@ -67,16 +69,19 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
 
     switch(this->currentAction) {
     case VIEW : // SI l'action courante est la vue
-        if((this->currentItem = this->model->at(index)) != NULL) { // Et que l'Item séléctionné dans la grille existe
-            this->ui->name->setText(this->currentItem->getName()); // On met son nom dans la partie Informations
+        if((aux = this->model->at(index)) != NULL) { // Et que l'Item séléctionné dans la grille existe
+            this->ui->name->setText(aux->getName()); // On met son nom dans la partie Informations
             this->ui->Delete->setEnabled(true); // On active la suppression
             this->ui->modify->setEnabled(true); // On active la modification
-            (this->currentItem->getClass() == Item::Input0) ? this->ui->def_value->setEnabled(true) : this->ui->def_value->setEnabled(false); // Activation/désactivation valeur par default
-            this->ui->def_value->setValue(this->currentItem->getDefaultValue());
+            this->ui->def_value->setValue(0);
+            this->ui->def_value->setEnabled(true);
+            if(aux->getClass() == Item::Input0) this->ui->def_value->setValue(aux->getAuxValue());
+            else this->ui->def_value->setEnabled(false); // Activation/désactivation valeur par default
         }
         else {
             this->ui->name->setText(""); // Sinon on ne met pas de nom ...
             this->ui->Delete->setEnabled(false); // On désactive la suppression
+            this->ui->def_value->setValue(0);
             this->ui->def_value->setEnabled(false); // Désactivation valeur par default
             this->ui->modify->setEnabled(false);
         }
@@ -338,6 +343,8 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
         break;
     case Item::And4 : this->currentItem = new And();
         break;
+    case Item::Mux5 : this->currentItem = new Multiplexer(2);
+        break;
 
         default : this->ui->tableView->enableTracking(false); // Sinon On annule ...
             this->currentAction = VIEW; // le placement
@@ -373,7 +380,7 @@ void MApp::on_actionQuit_triggered()
 
 void MApp::on_def_value_valueChanged(int arg1)
 {
-    this->model->setDefValueOnInput(this->model->at(this->currentIndex), arg1);
+    this->model->setDefValueOnInput(this->model->at(this->currentIndex), this->ui->def_value->value());
     emit this->ui->tableView->setFocus(); // On met le focus sur la grille (provoque une mise a jour visuelle)
 }
 
@@ -381,25 +388,37 @@ void MApp::on_modify_clicked()
 {
     QDialog *wModify = new QDialog(this); // On initialise la fenetre ...
     Ui::Modify *uModify = new Ui::Modify; // ... l'interface ...
-    Item *it = this->currentItem;
+    Item *it;
+
+    if((it = this->model->at(this->currentIndex)) == NULL)
+            return;
 
     uModify->setupUi(wModify); // ... et on les lie
     wModify->setWindowTitle(tr("Modifying") +" " +it->getName());
 
     uModify->name->setText(it->getName());
+    if(it->getClass() == Item::Mux5)
+        uModify->Inputs->setVisible(true);
+    else
+        uModify->Inputs->setVisible(false);
+
+    uModify->Inputs->setValue(it->getAuxValue());
 
     if(wModify->exec() == QDialog::Accepted) { // Fenetre bloquante
         if(uModify->name->text() != it->getName())
         {
             if(!(this->model->nameIsCorrect(uModify->name->text())))
-                QMessageBox::critical(0,tr("Incorrect name"), tr(" A name have to be unique and without space."));
+                QMessageBox::critical(0,tr("Incorrect name"), tr("A name have to be unique and without space."));
             else
                 it->setName(uModify->name->text());
         }
+
+        this->model->setDefValueOnInput(it, uModify->Inputs->value());
     }
 
     delete uModify; // On détruit l'interface ...
     delete wModify; // ... et la fenetre
+    this->on_tableView_clicked(this->currentIndex);
 }
 
 void MApp::on_TableDeVerite_clicked()

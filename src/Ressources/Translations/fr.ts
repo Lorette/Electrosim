@@ -23,9 +23,9 @@
     </message>
     <message>
         <location filename="../../Forms/mapp.ui" line="122"/>
-        <location filename="../../Interfaces/mapp.cpp" line="117"/>
-        <location filename="../../Interfaces/mapp.cpp" line="148"/>
-        <location filename="../../Interfaces/mapp.cpp" line="324"/>
+        <location filename="../../Interfaces/mapp.cpp" line="124"/>
+        <location filename="../../Interfaces/mapp.cpp" line="155"/>
+        <location filename="../../Interfaces/mapp.cpp" line="331"/>
         <source>Connect</source>
         <translation>Connecter</translation>
     </message>
@@ -51,9 +51,9 @@
     </message>
     <message>
         <location filename="../../Forms/mapp.ui" line="241"/>
-        <location filename="../../Interfaces/mapp.cpp" line="98"/>
-        <location filename="../../Interfaces/mapp.cpp" line="153"/>
-        <location filename="../../Interfaces/mapp.cpp" line="315"/>
+        <location filename="../../Interfaces/mapp.cpp" line="104"/>
+        <location filename="../../Interfaces/mapp.cpp" line="160"/>
+        <location filename="../../Interfaces/mapp.cpp" line="322"/>
         <source>Place</source>
         <translation>Placer</translation>
     </message>
@@ -148,54 +148,65 @@
         <translation type="obsolete">Objet</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="91"/>
+        <location filename="../../Interfaces/mapp.cpp" line="96"/>
         <source>Give a name</source>
         <translation>Donnez un nom</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="91"/>
+        <location filename="../../Interfaces/mapp.cpp" line="96"/>
         <source>Give a name to this component.</source>
         <translation>Donnez un nom à cet élément.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="87"/>
-        <location filename="../../Interfaces/mapp.cpp" line="94"/>
-        <location filename="../../Interfaces/mapp.cpp" line="107"/>
-        <location filename="../../Interfaces/mapp.cpp" line="121"/>
-        <location filename="../../Interfaces/mapp.cpp" line="124"/>
-        <location filename="../../Interfaces/mapp.cpp" line="127"/>
-        <location filename="../../Interfaces/mapp.cpp" line="260"/>
-        <location filename="../../Interfaces/mapp.cpp" line="271"/>
-        <location filename="../../Interfaces/mapp.cpp" line="295"/>
-        <location filename="../../Interfaces/mapp.cpp" line="391"/>
+        <location filename="../../Interfaces/mapp.cpp" line="92"/>
+        <location filename="../../Interfaces/mapp.cpp" line="114"/>
+        <location filename="../../Interfaces/mapp.cpp" line="128"/>
+        <location filename="../../Interfaces/mapp.cpp" line="131"/>
+        <location filename="../../Interfaces/mapp.cpp" line="134"/>
+        <location filename="../../Interfaces/mapp.cpp" line="267"/>
+        <location filename="../../Interfaces/mapp.cpp" line="278"/>
+        <location filename="../../Interfaces/mapp.cpp" line="302"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="87"/>
+        <location filename="../../Interfaces/mapp.cpp" line="92"/>
         <source>Position already used.</source>
         <translation>Position déjà utilisée.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="107"/>
+        <location filename="../../Interfaces/mapp.cpp" line="99"/>
+        <location filename="../../Interfaces/mapp.cpp" line="411"/>
+        <source>Incorrect name</source>
+        <translatorcomment>Un nom doit être unique et ne doit contenir aucun espace.</translatorcomment>
+        <translation>Nom incorrect</translation>
+    </message>
+    <message>
+        <location filename="../../Interfaces/mapp.cpp" line="99"/>
+        <location filename="../../Interfaces/mapp.cpp" line="411"/>
+        <source>A name have to be unique and without space.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../Interfaces/mapp.cpp" line="114"/>
         <source>You have to select a component.</source>
         <translation>Vous devez sélectionner un composant.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="121"/>
-        <location filename="../../Interfaces/mapp.cpp" line="124"/>
+        <location filename="../../Interfaces/mapp.cpp" line="128"/>
+        <location filename="../../Interfaces/mapp.cpp" line="131"/>
         <source>Unable to connect those components.</source>
         <translation>Impossible de connecter ces composants.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="250"/>
-        <location filename="../../Interfaces/mapp.cpp" line="286"/>
+        <location filename="../../Interfaces/mapp.cpp" line="257"/>
+        <location filename="../../Interfaces/mapp.cpp" line="293"/>
         <source>Choose a file</source>
         <translation>Choisissez un fichier</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="250"/>
-        <location filename="../../Interfaces/mapp.cpp" line="286"/>
+        <location filename="../../Interfaces/mapp.cpp" line="257"/>
+        <location filename="../../Interfaces/mapp.cpp" line="293"/>
         <source>Elec Files (*.elec);;Texts Files (*.txt)</source>
         <translation>Fichiers Elec (*.elec);;Fichiers Textes (*.txt)</translation>
     </message>
@@ -208,8 +219,8 @@
         <translation type="obsolete">Error</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="152"/>
-        <location filename="../../Interfaces/mapp.cpp" line="325"/>
+        <location filename="../../Interfaces/mapp.cpp" line="159"/>
+        <location filename="../../Interfaces/mapp.cpp" line="332"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -218,26 +229,24 @@
         <translation type="obsolete">Texts Files (*.txt);;Elec Files(*.elec)</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="260"/>
-        <location filename="../../Interfaces/mapp.cpp" line="295"/>
+        <location filename="../../Interfaces/mapp.cpp" line="267"/>
+        <location filename="../../Interfaces/mapp.cpp" line="302"/>
         <source>Unable to open this file.</source>
         <translation>Impossible d&apos;ouvrir ce fichier.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="271"/>
+        <location filename="../../Interfaces/mapp.cpp" line="278"/>
         <source>Corrupted file.</source>
         <translation>Fichier corrompu.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="385"/>
+        <location filename="../../Interfaces/mapp.cpp" line="397"/>
         <source>Modifying</source>
         <translation>Modification</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="94"/>
-        <location filename="../../Interfaces/mapp.cpp" line="391"/>
         <source>Name already used.</source>
-        <translation>Nom déjà utilisé.</translation>
+        <translation type="obsolete">Nom déjà utilisé.</translation>
     </message>
 </context>
 <context>
@@ -248,15 +257,20 @@
         <translation>Modification</translation>
     </message>
     <message>
-        <location filename="../../Forms/modify.ui" line="33"/>
+        <location filename="../../Forms/modify.ui" line="20"/>
         <source>Inputs</source>
         <translatorcomment>Sorties</translatorcomment>
         <translation>Entrées</translation>
     </message>
     <message>
-        <location filename="../../Forms/modify.ui" line="66"/>
+        <location filename="../../Forms/modify.ui" line="27"/>
         <source>Outputs</source>
         <translation>Sorties</translation>
+    </message>
+    <message>
+        <location filename="../../Forms/modify.ui" line="73"/>
+        <source> Inputs</source>
+        <translation> Entrées</translation>
     </message>
 </context>
 <context>

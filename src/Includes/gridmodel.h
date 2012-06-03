@@ -35,6 +35,7 @@
 #include "not.h"
 #include "and.h"
 #include "or.h"
+#include "multiplexer.h"
 
 /*! \class GridModel
   * \brief Classe GridModel :
