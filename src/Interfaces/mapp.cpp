@@ -22,9 +22,11 @@
 
 MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
 {
-    model = new GridModel(0,0); // Initialise le model de 9x14 par defaut
+    model = new GridModel(9,14); // Initialise le model de 9x14 par defaut
 
     ui->setupUi(this); // Relie l'interface à cet objet
+
+    this->on_actionFrench_triggered(); // On le traduit en francais
 
     ui->tableView->setModel(model); //Indique à la vue d'utiliserle model crée
     ui->tableView->setItemDelegate(new ImageDelegate(this)); // Créer un délégué
@@ -58,7 +60,6 @@ MApp::~MApp()
 
 void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la grille
 {
-    static int numItem = 0; //sert pour le nom suggéré de l'objet au placement
     Item *aux = NULL;
     QString name;
     Item::s_connect *conn;
@@ -82,23 +83,22 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
         break;
     case PLACE : // Si l'action est le placement d'un nouvel Item
         if(this->currentItem != NULL) { // Si il y a un Item en cours de placement
-            //génération du nom par défaut
-            QString s = "Item"; //bout qui sera toujours le même
-            QString s_num;
-            s_num.setNum(numItem); //conversion du numéro en QString
-            ++numItem; //augmente le numéro de 1
-            s.append(s_num); //concatenation
             if(this->model->at(index) != NULL) // Et qu'il y a un Item à l'endroit séléctionné
-                QMessageBox::critical(0,"Enculé","Hey, fils de pute, ta pas le droit ici"); // On indique que l'endroit est déjà pris
-            else if((name = QInputDialog::getText(this,"Entrez un nom","Entre un nom fils de pute", QLineEdit::Normal, s)) != "") { // Sinon on demande un nom
-                this->currentItem->setName(name); // On met le nom à l'Item en cours de placement
-                if(!this->model->addItem(index, this->currentItem)) // On le rajoute au model
-                    QMessageBox::critical(0,"Erreur", "Nom incorrecte.\nUn nom doît être unique et sans espace."); //le nom doit etre unique
-                else {
-                    this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
-                    this->currentItem = NULL; // Plus d'item en cours de placement
-                    this->currentAction = VIEW; // Action remise par defaut à la vue
-                    this->ui->Place->setText("Place"); // On remet le text du bouton par defaut pour un nouveau placement
+                QMessageBox::critical(0,tr("Error"),tr("Position already used.")); // On indique que l'endroit est déjà pris
+            else {
+                int i = 0;
+                 while(!(this->model->nameIsCorrect("Item" +QString::number(i)))) { i++; }
+                if((name = QInputDialog::getText(this,tr("Give a name"),tr("Give a name to this component."), QLineEdit::Normal, "Item" +QString::number(i))) != "") { // Sinon on demande un nom
+                    this->currentItem->setName(name); // On met le nom à l'Item en cours de placement
+                    if(!this->model->addItem(index, this->currentItem)) // On le rajoute au model
+                        QMessageBox::critical(0,tr("Incorrect name"), tr("A name have to be unique and without space.")); //le nom doit etre unique
+                    else {
+                        this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
+                        this->currentItem = NULL; // Plus d'item en cours de placement
+                        this->currentAction = VIEW; // Action remise par defaut à la vue
+                        this->ui->Place->setText(tr("Place")); // On remet le text du bouton par defaut pour un nouveau placement
+                    }
+
                 }
             }
         }
@@ -106,7 +106,7 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
 
     case CONNECT1 : // SI c'est la première fois qu'on clic sur la grille alors qu'on veut faire une connection
         if((this->currentItem = this->model->at(index)) == NULL) // Si il n'y a pas d'item à l'endroit séléctionné + on sauvegarde cet Item
-            QMessageBox::critical(this,"Enculé","Vous devez selectionner un objet"); // On l'indique
+            QMessageBox::critical(this,tr("Error"),tr("You have to select a component.")); // On l'indique
         else
             this->currentAction = CONNECT2; // Sinon on peut passer  à la deuxième phase
         break;
@@ -116,17 +116,17 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
 
             if(conn != NULL) { // Si la connection s'est correctement crée
                 if(this->model->connexion(conn)) { // On le rajoute au model
-                    this->ui->connect->setText("Connect"); // On reinitialise le bouton pour une nouvelle connection
+                    this->ui->connect->setText(tr("Connect")); // On reinitialise le bouton pour une nouvelle connection
                     this->currentAction = VIEW; // On remet l'action par defaut à la vue
                 }
                 else // Sinon
-                    QMessageBox::critical(this,"Erreur","Impossible de connecter ces 2 objets"); // On indique une erreur
+                    QMessageBox::critical(this,tr("Error"),tr("Unable to connect those components.")); // On indique une erreur
             }
             else
-                    QMessageBox::critical(this,"Erreur","Impossible de connecter ces 2 objets"); // On indique une erreur
+                QMessageBox::critical(this,tr("Error"),tr("Unable to connect those components.")); // On indique une erreur
         }
         else
-            QMessageBox::critical(this,"Enculé","Vous deevez selectionner au moins un objet différent");
+            QMessageBox::critical(this,tr("Error"),("This component was already selected for connexion."));
         break;
 
     }
@@ -147,12 +147,12 @@ void MApp::on_connect_clicked() // SI on clic sur le bouton connect
     this->ui->modify->setEnabled(false);
     if(this->currentAction == CONNECT1 || this->currentAction == CONNECT2) { // Si l'action courante est une connection de n'importe quel phase
         this->currentAction = VIEW; // On annule l'action de connection et on remet l'action à la Vue
-        this->ui->connect->setText("Connect"); // Indique qu'une nouvelle connection est possible
+        this->ui->connect->setText(tr("Connect")); // Indique qu'une nouvelle connection est possible
     }
     else { // Sinon on veut faire une connection
         this->currentAction = CONNECT1; // 1ere phase enclenchée
-        this->ui->connect->setText("Cancel"); // On indique qu'on peut annulé l'action en recliquant sur le meme bouton
-        this->ui->Place->setText("Place"); // On annule l'action de placement si il y en avait une
+        this->ui->connect->setText(tr("Cancel")); // On indique qu'on peut annulé l'action en recliquant sur le meme bouton
+        this->ui->Place->setText(tr("Place")); // On annule l'action de placement si il y en avait une
     }
 
     this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
@@ -249,7 +249,7 @@ void MApp::on_actionSettings_triggered() // Fenetre des options pour l'applicati
 
 void MApp::on_actionCharger_un_Fichier_triggered()
 {
-    QString s = QFileDialog::getOpenFileName(this,tr("Choississez un Fichier"),QString(),tr("Fichiers Textes (*.txt);;Elec Files (*.elec)"));
+    QString s = QFileDialog::getOpenFileName(this,tr("Choose a file"),QString(),tr("Elec Files (*.elec);;Texts Files (*.txt)"));
     GridModel *gModel;
 
     if(s == "") //cancel
@@ -259,7 +259,7 @@ void MApp::on_actionCharger_un_Fichier_triggered()
 
     if( !file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        QMessageBox::critical(this,"Error","Fichier Inutilisable !!");
+        QMessageBox::critical(this,tr("Error"),tr("Unable to open this file."));
         return;
     }
 
@@ -270,7 +270,7 @@ void MApp::on_actionCharger_un_Fichier_triggered()
         this->ui->column_count->setText(QString::number(model->columnCount()));
     }
     else
-        QMessageBox::critical(0, "Error", "Fichier Corrompu");
+        QMessageBox::critical(0, tr("Error"), tr("Corrupted file."));
 
     file.close();
 
@@ -285,7 +285,7 @@ void MApp::on_actionCharger_un_Fichier_triggered()
 
 void MApp::on_actionSauvegarder_un_Fichier_triggered()
 {
-    QString s = QFileDialog::getSaveFileName(this,tr("Choississez un Fichier"),QString(),tr("Fichiers Textes (*.txt);;Elec Files (*.elec)"));
+    QString s = QFileDialog::getSaveFileName(this,tr("Choose a file"),QString(),tr("Elec Files (*.elec);;Texts Files (*.txt)"));
 
     if(s == "") //cancel
         return;
@@ -294,7 +294,7 @@ void MApp::on_actionSauvegarder_un_Fichier_triggered()
 
     if( !file.open(QIODevice::Append))
     {
-        QMessageBox::critical(this,"Error","Fichier Inutilisable !!");
+        QMessageBox::critical(this,tr("Error"),tr("Unable to open this file."));
         return;
     }
     this->model->saveInFile(&file);
@@ -314,7 +314,7 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
     if(this->currentAction == PLACE) { // Si l'action est déjà le placement
         this->currentAction = VIEW; // On l'annule et on revient à la vue
         this->currentItem = NULL; // Pas d'item séléctionné
-        this->ui->Place->setText("Place"); // On indique qu'on peut refaire un placement
+        this->ui->Place->setText(tr("Place")); // On indique qu'on peut refaire un placement
         this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placemen
         return;
     }
@@ -323,8 +323,8 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
     this->currentItem = NULL; // Pas d'item selectionné
     this->ui->Delete->setEnabled(false);
     this->ui->modify->setEnabled(false);
-    this->ui->connect->setText("Connect"); // On indique que la connection est possible
-    this->ui->Place->setText("Cancel"); // On indique qu'on peut annuler le placement
+    this->ui->connect->setText(tr("Connect")); // On indique que la connection est possible
+    this->ui->Place->setText(tr("Cancel")); // On indique qu'on peut annuler le placement
     this->ui->tableView->enableTracking(true); // On active la coloration des cases
 
     switch(index.row()) { // Selon la ligne séléctionné dans la liste
@@ -357,7 +357,7 @@ void MApp::on_Delete_clicked()
     if(this->currentIndex.isValid()) // On vérifie que l'index est valide
         this->model->removeItem(this->currentIndex); // Et on supprime l'item du modele
 
-    this->on_tableView_clicked(this->currentIndex); // Mise à jour des infos ...
+    emit this->ui->tableView->setFocus(); // Mise à jour des infos ...
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -368,7 +368,7 @@ void MApp::on_Delete_clicked()
 
 void MApp::on_actionQuit_triggered()
 {
-    QApplication::quit();
+    qApp->quit();
 }
 
 void MApp::on_def_value_valueChanged(int arg1)
@@ -384,15 +384,18 @@ void MApp::on_modify_clicked()
     Item *it = this->currentItem;
 
     uModify->setupUi(wModify); // ... et on les lie
-    wModify->setWindowTitle("Modifying "+it->getName());
+    wModify->setWindowTitle(tr("Modifying") +" " +it->getName());
 
     uModify->name->setText(it->getName());
 
     if(wModify->exec() == QDialog::Accepted) { // Fenetre bloquante
-        if(!(this->model->nameIsCorrect(uModify->name->text())))
-            QMessageBox::critical(0,"Erreur", "Nom incorrecte.\nUn nom doît être unique et sans espace.");
-        else
-            it->setName(uModify->name->text());
+        if(uModify->name->text() != it->getName())
+        {
+            if(!(this->model->nameIsCorrect(uModify->name->text())))
+                QMessageBox::critical(0,tr("Incorrect name"), tr(" A name have to be unique and without space."));
+            else
+                it->setName(uModify->name->text());
+        }
     }
 
     delete uModify; // On détruit l'interface ...
@@ -423,4 +426,26 @@ void MApp::on_TableDeVerite_clicked()
 
     delete uVerite;
     delete wVerite;
+}
+
+void MApp::on_actionFrench_triggered()
+{
+    QTranslator* translator = new QTranslator();
+    translator->load(":/Translations/fr"); // On charge le fichier francais
+    qApp->installTranslator(translator); // On installe la nouvelle traduction
+    ui->actionFrench->setChecked(true);
+    ui->actionEnglish->setChecked(false);
+
+    this->ui->retranslateUi(this); // On retraduit tout !!
+}
+
+void MApp::on_actionEnglish_triggered()
+{
+    QTranslator* translator = new QTranslator();
+    translator->load(":/Translations/en"); // On charge le fichier anglais
+    qApp->installTranslator(translator); // On installe la nouvelle traduction
+    ui->actionFrench->setChecked(false);
+    ui->actionEnglish->setChecked(true);
+
+    this->ui->retranslateUi(this); // On retraduit tout !!
 }

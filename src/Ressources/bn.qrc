@@ -7,5 +7,7 @@
         <file>Images/and.png</file>
         <file>Images/or.png</file>
         <file>Images/modify.png</file>
+        <file>Translations/fr.qm</file>
+        <file>Translations/en.qm</file>
     </qresource>
 </RCC>

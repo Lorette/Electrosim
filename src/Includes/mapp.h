@@ -28,6 +28,7 @@
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QFileDialog>
+#include <QTranslator>
 
 #include "item.h"
 #include "input.h"
@@ -149,6 +150,10 @@ private slots:
     void on_modify_clicked();
 
     void on_TableDeVerite_clicked();
+
+    void on_actionFrench_triggered();
+
+    void on_actionEnglish_triggered();
 
 private:
     Ui::MApp *ui; /*!< Interface de la classe*/
