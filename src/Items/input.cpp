@@ -13,7 +13,7 @@ bool Input::_do()
         return false; // Ba c'est pas bon ...
 
     this->outputs.at(0)->value = new int; // Sinon on réserve de la place pour la valeur de sortie
-    *(this->outputs.at(0)->value) = this->def_value;
+    *(this->outputs.at(0)->value) = this->aux;
 
     return true;
 }

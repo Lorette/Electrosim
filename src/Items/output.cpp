@@ -5,12 +5,12 @@ Output::Output() : Item()
     this->image = ":/Images/output.png";
     this->description = "Output";
     this->inputs.resize(1); // 1 entrée
-    this->def_value = -1;
+    this->aux = -1;
 }
 
 bool Output::_do() // A refaire ici
 {
-    this->def_value = *(this->inputs.at(0)->value);
+    this->aux = *(this->inputs.at(0)->value);
 
     return true;
 }

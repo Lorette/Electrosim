@@ -36,6 +36,7 @@
 #include "not.h"
 #include "or.h"
 #include "and.h"
+#include "multiplexer.h"
 #include "gridmodel.h"
 #include "imagedelegate.h"
 

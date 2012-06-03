@@ -9,5 +9,6 @@
         <file>Images/modify.png</file>
         <file>Translations/fr.qm</file>
         <file>Translations/en.qm</file>
+        <file>Images/mux.png</file>
     </qresource>
 </RCC>

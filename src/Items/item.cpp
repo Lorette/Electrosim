@@ -8,12 +8,22 @@ Item::Item(QObject *parent) : QObject(parent) // Constructeur
     this->inputs.resize(0); // Pas d'entrée ...
     this->outputs.resize(0); // et de sortie par default
     this->deleted = true;
-    this->def_value = 0;
+    this->aux = 0;
 }
 
 Item::~Item() // Destructeur
 {
     this->deleteAllConnexion();
+}
+
+bool Item::setAuxValue(int value) {
+    if(this->getClass() != Item::Input0 && this->getClass() != Item::Output1 && this->getClass() != Item::Mux5)
+        return false;
+
+    this->aux = value;
+
+    return true;
+
 }
 
 void Item::setIndex(const QModelIndex &i)

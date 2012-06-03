@@ -63,10 +63,10 @@ QVariant GridModel::data(const QModelIndex &index, int role) const { // Retourne
         return c->getIndexOutputs();
 
     if(role == Qt::UserRole+1 && ((c = this->items.at(index.row()).at(index.column())) != NULL) && c->getClass() == Item::Input0)
-        return c->getDefaultValue();
+        return c->getAuxValue();
 
     if(role == Qt::UserRole+2 && ((c = this->items.at(index.row()).at(index.column())) != NULL) && c->getClass() == Item::Output1)
-        return c->getDefaultValue();
+        return c->getAuxValue();
 
     return QVariant();
 }
@@ -304,7 +304,7 @@ void GridModel::simulate() {
     this->resetAllConnexions();
     //initialise les sorties à -1 (-1 signifie que la valeur est inconnu car le circuit n'est pas complet)
     for(QList<Item*>::iterator it = this->outputs.begin(); it != this->outputs.end(); ++it)
-        (*it)->setDefaultValue(-1);
+        (*it)->setAuxValue(-1);
     emit launch();
 }
 
@@ -361,7 +361,7 @@ QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
         i=0;
         for(QList<Item*>::iterator it = this->inputs.begin(); it != this->inputs.end(); ++it)
         {
-            (*it)->setDefaultValue(resultat.second[l][i]); //initialise l'input numéro i avec la valeur présente dans la case (l,i)
+            (*it)->setAuxValue(resultat.second[l][i]); //initialise l'input numéro i avec la valeur présente dans la case (l,i)
             ++i;
         }
 
@@ -372,7 +372,7 @@ QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
         i=0;
         for(QList<Item*>::iterator it = this->outputs.begin(); it != this->outputs.end(); ++it)
         {
-            resultat.second[l][nb_inputs+i] = (*it)->getDefaultValue();
+            resultat.second[l][nb_inputs+i] = (*it)->getAuxValue();
             ++i;
         }
     }
@@ -384,10 +384,10 @@ bool GridModel::setDefValueOnInput(Item *item, int value) {
     if(item == NULL)
         return false;
 
-    if(item->getClass() != Item::Input0)
+    if(item->getClass() != Item::Input0 && item->getClass() != Item::Mux5)
         return false;
 
-    item->setDefaultValue(value);
+    item->setAuxValue(value);
     item->recvSignal();
 
     return true;
@@ -416,9 +416,12 @@ bool GridModel::saveInFile(QFile* file){
                 case Item::Or3 : out << "\tOR\t";
                     break;
                 case Item::And4 : out << "\tAND\t";
+                    break;
+                case Item::Mux5 : out << "\tMUX\t";
+                    break;
                 }
 
-                out << i << "\t" << j << "\n";
+                out << i << "\t" << j << "\t" << this->items.at(i).at(j)->getAuxValue() << "\n";
             }
 
     //Liste des liaisons
@@ -462,6 +465,7 @@ GridModel* GridModel::loadFromFile(QFile* file) {
             {
                 Input* in = new Input();
                 in->setName( list[1] );
+                in->setAuxValue(list[5].toInt());
                 if(!model->addItem(model->createIndex(i,j), in))
                     return NULL;
             }
@@ -493,7 +497,13 @@ GridModel* GridModel::loadFromFile(QFile* file) {
                 if(!model->addItem(model->createIndex(i,j), ou))
                     return NULL;
             }
-
+            else if( list[2] == "MUX" )
+            {
+                Multiplexer* mux = new Multiplexer(list[5].toInt());
+                mux->setName( list[1] );
+                if(!model->addItem(model->createIndex(i,j), mux))
+                    return NULL;
+            }
         }
 
         //si le premier élément n'est pas "composant" on voit les liaisons, par verification on rajoute le test
