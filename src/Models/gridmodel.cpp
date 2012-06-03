@@ -565,3 +565,16 @@ bool GridModel::nameIsCorrect(const QString& name) const
 
     return true;
 }
+
+bool GridModel::removeConnexion(Item::s_connect *conn) {
+    if(conn == NULL || conn->sender == NULL || conn->receiver == NULL)
+        return false;
+
+    if(!conn->receiver->deleteInput(conn->input) || !conn->sender->deleteOutput(conn->output))
+        return false;
+
+    this->connexions.removeOne(conn);
+    delete conn;
+
+    return true;
+}

@@ -176,13 +176,13 @@
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="99"/>
-        <location filename="../../Interfaces/mapp.cpp" line="411"/>
+        <location filename="../../Interfaces/mapp.cpp" line="446"/>
         <source>Incorrect name</source>
         <translation>Incorrect name</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="99"/>
-        <location filename="../../Interfaces/mapp.cpp" line="411"/>
+        <location filename="../../Interfaces/mapp.cpp" line="446"/>
         <source>A name have to be unique and without space.</source>
         <translation>A name have to be unique and without space.</translation>
     </message>
@@ -196,6 +196,11 @@
         <location filename="../../Interfaces/mapp.cpp" line="131"/>
         <source>Unable to connect those components.</source>
         <translation>Unable to connect those components.</translation>
+    </message>
+    <message>
+        <location filename="../../Interfaces/mapp.cpp" line="134"/>
+        <source>This component was already selected for connexion.</source>
+        <translation>This component was already selected for connexion.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="159"/>
@@ -227,7 +232,7 @@
         <translation>Corrupted file.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="397"/>
+        <location filename="../../Interfaces/mapp.cpp" line="405"/>
         <source>Modifying</source>
         <translation>Modifying</translation>
     </message>
@@ -244,17 +249,17 @@
         <translation>Modifying</translation>
     </message>
     <message>
-        <location filename="../../Forms/modify.ui" line="20"/>
+        <location filename="../../Forms/modify.ui" line="97"/>
         <source>Inputs</source>
         <translation>Inputs</translation>
     </message>
     <message>
-        <location filename="../../Forms/modify.ui" line="27"/>
+        <location filename="../../Forms/modify.ui" line="66"/>
         <source>Outputs</source>
         <translation>Outputs</translation>
     </message>
     <message>
-        <location filename="../../Forms/modify.ui" line="73"/>
+        <location filename="../../Forms/modify.ui" line="49"/>
         <source> Inputs</source>
         <translation> Inputs</translation>
     </message>

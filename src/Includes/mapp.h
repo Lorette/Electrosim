@@ -29,6 +29,9 @@
 #include <QInputDialog>
 #include <QFileDialog>
 #include <QTranslator>
+#include <QLabel>
+#include <QVector>
+#include <QCheckBox>
 
 #include "item.h"
 #include "input.h"

@@ -176,14 +176,14 @@
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="99"/>
-        <location filename="../../Interfaces/mapp.cpp" line="411"/>
+        <location filename="../../Interfaces/mapp.cpp" line="446"/>
         <source>Incorrect name</source>
         <translatorcomment>Un nom doit être unique et ne doit contenir aucun espace.</translatorcomment>
         <translation>Nom incorrect</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="99"/>
-        <location filename="../../Interfaces/mapp.cpp" line="411"/>
+        <location filename="../../Interfaces/mapp.cpp" line="446"/>
         <source>A name have to be unique and without space.</source>
         <translation></translation>
     </message>
@@ -197,6 +197,11 @@
         <location filename="../../Interfaces/mapp.cpp" line="131"/>
         <source>Unable to connect those components.</source>
         <translation>Impossible de connecter ces composants.</translation>
+    </message>
+    <message>
+        <location filename="../../Interfaces/mapp.cpp" line="134"/>
+        <source>This component was already selected for connexion.</source>
+        <translation>Ce composant a déjà été sélectionné pour une connexion.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="257"/>
@@ -240,7 +245,7 @@
         <translation>Fichier corrompu.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="397"/>
+        <location filename="../../Interfaces/mapp.cpp" line="405"/>
         <source>Modifying</source>
         <translation>Modification</translation>
     </message>
@@ -257,18 +262,18 @@
         <translation>Modification</translation>
     </message>
     <message>
-        <location filename="../../Forms/modify.ui" line="20"/>
+        <location filename="../../Forms/modify.ui" line="97"/>
         <source>Inputs</source>
         <translatorcomment>Sorties</translatorcomment>
         <translation>Entrées</translation>
     </message>
     <message>
-        <location filename="../../Forms/modify.ui" line="27"/>
+        <location filename="../../Forms/modify.ui" line="66"/>
         <source>Outputs</source>
         <translation>Sorties</translation>
     </message>
     <message>
-        <location filename="../../Forms/modify.ui" line="73"/>
+        <location filename="../../Forms/modify.ui" line="49"/>
         <source> Inputs</source>
         <translation> Entrées</translation>
     </message>

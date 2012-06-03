@@ -131,7 +131,7 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
                 QMessageBox::critical(this,tr("Error"),tr("Unable to connect those components.")); // On indique une erreur
         }
         else
-            QMessageBox::critical(this,tr("Error"),("This component was already selected for connexion."));
+            QMessageBox::critical(this,tr("Error"),tr("This component was already selected for connexion."));
         break;
 
     }
@@ -388,10 +388,18 @@ void MApp::on_modify_clicked()
 {
     QDialog *wModify = new QDialog(this); // On initialise la fenetre ...
     Ui::Modify *uModify = new Ui::Modify; // ... l'interface ...
+    QVector <QCheckBox *> box_i;
+    QVector <QCheckBox *> box_o;
     Item *it;
+    int plc;
 
     if((it = this->model->at(this->currentIndex)) == NULL)
             return;
+
+    QVector<Item::s_connect *> outputs = it->getOutputs(); // On recupere les connections sortantes
+    QVector<Item::s_connect *> inputs = it->getInputs(); // On recupere les connections entrantes
+    box_i.resize(inputs.size());
+    box_o.resize(outputs.size());
 
     uModify->setupUi(wModify); // ... et on les lie
     wModify->setWindowTitle(tr("Modifying") +" " +it->getName());
@@ -404,6 +412,33 @@ void MApp::on_modify_clicked()
 
     uModify->Inputs->setValue(it->getAuxValue());
 
+    plc = 0;
+    for(QVector<Item::s_connect *>::iterator it = inputs.begin(); it != inputs.end(); it++) {
+        if(*(it) != NULL) {
+            QCheckBox *chkbox = new QCheckBox(uModify->scrollAreaWidgetContents_3);
+            chkbox->setChecked(true);
+            QLabel *lbl = new QLabel((*(it))->sender->getName() +"  ---->  " +(*(it))->receiver->getName(),uModify->scrollAreaWidgetContents_3);
+            uModify->formLayout_2->setWidget(plc, QFormLayout::LabelRole, chkbox);
+            uModify->formLayout_2->setWidget(plc, QFormLayout::FieldRole, lbl);
+            box_i[(*it)->input] = chkbox;
+            plc++;
+        }
+    }
+
+    plc = 0;
+    for(QVector<Item::s_connect *>::iterator it = outputs.begin(); it != outputs.end(); it++) {
+        if(*(it) != NULL) {
+            QCheckBox *chkbox = new QCheckBox(uModify->scrollAreaWidgetContents_4);
+            chkbox->setChecked(true);
+            QLabel *lbl = new QLabel((*(it))->sender->getName() +"  ---->  " +(*(it))->receiver->getName(),uModify->scrollAreaWidgetContents_4);
+            uModify->formLayout->setWidget(plc, QFormLayout::LabelRole, chkbox);
+            uModify->formLayout->setWidget(plc, QFormLayout::FieldRole, lbl);
+            box_o[(*it)->output] = chkbox;
+            plc++;
+
+        }
+    }
+
     if(wModify->exec() == QDialog::Accepted) { // Fenetre bloquante
         if(uModify->name->text() != it->getName())
         {
@@ -413,7 +448,19 @@ void MApp::on_modify_clicked()
                 it->setName(uModify->name->text());
         }
 
-        this->model->setDefValueOnInput(it, uModify->Inputs->value());
+        for(int i = 0; i < box_i.size(); i++)
+            if(box_i.at(i) != NULL && !box_i.at(i)->isChecked())
+                this->model->removeConnexion(inputs.at(i));
+
+        for(int i = 0; i < box_o.size(); i++)
+            if(box_o.at(i) != NULL && !box_o.at(i)->isChecked())
+                this->model->removeConnexion(outputs.at(i));
+
+        if(it->getClass() == Item::Mux5 && uModify->Inputs->value() < it->getAuxValue())
+            for(int i = uModify->Inputs->value() +1; i < it->getAuxValue() + log2(it->getAuxValue()); i++)
+                this->model->removeConnexion(inputs.at(i));
+
+         this->model->setDefValueOnInput(it, uModify->Inputs->value());
     }
 
     delete uModify; // On détruit l'interface ...
