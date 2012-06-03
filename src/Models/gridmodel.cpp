@@ -224,8 +224,8 @@ bool GridModel::addItem(const QModelIndex &index, Item* item) { // Rajoute un it
     if(this->items[index.row()][index.column()])
         return false;
 
-    //Vérification de l'unicité du nom
-    if(this->nameIsUsed(item->getName()))
+    //Vérification du nom
+    if(!(this->nameIsCorrect(item->getName())))
         return false;
 
     //ajout de l'objet
@@ -531,8 +531,13 @@ Item* GridModel::findChildByName(QString name)
 
 }
 
-bool GridModel::nameIsUsed(QString& name) const
+bool GridModel::nameIsCorrect(const QString& name) const
 {
+    //vérifie qu'il n'y a pas d'espace
+    if(name.contains(" ") || name.contains("\t"))
+        return false;
+
+    //vérifie si le nom est aps déjà utilisé
     for(int r=0; r<this->rowCount(); ++r)
     {
         for(int c=0; c<this->columnCount(); ++c)
@@ -540,10 +545,10 @@ bool GridModel::nameIsUsed(QString& name) const
             if(this->items[r][c])
             {
                 if(this->items[r][c]->getName() == name)
-                    return true;
+                    return false;
             }
         }
     }
 
-    return false;
+    return true;
 }

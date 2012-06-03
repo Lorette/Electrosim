@@ -58,6 +58,7 @@ MApp::~MApp()
 
 void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la grille
 {
+    static int numItem = 0; //sert pour le nom suggéré de l'objet au placement
     Item *aux = NULL;
     QString name;
     Item::s_connect *conn;
@@ -81,17 +82,24 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
         break;
     case PLACE : // Si l'action est le placement d'un nouvel Item
         if(this->currentItem != NULL) { // Si il y a un Item en cours de placement
+            //génération du nom par défaut
+            QString s = "Item"; //bout qui sera toujours le même
+            QString s_num;
+            s_num.setNum(numItem); //conversion du numéro en QString
+            ++numItem; //augmente le numéro de 1
+            s.append(s_num); //concatenation
             if(this->model->at(index) != NULL) // Et qu'il y a un Item à l'endroit séléctionné
                 QMessageBox::critical(0,"Enculé","Hey, fils de pute, ta pas le droit ici"); // On indique que l'endroit est déjà pris
-            else if((name = QInputDialog::getText(this,"Entrez un nom","Entre un nom fils de pute", QLineEdit::Normal, "Item")) != "") { // Sinon on demande un nom
+            else if((name = QInputDialog::getText(this,"Entrez un nom","Entre un nom fils de pute", QLineEdit::Normal, s)) != "") { // Sinon on demande un nom
                 this->currentItem->setName(name); // On met le nom à l'Item en cours de placement
                 if(!this->model->addItem(index, this->currentItem)) // On le rajoute au model
-                    QMessageBox::critical(0,"Erreur", "Nom déjà utilisé par un autre composant"); //le nom doit etre unique
-                this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
-                this->currentItem = NULL; // Plus d'item en cours de placement
-                this->currentAction = VIEW; // Action remise par defaut à la vue
-                this->ui->Place->setText("Place"); // On remet le text du bouton par defaut pour un nouveau placement
-
+                    QMessageBox::critical(0,"Erreur", "Nom incorrecte.\nUn nom doît être unique et sans espace."); //le nom doit etre unique
+                else {
+                    this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
+                    this->currentItem = NULL; // Plus d'item en cours de placement
+                    this->currentAction = VIEW; // Action remise par defaut à la vue
+                    this->ui->Place->setText("Place"); // On remet le text du bouton par defaut pour un nouveau placement
+                }
             }
         }
         break;
@@ -381,8 +389,8 @@ void MApp::on_modify_clicked()
     uModify->name->setText(it->getName());
 
     if(wModify->exec() == QDialog::Accepted) { // Fenetre bloquante
-        if(this->model->nameIsUsed(uModify->name->text()))
-            QMessageBox::critical(0,"Erreur", "Nom déjà utilisé par un autre composant");
+        if(!(this->model->nameIsCorrect(uModify->name->text())))
+            QMessageBox::critical(0,"Erreur", "Nom incorrecte.\nUn nom doît être unique et sans espace.");
         else
             it->setName(uModify->name->text());
     }

@@ -276,13 +276,14 @@ public:
     Item* findChildByName(QString name);
 
     /*!
-     *  \brief Indique si un nom est déjà utilisé par un composant.
+     *  \brief Indique si un nom est correcte.
+     *  Un nom est considéré correcte s'il n'est pas déjà utilisé et ne contient aucun espace.
      *
      *  \param name : nom à tester.
      *
-     *  \return true si le nom est déjà utilisé, false sinon.
+     *  \return true si le nom est correcte, false sinon.
      */
-    bool nameIsUsed(QString& name) const;
+    bool nameIsCorrect(const QString& name) const;
 
 
 signals:
