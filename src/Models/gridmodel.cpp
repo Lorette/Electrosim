@@ -291,7 +291,10 @@ bool GridModel::resetAllConnexions() { // Réinitialise toutes les connexions
         if(this->connexions.at(i) == NULL)
             this->connexions.removeAt(i);
         else
+        {
+            delete (this->connexions.at(i)->value); //on l'alloue avec new dans les différents composants, il faut le delete
             this->connexions.at(i)->value = NULL;
+        }
 
     return true;
 
