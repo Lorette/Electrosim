@@ -14,11 +14,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MApp</string>
+   <string>Electro' Sim</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="1" rowspan="2" colspan="10">
+    <item row="2" column="1" rowspan="2" colspan="9">
      <widget class="GridView" name="tableView">
       <property name="enabled">
        <bool>true</bool>
@@ -116,14 +116,14 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="9">
+    <item row="1" column="8">
      <widget class="QPushButton" name="connect">
       <property name="text">
        <string>Connect</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="11" rowspan="3">
+    <item row="1" column="10" rowspan="3">
      <widget class="QGroupBox" name="groupBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
@@ -283,7 +283,7 @@
       </property>
      </spacer>
     </item>
-    <item row="1" column="7">
+    <item row="1" column="6">
      <spacer name="horizontalSpacer_2">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -296,10 +296,10 @@
       </property>
      </spacer>
     </item>
-    <item row="1" column="8">
+    <item row="1" column="7">
      <widget class="QPushButton" name="TableDeVerite">
       <property name="text">
-       <string>Table de vérité</string>
+       <string>Truth Table</string>
       </property>
      </widget>
     </item>
@@ -311,16 +311,16 @@
      <x>0</x>
      <y>0</y>
      <width>1007</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="separator"/>
     <addaction name="actionCharger_un_Fichier"/>
     <addaction name="actionSauvegarder_un_Fichier"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuOptions">
@@ -329,8 +329,16 @@
     </property>
     <addaction name="actionSettings"/>
    </widget>
+   <widget class="QMenu" name="menuLanguages">
+    <property name="title">
+     <string>Language</string>
+    </property>
+    <addaction name="actionEnglish"/>
+    <addaction name="actionFrench"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuOptions"/>
+   <addaction name="menuLanguages"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionSettings">
@@ -345,12 +353,28 @@
   </action>
   <action name="actionCharger_un_Fichier">
    <property name="text">
-    <string>Charger un Fichier</string>
+    <string>Load</string>
    </property>
   </action>
   <action name="actionSauvegarder_un_Fichier">
    <property name="text">
-    <string>Sauvegarder un Fichier</string>
+    <string>Save as ...</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
+  <action name="actionFrench">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>French</string>
    </property>
   </action>
  </widget>

@@ -531,7 +531,7 @@ Item* GridModel::findChildByName(QString name)
 
 }
 
-bool GridModel::nameIsUsed(QString& name) const
+bool GridModel::nameIsUsed(QString name) const
 {
     for(int r=0; r<this->rowCount(); ++r)
     {

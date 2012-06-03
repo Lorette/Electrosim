@@ -282,7 +282,7 @@ public:
      *
      *  \return true si le nom est déjà utilisé, false sinon.
      */
-    bool nameIsUsed(QString& name) const;
+    bool nameIsUsed(QString name) const;
 
 
 signals:

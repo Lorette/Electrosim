@@ -47,3 +47,6 @@ SOURCES += main.cpp \
     Items/and.cpp
 
 RESOURCES += Ressources/bn.qrc
+
+TRANSLATIONS = Ressources/Translations/en.ts \
+                Ressources/Translations/fr.ts
