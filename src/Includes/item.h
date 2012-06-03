@@ -33,7 +33,7 @@ public:
     virtual inline s_connect* deleteInput(int input) { s_connect *conn; if(input < 0 || input > inputs.size()) return NULL; conn = inputs.at(input); inputs[input] = NULL; return conn; }
     virtual inline s_connect* deleteOutput(int output) { s_connect *conn; if(output < 0 || output > outputs.size()) return NULL; conn = outputs.at(output); outputs[output] = NULL; return conn; }
     virtual inline bool deleteAllConnexion() { if(this->deleted) return true; for(int i = 0; i < inputs.size(); i++) if(inputs.at(i) != NULL){ inputs.at(i)->sender->deleteOutput(inputs.at(i)->output); delete inputs.at(i); inputs[i] = NULL; } for(int i = 0; i < outputs.size(); i++) if(outputs.at(i) != NULL) { outputs.at(i)->receiver->deleteInput(outputs.at(i)->input); delete outputs.at(i); outputs[i] = NULL; } this->deleted = true; return true; }
-    virtual inline bool setDefaultValue(int value) { if(this->getClass() != Item::Input0) return false; this->def_value = value; return true; }
+    virtual inline bool setDefaultValue(int value) { if(this->getClass() != Item::Input0 && this->getClass() != Item::Output1) return false; this->def_value = value; return true; }
     virtual int getDefaultValue() { return this->def_value; }
     virtual int getClass() = 0;
     void setIndex(const QModelIndex &i);

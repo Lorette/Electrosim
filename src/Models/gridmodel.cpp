@@ -299,6 +299,9 @@ bool GridModel::resetAllConnexions() { // Réinitialise toutes les connexions
 
 void GridModel::simulate() {
     this->resetAllConnexions();
+    //initialise les sorties à -1 (-1 signifie que la valeur est inconnu car le circuit n'est pas complet)
+    for(QList<Item*>::iterator it = this->outputs.begin(); it != this->outputs.end(); ++it)
+        (*it)->setDefaultValue(-1);
     emit launch();
 }
 
