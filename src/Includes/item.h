@@ -16,7 +16,7 @@ class Item : public QObject
 public:
     typedef struct {int c; int r; int num_max_input; } s_index;
     typedef struct {Item* sender; int output; Item* receiver; int input; int* value; } s_connect;
-    enum Items { Input0, Output1, Not2, Or3, And4, Mux5 };
+    enum Items { Input0, Output1, Not2, Or3, And4, Mux5, Demux6 };
 
 public:
     explicit Item(QObject *parent = 0);
@@ -32,7 +32,6 @@ public:
     virtual QString getDescription() { return this->description; }
     virtual inline s_connect* deleteInput(int input) { s_connect *conn; if(input < 0 || input > inputs.size()) return NULL; conn = inputs.at(input); inputs[input] = NULL; return conn; }
     virtual inline s_connect* deleteOutput(int output) { s_connect *conn; if(output < 0 || output > outputs.size()) return NULL; conn = outputs.at(output); outputs[output] = NULL; return conn; }
-    virtual inline bool deleteAllConnexion() { if(this->deleted) return true; for(int i = 0; i < inputs.size(); i++) if(inputs.at(i) != NULL){ inputs.at(i)->sender->deleteOutput(inputs.at(i)->output); delete inputs.at(i); inputs[i] = NULL; } for(int i = 0; i < outputs.size(); i++) if(outputs.at(i) != NULL) { outputs.at(i)->receiver->deleteInput(outputs.at(i)->input); delete outputs.at(i); outputs[i] = NULL; } this->deleted = true; return true; }
     virtual bool setAuxValue(int value);
     virtual int getAuxValue() { return this->aux; }
     virtual int getClass() = 0;

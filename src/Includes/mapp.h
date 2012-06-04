@@ -29,6 +29,9 @@
 #include <QInputDialog>
 #include <QFileDialog>
 #include <QTranslator>
+#include <QLabel>
+#include <QVector>
+#include <QCheckBox>
 
 #include "item.h"
 #include "input.h"
@@ -37,6 +40,7 @@
 #include "or.h"
 #include "and.h"
 #include "multiplexer.h"
+#include "demultiplexer.h"
 #include "gridmodel.h"
 #include "imagedelegate.h"
 

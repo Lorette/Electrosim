@@ -266,19 +266,27 @@ bool GridModel::connexion(Item::s_connect* conn) { // Rajoute une connection à l
 
 
 bool GridModel::removeItem(const QModelIndex &index) { // Supprime un item à l'index indiqué
-    Item *i = NULL;
+    Item *it = NULL;
 
     if(index.row() < 0 || index.row() > this->row_count || index.column() < 0 || index.column() > this->column_count || this->items.at(index.row()).at(index.column()) == NULL)
         return false;
 
-    i = this->items[index.row()][index.column()];
+    it = this->items[index.row()][index.column()];
+    QVector<Item::s_connect *> i_inputs = it->getInputs();
+    QVector<Item::s_connect *> i_outputs = it->getOutputs();
 
-    if(i->getClass() == Item::Input0)
-        this->inputs.removeOne(i);
-    if(i->getClass() == Item::Output1)
-        this->outputs.removeOne(i);
+    if(it->getClass() == Item::Input0)
+        this->inputs.removeOne(it);
+    if(it->getClass() == Item::Output1)
+        this->outputs.removeOne(it);
 
-    delete i;
+    for(int i = 0; i < i_inputs.size(); i++)
+        this->removeConnexion(i_inputs.at(i));
+
+    for(int i = 0; i < i_outputs.size(); i++)
+        this->removeConnexion(i_outputs.at(i));
+
+    delete it;
     this->items[index.row()][index.column()] = NULL;
 
     return true;
@@ -384,7 +392,7 @@ bool GridModel::setDefValueOnInput(Item *item, int value) {
     if(item == NULL)
         return false;
 
-    if(item->getClass() != Item::Input0 && item->getClass() != Item::Mux5)
+    if(item->getClass() != Item::Input0 && item->getClass() != Item::Mux5 && item->getClass() != Item::Demux6)
         return false;
 
     item->setAuxValue(value);
@@ -419,9 +427,11 @@ bool GridModel::saveInFile(QFile* file){
                     break;
                 case Item::Mux5 : out << "\tMUX\t";
                     break;
+                case Item::Demux6 : out << "\tDEMUX\t";
+                    break;
                 }
 
-                out << i << "\t" << j << "\t" << this->items.at(i).at(j)->getAuxValue() << "\n";
+                out << i << "\t" << j << "\t" << QString::number(this->items.at(i).at(j)->getAuxValue()) << "\n";
             }
 
     //Liste des liaisons
@@ -504,6 +514,13 @@ GridModel* GridModel::loadFromFile(QFile* file) {
                 if(!model->addItem(model->createIndex(i,j), mux))
                     return NULL;
             }
+            else if( list[2] == "DEMUX" )
+            {
+                Demultiplexer* demux = new Demultiplexer(list[5].toInt());
+                demux->setName( list[1] );
+                if(!model->addItem(model->createIndex(i,j), demux))
+                    return NULL;
+            }
         }
 
         //si le premier élément n'est pas "composant" on voit les liaisons, par verification on rajoute le test
@@ -565,6 +582,19 @@ bool GridModel::nameIsCorrect(const QString& name) const
             }
         }
     }
+
+    return true;
+}
+
+bool GridModel::removeConnexion(Item::s_connect *conn) {
+    if(conn == NULL || conn->sender == NULL || conn->receiver == NULL)
+        return false;
+
+    if(!conn->receiver->deleteInput(conn->input) || !conn->sender->deleteOutput(conn->output))
+        return false;
+
+    this->connexions.removeOne(conn);
+    delete conn;
 
     return true;
 }

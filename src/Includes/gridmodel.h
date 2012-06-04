@@ -36,6 +36,7 @@
 #include "and.h"
 #include "or.h"
 #include "multiplexer.h"
+#include "demultiplexer.h"
 
 /*! \class GridModel
   * \brief Classe GridModel :
@@ -286,6 +287,15 @@ public:
      */
     bool nameIsCorrect(const QString& name) const;
 
+    /*!
+     *  \brief Supprime une connexion.
+     *  Supprime une connexion et informe l'emetteur et le recepteur de la suppression.
+     *
+     *  \param name : Connexion à supprimer.
+     *
+     *  \return true si la connexion a bien été supprimer, false sinon.
+     */
+    bool removeConnexion(Item::s_connect* conn);
 
 signals:
     /*!

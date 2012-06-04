@@ -10,5 +10,6 @@
         <file>Translations/fr.qm</file>
         <file>Translations/en.qm</file>
         <file>Images/mux.png</file>
+        <file>Images/demux.png</file>
     </qresource>
 </RCC>
