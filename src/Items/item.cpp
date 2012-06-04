@@ -13,7 +13,6 @@ Item::Item(QObject *parent) : QObject(parent) // Constructeur
 
 Item::~Item() // Destructeur
 {
-    this->deleteAllConnexion();
 }
 
 bool Item::setAuxValue(int value) {

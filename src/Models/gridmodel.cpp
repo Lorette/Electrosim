@@ -266,19 +266,27 @@ bool GridModel::connexion(Item::s_connect* conn) { // Rajoute une connection à l
 
 
 bool GridModel::removeItem(const QModelIndex &index) { // Supprime un item à l'index indiqué
-    Item *i = NULL;
+    Item *it = NULL;
 
     if(index.row() < 0 || index.row() > this->row_count || index.column() < 0 || index.column() > this->column_count || this->items.at(index.row()).at(index.column()) == NULL)
         return false;
 
-    i = this->items[index.row()][index.column()];
+    it = this->items[index.row()][index.column()];
+    QVector<Item::s_connect *> i_inputs = it->getInputs();
+    QVector<Item::s_connect *> i_outputs = it->getOutputs();
 
-    if(i->getClass() == Item::Input0)
-        this->inputs.removeOne(i);
-    if(i->getClass() == Item::Output1)
-        this->outputs.removeOne(i);
+    if(it->getClass() == Item::Input0)
+        this->inputs.removeOne(it);
+    if(it->getClass() == Item::Output1)
+        this->outputs.removeOne(it);
 
-    delete i;
+    for(int i = 0; i < i_inputs.size(); i++)
+        this->removeConnexion(i_inputs.at(i));
+
+    for(int i = 0; i < i_outputs.size(); i++)
+        this->removeConnexion(i_outputs.at(i));
+
+    delete it;
     this->items[index.row()][index.column()] = NULL;
 
     return true;
@@ -420,7 +428,7 @@ bool GridModel::saveInFile(QFile* file){
                     break;
                 }
 
-                out << i << "\t" << j << "\t" << this->items.at(i).at(j)->getAuxValue() << "\n";
+                out << i << "\t" << j << "\t" << QString::number(this->items.at(i).at(j)->getAuxValue()) << "\n";
             }
 
     //Liste des liaisons
