@@ -38,6 +38,8 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
     ui->listWidget->addItem(new QListWidgetItem("Or")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("And")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("Multiplexer")); // Idem
+    ui->listWidget->addItem(new QListWidgetItem("Demultiplexer")); // Idem
+    ui->listWidget->setCurrentRow(0);
 
     this->currentItem = NULL; // Indique qu'aucune sélection n'est faite ...
     this->currentAction = VIEW; // Indique que l'action est la vue simple
@@ -73,7 +75,6 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
             this->ui->name->setText(aux->getName()); // On met son nom dans la partie Informations
             this->ui->Delete->setEnabled(true); // On active la suppression
             this->ui->modify->setEnabled(true); // On active la modification
-            this->ui->def_value->setValue(0);
             this->ui->def_value->setEnabled(true);
             if(aux->getClass() == Item::Input0) this->ui->def_value->setValue(aux->getAuxValue());
             else this->ui->def_value->setEnabled(false); // Activation/désactivation valeur par default
@@ -81,7 +82,6 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
         else {
             this->ui->name->setText(""); // Sinon on ne met pas de nom ...
             this->ui->Delete->setEnabled(false); // On désactive la suppression
-            this->ui->def_value->setValue(0);
             this->ui->def_value->setEnabled(false); // Désactivation valeur par default
             this->ui->modify->setEnabled(false);
         }
@@ -102,6 +102,7 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
                         this->currentItem = NULL; // Plus d'item en cours de placement
                         this->currentAction = VIEW; // Action remise par defaut à la vue
                         this->ui->Place->setText(tr("Place")); // On remet le text du bouton par defaut pour un nouveau placement
+                        this->ui->statusBar->showMessage(tr("The component has been correctly place on the grid."),3000);
                     }
 
                 }
@@ -112,26 +113,31 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
     case CONNECT1 : // SI c'est la première fois qu'on clic sur la grille alors qu'on veut faire une connection
         if((this->currentItem = this->model->at(index)) == NULL) // Si il n'y a pas d'item à l'endroit séléctionné + on sauvegarde cet Item
             QMessageBox::critical(this,tr("Error"),tr("You have to select a component.")); // On l'indique
-        else
+        else {
             this->currentAction = CONNECT2; // Sinon on peut passer  à la deuxième phase
+            this->ui->statusBar->showMessage(tr("You have two click on the second component (receiver)."));
+        }
         break;
     case CONNECT2 : // Si c'est la deuxième fois qu'on clic sur la grille alors qu'on veut faire une connection
         if((aux = this->model->at(index)) != NULL && aux != this->currentItem) { // Si le deuxième Item séléctionné existe et qu'il est différent du premier
             conn = this->autoS_connect(this->currentItem, aux); // On crée une connection entre ces deux Items
 
             if(conn != NULL) { // Si la connection s'est correctement crée
-                if(this->model->connexion(conn)) { // On le rajoute au model
-                    this->ui->connect->setText(tr("Connect")); // On reinitialise le bouton pour une nouvelle connection
-                    this->currentAction = VIEW; // On remet l'action par defaut à la vue
-                }
-                else // Sinon
+                if(!this->model->connexion(conn))  // On le rajoute au model
                     QMessageBox::critical(this,tr("Error"),tr("Unable to connect those components.")); // On indique une erreur
+                else
+                    this->ui->statusBar->showMessage(tr("The connexion has been correctly made."),3000);
             }
-            else
-                QMessageBox::critical(this,tr("Error"),tr("Unable to connect those components.")); // On indique une erreur
+            else {
+                this->on_connect_clicked();
+                break;
+            }
         }
         else
             QMessageBox::critical(this,tr("Error"),tr("This component was already selected for connexion."));
+        this->currentAction = CONNECT1; // On remet l'action par defaut à la vue
+        this->ui->statusBar->showMessage(tr("You have two click on the first component (sender)."));
+        this->currentItem = NULL;
         break;
 
     }
@@ -153,11 +159,13 @@ void MApp::on_connect_clicked() // SI on clic sur le bouton connect
     if(this->currentAction == CONNECT1 || this->currentAction == CONNECT2) { // Si l'action courante est une connection de n'importe quel phase
         this->currentAction = VIEW; // On annule l'action de connection et on remet l'action à la Vue
         this->ui->connect->setText(tr("Connect")); // Indique qu'une nouvelle connection est possible
+        this->ui->statusBar->showMessage("");
     }
     else { // Sinon on veut faire une connection
         this->currentAction = CONNECT1; // 1ere phase enclenchée
         this->ui->connect->setText(tr("Cancel")); // On indique qu'on peut annulé l'action en recliquant sur le meme bouton
         this->ui->Place->setText(tr("Place")); // On annule l'action de placement si il y en avait une
+        this->ui->statusBar->showMessage(tr("You have two click on the first component (sender)."));
     }
 
     this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
@@ -170,7 +178,7 @@ void MApp::on_connect_clicked() // SI on clic sur le bouton connect
 ////////////////////////////////////////////////////////////////////////
 
 Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) { // Affichage des options de connection
-    Item::s_connect *conn = new Item::s_connect; // On crée une connection vide
+    Item::s_connect *conn = NULL; // On crée une connection vide
     QDialog *wConnOpt = new QDialog(this); // On initialise une fenetre
     Ui::ConnOpt *uConnOpt = new Ui::ConnOpt; // On initialise une interface de fenetre
 
@@ -190,16 +198,19 @@ Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) { // Affichag
         if(inputs.at(i) == NULL) // ... on indique les entrées disponibles ...
             uConnOpt->chk_inputs->addItem(QString::number(i)); // ... pour le 2eme Item (Récepteur)
 
-    wConnOpt->exec(); // On affiche la fenetre (exec va bloquer l'application sur cette fenetre)
+    if(wConnOpt->exec() == QDialog::Accepted) { // On affiche la fenetre (exec va bloquer l'application sur cette fenetre)
 
-    if(uConnOpt->chk_inputs->currentText() == "" || uConnOpt->chk_outputs->currentText() == "")
-        return NULL;
+        if(uConnOpt->chk_inputs->currentText() == "" || uConnOpt->chk_outputs->currentText() == "")
+            return NULL;
 
-    conn->sender = sender; // On indique l'emetteur
-    conn->output = uConnOpt->chk_outputs->currentText().toInt(); // la sortie
-    conn->receiver = receiver; // le recepteur
-    conn->input = uConnOpt->chk_inputs->currentText().toInt(); // l'entrée
-    conn->value = NULL; // et la valeur
+        conn = new Item::s_connect;
+        conn->sender = sender; // On indique l'emetteur
+        conn->output = uConnOpt->chk_outputs->currentText().toInt(); // la sortie
+        conn->receiver = receiver; // le recepteur
+        conn->input = uConnOpt->chk_inputs->currentText().toInt(); // l'entrée
+        conn->value = NULL; // et la valeur
+    }
+
 
     delete uConnOpt; // On détruit l'interface ...
     delete wConnOpt; // et la fenetre
@@ -273,6 +284,7 @@ void MApp::on_actionCharger_un_Fichier_triggered()
         this->ui->tableView->setModel(this->model = gModel);
         this->ui->row_count->setText(QString::number(model->rowCount()));
         this->ui->column_count->setText(QString::number(model->columnCount()));
+        this->ui->statusBar->showMessage(tr("The grid has been correctly loaded."),3000);
     }
     else
         QMessageBox::critical(0, tr("Error"), tr("Corrupted file."));
@@ -302,7 +314,11 @@ void MApp::on_actionSauvegarder_un_Fichier_triggered()
         QMessageBox::critical(this,tr("Error"),tr("Unable to open this file."));
         return;
     }
-    this->model->saveInFile(&file);
+    if(this->model->saveInFile(&file))
+        this->ui->statusBar->showMessage(tr("The grid has been correctly saved into ") +s +".",3000);
+    else
+        this->ui->statusBar->showMessage(tr("A problem occured during the save."),3000);
+
     file.close();
 }
 
@@ -321,6 +337,7 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
         this->currentItem = NULL; // Pas d'item séléctionné
         this->ui->Place->setText(tr("Place")); // On indique qu'on peut refaire un placement
         this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placemen
+        this->ui->statusBar->showMessage("");
         return;
     }
 
@@ -331,6 +348,7 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
     this->ui->connect->setText(tr("Connect")); // On indique que la connection est possible
     this->ui->Place->setText(tr("Cancel")); // On indique qu'on peut annuler le placement
     this->ui->tableView->enableTracking(true); // On active la coloration des cases
+    this->ui->statusBar->showMessage(tr("You have to select a position on the grid to place this component."));
 
     switch(index.row()) { // Selon la ligne séléctionné dans la liste
         case Item::Input0 : this->currentItem = new Input(); // Nouvelle Entrée
@@ -339,11 +357,13 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
             break;
     case Item::Not2 : this->currentItem = new Not(); // Nouveau composant de type Not
           break;
-    case Item::Or3 : this->currentItem = new Or();
+    case Item::Or3 : this->currentItem = new Or(); // Type Or
         break;
-    case Item::And4 : this->currentItem = new And();
+    case Item::And4 : this->currentItem = new And(); // And
         break;
-    case Item::Mux5 : this->currentItem = new Multiplexer(2);
+    case Item::Mux5 : this->currentItem = new Multiplexer(2); // Multiplexeur avec n = 2 par defaut
+        break;
+    case Item::Demux6 : this->currentItem = new Demultiplexer(2); // Demultiplexeur avec n = 2 par defaut
         break;
 
         default : this->ui->tableView->enableTracking(false); // Sinon On annule ...
@@ -361,9 +381,15 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
 
 void MApp::on_Delete_clicked()
 {
-    if(this->currentIndex.isValid()) // On vérifie que l'index est valide
-        this->model->removeItem(this->currentIndex); // Et on supprime l'item du modele
+    if(this->currentIndex.isValid()) { // On vérifie que l'index est valide
+        if(this->model->removeItem(this->currentIndex)) {// Et on supprime l'item du modele
+            this->ui->statusBar->showMessage(tr("The component has been deleted."),3000);
+        }
+        else
+            this->ui->statusBar->showMessage(tr("A problem occured during the deletion."),3000);
+    }
 
+    this->on_tableView_clicked(this->currentIndex);
     emit this->ui->tableView->setFocus(); // Mise à jour des infos ...
 }
 
@@ -405,7 +431,7 @@ void MApp::on_modify_clicked()
     wModify->setWindowTitle(tr("Modifying") +" " +it->getName());
 
     uModify->name->setText(it->getName());
-    if(it->getClass() == Item::Mux5)
+    if(it->getClass() == Item::Mux5 || it->getClass() == Item::Demux6)
         uModify->Inputs->setVisible(true);
     else
         uModify->Inputs->setVisible(false);
@@ -459,6 +485,13 @@ void MApp::on_modify_clicked()
         if(it->getClass() == Item::Mux5 && uModify->Inputs->value() < it->getAuxValue())
             for(int i = uModify->Inputs->value() +1; i < it->getAuxValue() + log2(it->getAuxValue()); i++)
                 this->model->removeConnexion(inputs.at(i));
+
+        if(it->getClass() == Item::Demux6 && uModify->Inputs->value() < it->getAuxValue()) {
+            for(int i = uModify->Inputs->value(); i < it->getAuxValue(); i++)
+                this->model->removeConnexion(inputs.at(i));
+            for(int i = qPow(2,uModify->Inputs->value()); i < qPow(2,it->getAuxValue()); i++)
+                this->model->removeConnexion(outputs.at(i));
+        }
 
          this->model->setDefValueOnInput(it, uModify->Inputs->value());
     }

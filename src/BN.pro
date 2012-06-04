@@ -27,7 +27,8 @@ HEADERS += Includes/gridmodel.h \
     Includes/item.h \
     Includes/or.h \
     Includes/and.h \
-    Includes/multiplexer.h
+    Includes/multiplexer.h \
+    Includes/demultiplexer.h
 		   
 FORMS += Forms/mapp.ui \
     Forms/conn_option.ui \
@@ -46,7 +47,8 @@ SOURCES += main.cpp \
     Models/imagedelegate.cpp \
     Items/or.cpp \
     Items/and.cpp \
-    Items/multiplexer.cpp
+    Items/multiplexer.cpp \
+    Items/demultiplexer.cpp
 
 RESOURCES += Ressources/bn.qrc
 

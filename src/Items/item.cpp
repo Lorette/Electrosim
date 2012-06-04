@@ -17,9 +17,6 @@ Item::~Item() // Destructeur
 }
 
 bool Item::setAuxValue(int value) {
-    if(this->getClass() != Item::Input0 && this->getClass() != Item::Output1 && this->getClass() != Item::Mux5)
-        return false;
-
     this->aux = value;
 
     return true;

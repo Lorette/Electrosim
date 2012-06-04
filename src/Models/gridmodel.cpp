@@ -381,7 +381,7 @@ bool GridModel::setDefValueOnInput(Item *item, int value) {
     if(item == NULL)
         return false;
 
-    if(item->getClass() != Item::Input0 && item->getClass() != Item::Mux5)
+    if(item->getClass() != Item::Input0 && item->getClass() != Item::Mux5 && item->getClass() != Item::Demux6)
         return false;
 
     item->setAuxValue(value);
@@ -415,6 +415,8 @@ bool GridModel::saveInFile(QFile* file){
                 case Item::And4 : out << "\tAND\t";
                     break;
                 case Item::Mux5 : out << "\tMUX\t";
+                    break;
+                case Item::Demux6 : out << "\tDEMUX\t";
                     break;
                 }
 
@@ -499,6 +501,13 @@ GridModel* GridModel::loadFromFile(QFile* file) {
                 Multiplexer* mux = new Multiplexer(list[5].toInt());
                 mux->setName( list[1] );
                 if(!model->addItem(model->createIndex(i,j), mux))
+                    return NULL;
+            }
+            else if( list[2] == "DEMUX" )
+            {
+                Demultiplexer* demux = new Demultiplexer(list[5].toInt());
+                demux->setName( list[1] );
+                if(!model->addItem(model->createIndex(i,j), demux))
                     return NULL;
             }
         }
