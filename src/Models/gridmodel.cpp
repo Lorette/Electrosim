@@ -333,8 +333,10 @@ QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
     int nb_inputs = this->inputs.size();
     int nb_lignes = qPow(2.0,nb_inputs); //nombre de lignes de la table de vérité = 2^(nombre d'entrées)
     int nb_colonnes = nb_inputs+this->outputs.size(); //nombre de colonne = nombre d'entrées + nombre de sorties
+    QVector<int> save; //Pour sauvegarder l'état actuel des inputs
 
     //met les tableaux à la bonne taille
+    save.resize(this->inputs.size());
     resultat.first.resize(nb_colonnes); //il y a un nom de collonne pour chaque colonne.
     resultat.second.resize(nb_lignes);
     for(int i=0; i<nb_lignes; ++i)
@@ -345,6 +347,7 @@ QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
     for(QList<Item*>::iterator it = this->inputs.begin(); it != this->inputs.end(); ++it)
     {
         resultat.first[i] = (*it)->getName();
+        save[i] = (*it)->getAuxValue(); //sauvegarde la valeur actuelle
         ++i;
     }
     for(QList<Item*>::iterator it = this->outputs.begin(); it != this->outputs.end(); ++it)
@@ -396,6 +399,16 @@ QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
             ++i;
         }
     }
+
+    //Charge l'état des inputs avant la fonction
+    i=0;
+    for(QList<Item*>::iterator it = this->inputs.begin(); it != this->inputs.end(); ++it)
+    {
+        (*it)->setAuxValue(save[i]);
+        ++i;
+    }
+    //relance la simulation pour actualiser les sorties
+    this->simulate();
 
     return resultat;
 }
