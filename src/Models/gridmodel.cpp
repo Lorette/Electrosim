@@ -92,8 +92,10 @@ bool GridModel::removeColumn(int column, const QModelIndex &parent) { // Suppres
     this->beginRemoveColumns(parent,this->column_count -1, this->column_count -1);
 
     for(int i = 0; i < this->row_count; i++) {
-        if(this->items[i][this->column_count -1] != NULL)
-            delete this->items[i][this->column_count -1];
+        if(this->items[i][this->column_count -1] != NULL) {
+            QModelIndex in = this->index(i,this->column_count -1);
+            this->removeItem(in);
+        }
         this->items[i].resize(this->column_count -1);
     }
 
@@ -123,9 +125,12 @@ bool GridModel::removeRow(int row, const QModelIndex &parent) { // Suppression d
 
     this->beginRemoveRows(parent, this->row_count -1, this->row_count -1);
 
-    for(int i = 0; i < this->column_count; i++)
-        if(this->items[row_count -1][i] != NULL)
-            delete this->items[row_count -1][i];
+    for(int i = 0; i < this->column_count; i++) {
+        if(this->items[row_count -1][i] != NULL) {
+            QModelIndex in = this->index(row_count -1,i);
+            this->removeItem(in);
+        }
+    }
     this->items.resize(this->row_count -1);
 
     this->endRemoveRows();
@@ -159,9 +164,12 @@ bool GridModel::removeColumns(int column, int count, const QModelIndex &parent) 
     this->beginRemoveColumns(parent,this->column_count - count, this->column_count - 1);
 
     for(int i = 0; i < this->row_count; i++) {
-        for(int j = 0; j < count; j++)
-            if(this->items[i][this->column_count -1 - j] != NULL)
-                delete this->items[i][this->column_count -1 - j];
+        for(int j = 0; j < count; j++) {
+            if(this->items[i][this->column_count -1 - j] != NULL) {
+                QModelIndex in = this->index(i,this->column_count -1 - j);
+                this->removeItem(in);
+            }
+        }
         this->items[i].resize(this->column_count -count);
     }
 
@@ -196,10 +204,14 @@ bool GridModel::removeRows(int row, int count, const QModelIndex &parent) {
 
     this->beginRemoveRows(parent, this->row_count - count, this->row_count - 1);
 
-    for(int i = 0; i < this->column_count; i++)
-        for(int j = 0; j < count; j++)
-        if(this->items[row_count -1 - j][i] != NULL)
-            delete this->items[row_count -1 - j][i];
+    for(int i = 0; i < this->column_count; i++) {
+        for(int j = 0; j < count; j++) {
+            if(this->items[row_count -1 - j][i] != NULL) {
+                QModelIndex in = this->index(row_count -1 - j,i);
+                this->removeItem(in);
+            }
+        }
+    }
     this->items.resize(this->row_count - count);
 
     this->endRemoveRows();

@@ -309,7 +309,7 @@ void MApp::on_actionSauvegarder_un_Fichier_triggered()
 
     QFile file(s);
 
-    if( !file.open(QIODevice::Append))
+    if( !file.open(QIODevice::WriteOnly))
     {
         QMessageBox::critical(this,tr("Error"),tr("Unable to open this file."));
         return;
