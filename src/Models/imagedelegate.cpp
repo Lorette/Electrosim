@@ -6,6 +6,10 @@ ImageDelegate::ImageDelegate(QObject * parent) : QStyledItemDelegate(parent) // 
 {
 }
 
+ImageDelegate::~ImageDelegate()
+{
+}
+
 QSize ImageDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const
 {
     return QSize(50,50); // Taille des cases (50 pixels x 50 pixels)

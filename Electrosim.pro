@@ -4,4 +4,4 @@
 
 TEMPLATE = subdirs
 
-SUBDIRS = src/BN.pro
+SUBDIRS = src/Electrosim.pro

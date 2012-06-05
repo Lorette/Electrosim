@@ -17,7 +17,9 @@ GridModel::GridModel(int rows, int columns) //Constructeur
 }
 
 GridModel::~GridModel() {
-// A IMPLEMENTER :: tout détruire !!
+    for(int i = 0; i < this->row_count; i++)
+        for(int j = 0; j < this->column_count; j++)
+            this->removeItem(this->index(i,j));
 }
 
 QModelIndex GridModel::index(int row, int column, const QModelIndex &parent) const { // Créer un index correct avec les bonnes coorodnnées
@@ -59,7 +61,7 @@ QVariant GridModel::data(const QModelIndex &index, int role) const { // Retourne
     if(role == Qt::ToolTipRole && ((c = this->items.at(index.row()).at(index.column())) != NULL)) // Plus ou moins fonctionnel
         return c->getDescription();
 
-    if(role == (Qt::UserRole) && ((c = this->items.at(index.row()).at(index.column())) != NULL)) // Paul !!!!! @@@@@ Retourne qqch ...
+    if(role == Qt::UserRole && ((c = this->items.at(index.row()).at(index.column())) != NULL)) // Paul !!!!! @@@@@ Retourne qqch ...
         return c->getIndexOutputs();
 
     if(role == Qt::UserRole+1 && ((c = this->items.at(index.row()).at(index.column())) != NULL) && c->getClass() == Item::Input0)

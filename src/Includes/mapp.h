@@ -160,6 +160,8 @@ private slots:
 
     void on_actionEnglish_triggered();
 
+    void on_actionNew_triggered();
+
 private:
     Ui::MApp *ui; /*!< Interface de la classe*/
     GridModel *model; /*!< Instance du modele courant*/

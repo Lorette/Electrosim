@@ -53,6 +53,7 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
 
 MApp::~MApp()
 {
+    delete this->model;
     delete ui; // Détruit l'interface
 }
 
@@ -547,4 +548,14 @@ void MApp::on_actionEnglish_triggered()
     ui->actionEnglish->setChecked(true);
 
     this->ui->retranslateUi(this); // On retraduit tout !!
+}
+
+void MApp::on_actionNew_triggered()
+{
+    delete this->model;
+    model = new GridModel(9,14); // Initialise le model de 9x14 par defaut
+    this->ui->row_count->setText(QString::number(this->model->rowCount()));
+    this->ui->column_count->setText(QString::number(this->model->columnCount()));
+
+    ui->tableView->setModel(model); //Indique à la vue d'utiliserle model crée
 }

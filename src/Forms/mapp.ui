@@ -314,13 +314,14 @@
      <x>0</x>
      <y>0</y>
      <width>1007</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionNew"/>
     <addaction name="actionCharger_un_Fichier"/>
     <addaction name="actionSauvegarder_un_Fichier"/>
     <addaction name="separator"/>
@@ -348,20 +349,32 @@
    <property name="text">
     <string>Settings</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+S</string>
+   </property>
   </action>
   <action name="actionQuit">
    <property name="text">
     <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
   <action name="actionCharger_un_Fichier">
    <property name="text">
     <string>Load</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
   </action>
   <action name="actionSauvegarder_un_Fichier">
    <property name="text">
     <string>Save as ...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionEnglish">
@@ -378,6 +391,14 @@
    </property>
    <property name="text">
     <string>French</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
  </widget>
