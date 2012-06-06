@@ -13,5 +13,6 @@
         <file>Images/demux.png</file>
         <file>Images/xnor.png</file>
         <file>Images/ieo.png</file>
+        <file>Images/xor.png</file>
     </qresource>
 </RCC>

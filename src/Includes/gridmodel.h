@@ -39,6 +39,7 @@
 #include "demultiplexer.h"
 #include "xnor.h"
 #include "ieo.h"
+#include "xor.h"
 
 /*! \class GridModel
   * \brief Classe GridModel :

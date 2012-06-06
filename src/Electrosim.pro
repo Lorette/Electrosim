@@ -30,7 +30,8 @@ HEADERS += Includes/gridmodel.h \
     Includes/multiplexer.h \
     Includes/demultiplexer.h \
     Includes/xnor.h \
-    Includes/ieo.h
+    Includes/ieo.h \
+    Includes/xor.h
 		   
 FORMS += Forms/mapp.ui \
     Forms/conn_option.ui \
@@ -52,7 +53,8 @@ SOURCES += main.cpp \
     Items/multiplexer.cpp \
     Items/demultiplexer.cpp \
     Items/xnor.cpp \
-    Items/ieo.cpp
+    Items/ieo.cpp \
+    Items/xor.cpp
 
 RESOURCES += Ressources/bn.qrc
 

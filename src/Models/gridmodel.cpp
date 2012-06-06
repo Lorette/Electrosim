@@ -458,6 +458,8 @@ bool GridModel::saveInFile(QFile* file){
                     break;
                 case Item::IeO8 : out << "\tIEO\t";
                     break;
+                case Item::Xor9 : out << "\tXOR\t";
+                    break;
                 }
 
                 out << i << "\t" << j << "\t" << QString::number(this->items.at(i).at(j)->getAuxValue()) << "\n";
@@ -564,6 +566,15 @@ GridModel* GridModel::loadFromFile(QFile* file) {
                 if(!model->addItem(model->createIndex(i,j), ieo))
                     return NULL;
             }
+            else if( list[2] == "XOR")
+            {
+                Xor* ou_ex = new Xor();
+                ou_ex->setName(list[1]);
+                if(!model->addItem(model->createIndex(i,j), ou_ex))
+                    return NULL;
+            }
+
+
         }
 
         //si le premier élément n'est pas "composant" on voit les liaisons, par verification on rajoute le test

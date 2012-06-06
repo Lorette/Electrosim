@@ -16,7 +16,7 @@ class Item : public QObject
 public:
     typedef struct {int c; int r; int num_max_input; } s_index;
     typedef struct {Item* sender; int output; Item* receiver; int input; int* value; } s_connect;
-    enum Items { Input0, Output1, Not2, Or3, And4, Mux5, Demux6, XNOr7, IeO8};
+    enum Items { Input0, Output1, Not2, Or3, And4, Mux5, Demux6, XNOr7, IeO8, Xor9};
 
 public:
     explicit Item(QObject *parent = 0);

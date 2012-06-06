@@ -43,6 +43,7 @@
 #include "demultiplexer.h"
 #include "xnor.h"
 #include "ieo.h"
+#include "xor.h"
 #include "gridmodel.h"
 #include "imagedelegate.h"
 

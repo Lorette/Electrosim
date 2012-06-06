@@ -41,6 +41,7 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
     ui->listWidget->addItem(new QListWidgetItem("Demultiplexer")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("Equivalence")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("IeO")); // Idem
+    ui->listWidget->addItem(new QListWidgetItem("Xor")); // Idem
     ui->listWidget->setCurrentRow(0);
 
     this->currentItem = NULL; // Indique qu'aucune sélection n'est faite ...
@@ -373,6 +374,8 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
     case Item::XNOr7 : this->currentItem = new XNOr(); // Coïncidence
         break;
     case Item::IeO8 : this->currentItem = new IeO(2);
+        break;
+    case Item::Xor9 : this->currentItem = new Xor();
         break;
 
         default : this->ui->tableView->enableTracking(false); // Sinon On annule ...
