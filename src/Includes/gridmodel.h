@@ -37,6 +37,8 @@
 #include "or.h"
 #include "multiplexer.h"
 #include "demultiplexer.h"
+#include "xnor.h"
+#include "ieo.h"
 
 /*! \class GridModel
   * \brief Classe GridModel :
@@ -297,6 +299,9 @@ public:
      */
     bool removeConnexion(Item::s_connect* conn);
 
+    QList<QVariant> getConnexions(Item *it) const ;
+
+    QModelIndex getIndex(Item *item) const;
 signals:
     /*!
      *  \brief Signal émis pour lancer la simulation.

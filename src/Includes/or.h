@@ -10,7 +10,6 @@ class Or : public Item
 public:
     Or();
     virtual bool _do();
-    virtual int getClass();
 };
 
 #endif // OR_H

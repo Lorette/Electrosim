@@ -41,6 +41,8 @@
 #include "and.h"
 #include "multiplexer.h"
 #include "demultiplexer.h"
+#include "xnor.h"
+#include "ieo.h"
 #include "gridmodel.h"
 #include "imagedelegate.h"
 

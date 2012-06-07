@@ -11,7 +11,6 @@ class Not : public Item
 public:
     explicit Not();
     virtual bool _do();
-    virtual int getClass();
 };
 
 #endif // NOT_H

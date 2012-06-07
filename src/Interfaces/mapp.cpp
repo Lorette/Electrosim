@@ -22,7 +22,7 @@
 
 MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
 {
-    model = new GridModel(9,14); // Initialise le model de 9x14 par defaut
+    model = new GridModel(13,14); // Initialise le model de 13x14 par defaut
     ui->setupUi(this); // Relie l'interface à cet objet
 
     this->on_actionFrench_triggered(); // On le traduit en francais
@@ -39,6 +39,8 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
     ui->listWidget->addItem(new QListWidgetItem("And")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("Multiplexer")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("Demultiplexer")); // Idem
+    ui->listWidget->addItem(new QListWidgetItem("Equivalence")); // Idem
+    ui->listWidget->addItem(new QListWidgetItem("IeO")); // Idem
     ui->listWidget->setCurrentRow(0);
 
     this->currentItem = NULL; // Indique qu'aucune sélection n'est faite ...
@@ -77,6 +79,7 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
             this->ui->Delete->setEnabled(true); // On active la suppression
             this->ui->modify->setEnabled(true); // On active la modification
             this->ui->def_value->setEnabled(true);
+            this->ui->description->setText(aux->getDescription()); // On recupère la description
             if(aux->getClass() == Item::Input0) this->ui->def_value->setValue(aux->getAuxValue());
             else this->ui->def_value->setEnabled(false); // Activation/désactivation valeur par default
         }
@@ -84,6 +87,7 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
             this->ui->name->setText(""); // Sinon on ne met pas de nom ...
             this->ui->Delete->setEnabled(false); // On désactive la suppression
             this->ui->def_value->setEnabled(false); // Désactivation valeur par default
+            this->ui->description->setText(""); // Pas de description
             this->ui->modify->setEnabled(false);
         }
         break;
@@ -366,6 +370,10 @@ void MApp::on_Place_clicked() // Si on clic sur le placement
         break;
     case Item::Demux6 : this->currentItem = new Demultiplexer(2); // Demultiplexeur avec n = 2 par defaut
         break;
+    case Item::XNOr7 : this->currentItem = new XNOr(); // Coïncidence
+        break;
+    case Item::IeO8 : this->currentItem = new IeO(2);
+        break;
 
         default : this->ui->tableView->enableTracking(false); // Sinon On annule ...
             this->currentAction = VIEW; // le placement
@@ -432,10 +440,13 @@ void MApp::on_modify_clicked()
     wModify->setWindowTitle(tr("Modifying") +" " +it->getName());
 
     uModify->name->setText(it->getName());
-    if(it->getClass() == Item::Mux5 || it->getClass() == Item::Demux6)
+    if(it->getClass() == Item::Mux5 || it->getClass() == Item::Demux6 || it->getClass() == Item::IeO8)
         uModify->Inputs->setVisible(true);
     else
         uModify->Inputs->setVisible(false);
+
+    if(it->getClass() == Item::IeO8)
+        uModify->Inputs->setSuffix(tr(" Outputs"));
 
     uModify->Inputs->setValue(it->getAuxValue());
 
@@ -493,6 +504,10 @@ void MApp::on_modify_clicked()
             for(int i = qPow(2,uModify->Inputs->value()); i < qPow(2,it->getAuxValue()); i++)
                 this->model->removeConnexion(outputs.at(i));
         }
+
+        if(it->getClass() == Item::IeO8 && uModify->Inputs->value() < it->getAuxValue())
+            for(int i = uModify->Inputs->value(); i < it->getAuxValue(); i++)
+                this->model->removeConnexion(outputs.at(i));
 
          this->model->setDefValueOnInput(it, uModify->Inputs->value());
     }
@@ -553,7 +568,7 @@ void MApp::on_actionEnglish_triggered()
 void MApp::on_actionNew_triggered()
 {
     delete this->model;
-    model = new GridModel(9,14); // Initialise le model de 9x14 par defaut
+    model = new GridModel(13,14); // Initialise le model de 14x14 par defaut
     this->ui->row_count->setText(QString::number(this->model->rowCount()));
     this->ui->column_count->setText(QString::number(this->model->columnCount()));
 

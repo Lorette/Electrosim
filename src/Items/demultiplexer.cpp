@@ -4,6 +4,7 @@ Demultiplexer::Demultiplexer(int n) : Item()
 {
     this->image = ":/Images/demux.png";
     this->description = "Demultiplexer";
+    this->classe = Item::Demux6;
     this->aux = n;
     this->inputs.resize(n); // n entrées
     this->outputs.resize(qPow(2,n)); // ... et 2^n sortie
@@ -30,10 +31,6 @@ bool Demultiplexer::_do() {
 
     return true;
 
-}
-
-int Demultiplexer::getClass() {
-    return Demux6;
 }
 
 bool Demultiplexer::setAuxValue(int value) {

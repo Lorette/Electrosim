@@ -4,6 +4,7 @@ Not::Not() : Item()
 {
     this->image = ":/Images/not.png";
     this->description = "Not";
+    this->classe = Item::Not2;
     this->inputs.resize(1); // 1 entrée ...
     this->outputs.resize(1); // ... et 1 sortie ... logique
 }
@@ -16,8 +17,4 @@ bool Not::_do() {
     *(this->outputs.at(0)->value) = 1 - *(this->inputs.at(0)->value); // 1 devient 0 et 0 devient 1
 
     return true;
-}
-
-int Not::getClass() {
-    return Not2;
 }

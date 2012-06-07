@@ -10,7 +10,6 @@ class Input : public Item
 public:
     explicit Input();
     virtual bool _do();
-    virtual int getClass();
 
 };
 

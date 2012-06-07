@@ -59,10 +59,10 @@ QVariant GridModel::data(const QModelIndex &index, int role) const { // Retourne
     }
 
     if(role == Qt::ToolTipRole && ((c = this->items.at(index.row()).at(index.column())) != NULL)) // Plus ou moins fonctionnel
-        return c->getDescription();
+        return c->getName();
 
     if(role == Qt::UserRole && ((c = this->items.at(index.row()).at(index.column())) != NULL)) // Paul !!!!! @@@@@ Retourne qqch ...
-        return c->getIndexOutputs();
+        return getConnexions(c);
 
     if(role == Qt::UserRole+1 && ((c = this->items.at(index.row()).at(index.column())) != NULL) && c->getClass() == Item::Input0)
         return c->getAuxValue();
@@ -253,8 +253,6 @@ bool GridModel::addItem(const QModelIndex &index, Item* item) { // Rajoute un it
     if(item->getClass() == Item::Output1)
         this->outputs << item;
 
-    item->setIndex(index);
-
     return true;
 }
 
@@ -419,7 +417,7 @@ bool GridModel::setDefValueOnInput(Item *item, int value) {
     if(item == NULL)
         return false;
 
-    if(item->getClass() != Item::Input0 && item->getClass() != Item::Mux5 && item->getClass() != Item::Demux6)
+    if(item->getClass() != Item::Input0 && item->getClass() != Item::Mux5 && item->getClass() != Item::Demux6 && item->getClass() != Item::IeO8)
         return false;
 
     item->setAuxValue(value);
@@ -455,6 +453,10 @@ bool GridModel::saveInFile(QFile* file){
                 case Item::Mux5 : out << "\tMUX\t";
                     break;
                 case Item::Demux6 : out << "\tDEMUX\t";
+                    break;
+                case Item::XNOr7 : out << "\tXNOR\t";
+                    break;
+                case Item::IeO8 : out << "\tIEO\t";
                     break;
                 }
 
@@ -548,6 +550,20 @@ GridModel* GridModel::loadFromFile(QFile* file) {
                 if(!model->addItem(model->createIndex(i,j), demux))
                     return NULL;
             }
+            else if( list[2] == "XNOR")
+            {
+                XNOr* xnor = new XNOr();
+                xnor->setName(list[1]);
+                if(!model->addItem(model->createIndex(i,j), xnor))
+                    return NULL;
+            }
+            else if( list[2] == "IEO")
+            {
+                IeO* ieo = new IeO(list[5].toInt());
+                ieo->setName(list[1]);
+                if(!model->addItem(model->createIndex(i,j), ieo))
+                    return NULL;
+            }
         }
 
         //si le premier élément n'est pas "composant" on voit les liaisons, par verification on rajoute le test
@@ -577,15 +593,9 @@ GridModel* GridModel::loadFromFile(QFile* file) {
 Item* GridModel::findChildByName(QString name)
 {
     for( int i = 0 ; i < this->row_count ; i++)
-    {
         for( int j = 0 ; j < this->column_count ; j++)
-        {
             if( this->items[i][j] != NULL && this->items[i][j]->getName() == name)
-            {
                 return items[i][j];
-            }
-        }
-    }
 
     return NULL;
 
@@ -599,17 +609,9 @@ bool GridModel::nameIsCorrect(const QString& name) const
 
     //vérifie si le nom est aps déjà utilisé
     for(int r=0; r<this->rowCount(); ++r)
-    {
         for(int c=0; c<this->columnCount(); ++c)
-        {
-            if(this->items[r][c])
-            {
-                if(this->items[r][c]->getName() == name)
+            if(this->items[r][c] && this->items[r][c]->getName() == name)
                     return false;
-            }
-        }
-    }
-
     return true;
 }
 
@@ -624,4 +626,34 @@ bool GridModel::removeConnexion(Item::s_connect *conn) {
     delete conn;
 
     return true;
+}
+
+QList<QVariant> GridModel::getConnexions(Item *it) const {
+    QVector<Item::s_connect *> it_outs = it->getOutputs();
+    int s = it_outs.size();
+    QList< QVariant > resultat;
+
+    for(int i = 0 ; i < s; ++i)
+    {
+        if(!it_outs[i])
+            resultat.append(QVariant());
+        else
+        {
+            QModelIndex index = this->getIndex(it_outs[i]->receiver);
+            resultat.append(QVariant(QLine(index.column(), index.row(), it_outs[i]->input, it_outs.at(i)->receiver->getInputs().size())));
+        }
+    }
+
+    return resultat;
+}
+
+QModelIndex GridModel::getIndex(Item *item) const {
+    for(int i = 0; i < this->items.size(); i++)
+        for(int j = 0; j < this->items.at(i).size(); j++)
+            if(item == this->items.at(i).at(j))
+                return this->index(i,j);
+
+    return QModelIndex();
+
+
 }

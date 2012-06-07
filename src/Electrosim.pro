@@ -5,7 +5,7 @@
 QT += core gui
 
 TEMPLATE = app
-TARGET = BN
+TARGET = Electrosim
 CONFIG += static
 
 DEPENDPATH += . \
@@ -28,7 +28,9 @@ HEADERS += Includes/gridmodel.h \
     Includes/or.h \
     Includes/and.h \
     Includes/multiplexer.h \
-    Includes/demultiplexer.h
+    Includes/demultiplexer.h \
+    Includes/xnor.h \
+    Includes/ieo.h
 		   
 FORMS += Forms/mapp.ui \
     Forms/conn_option.ui \
@@ -48,7 +50,9 @@ SOURCES += main.cpp \
     Items/or.cpp \
     Items/and.cpp \
     Items/multiplexer.cpp \
-    Items/demultiplexer.cpp
+    Items/demultiplexer.cpp \
+    Items/xnor.cpp \
+    Items/ieo.cpp
 
 RESOURCES += Ressources/bn.qrc
 

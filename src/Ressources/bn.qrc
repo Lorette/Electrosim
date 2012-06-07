@@ -11,5 +11,7 @@
         <file>Translations/en.qm</file>
         <file>Images/mux.png</file>
         <file>Images/demux.png</file>
+        <file>Images/xnor.png</file>
+        <file>Images/ieo.png</file>
     </qresource>
 </RCC>

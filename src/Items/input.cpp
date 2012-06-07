@@ -4,7 +4,8 @@ Input::Input() : Item()
 {
     this->image = ":/Images/input.png"; // Image du composant
     this->description = "Input"; // Description à la con
-    this->outputs.resize(1); // Inidque 1 sortie
+    this->classe = Item::Input0;
+    this->outputs.resize(1); // Indique 1 sortie
 }
 
 bool Input::_do()
@@ -16,8 +17,4 @@ bool Input::_do()
     *(this->outputs.at(0)->value) = this->aux;
 
     return true;
-}
-
-int Input::getClass() {
-    return Input0;
 }

@@ -11,7 +11,6 @@ class Demultiplexer : public Item
 public:
     Demultiplexer(int n);
     virtual bool _do();
-    virtual int getClass();
     virtual bool setAuxValue(int value);
 };
 

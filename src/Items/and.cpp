@@ -4,7 +4,8 @@ And::And() : Item()
 {
     this->image = ":/Images/and.png";
     this->description = "And";
-    this->inputs.resize(2); // 1 entrée ...
+    this->classe = Item::And4;
+    this->inputs.resize(2); // 2 entrées ...
     this->outputs.resize(1); // ... et 1 sortie
 }
 
@@ -16,8 +17,4 @@ bool And::_do() {
     *(this->outputs.at(0)->value) = ((*(this->inputs.at(0)->value)) == 1 && (*(this->inputs.at(1)->value)) == 1) ? 1 : 0; // Fonction OU !
 
     return true;
-}
-
-int And::getClass() {
-    return And4;
 }
