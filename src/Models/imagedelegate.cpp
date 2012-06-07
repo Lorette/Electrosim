@@ -1,19 +1,42 @@
+/***********************************************************************
+ * Module:  imagedelegate.cpp
+ * Author:  SALMON PAUL
+ *          MONLOUIS Kevyn
+ *          DUREUIL Brice
+ * Modified: mardi 15 mai 2012 00:54:23
+ * Purpose: Implementation of the class ImageDelegate
+ ***********************************************************************/
+
 #include "imagedelegate.h"
 
 #include <QMessageBox>
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ImageDelegate::ImageDelegate(QObject * parent) : QStyledItemDelegate(parent)
+// Purpose:    Implementation of ImageDelegate::ImageDelegate()
+// Return:
+////////////////////////////////////////////////////////////////////////
 
 ImageDelegate::ImageDelegate(QObject * parent) : QStyledItemDelegate(parent) // Constructeur
 {
 }
 
-ImageDelegate::~ImageDelegate()
-{
-}
+////////////////////////////////////////////////////////////////////////
+// Name:       QSize ImageDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index)
+// Purpose:    Implementation of ImageDelegate::sizeHint()
+// Return:     QSize
+////////////////////////////////////////////////////////////////////////
 
 QSize ImageDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const
 {
     return QSize(50,50); // Taille des cases (50 pixels x 50 pixels)
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       void ImageDelegate::paint(QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index)
+// Purpose:    Implementation of ImageDelegate::paint()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
 
 void ImageDelegate::paint(QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index) const
 {

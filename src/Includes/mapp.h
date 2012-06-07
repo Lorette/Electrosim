@@ -4,7 +4,7 @@
  *          MONLOUIS Kevyn
  *          DUREUIL Brice
  * Modified: samedi 12 mai 2012 17:14:21
- * Purpose: Declaration of the class Ihm
+ * Purpose: Declaration of the class MApp
  ***********************************************************************/
 
 #ifndef MAPP_H
@@ -17,7 +17,7 @@
  *         MONLOUIS Kevyn
  *         DUREUIL Brice
  * \version 1.0
- * \date 12 mai 2011
+ * \date 12 mai 2012
  */
 
 #include <QMainWindow>
@@ -47,23 +47,13 @@
 #include "gridmodel.h"
 #include "imagedelegate.h"
 
-
-
-enum Actions {
-    VIEW,
-    PLACE,
-    CONNECT1,
-    CONNECT2
-};
-
-
 namespace Ui {
     class MApp;
     class ConnOpt;
     class Settings;
     class Modify;
     class Verite;
-}
+} /*!< Espace de nom pour les interfaces*/
 
 /*! \class MApp
   * \brief Classe MApp :
@@ -76,6 +66,8 @@ class MApp : public QMainWindow
     Q_OBJECT
 
 public:
+    enum Actions {VIEW, PLACE, CONNECT1, DELETE, CONNECT2}; /*!< Enumération des actions*/
+
     /*!
      *  \brief Constructeur.
      *
@@ -90,6 +82,13 @@ public:
      *  Destructeur de la classe MApp
      */
     ~MApp();
+
+    /*!
+     *  \brief Récupère un item en fonction de la sélection dans la liste.
+     *
+     *  \return Un item instancié prêt à être placé.
+     */
+    Item* getItemInList();
 
 private:
     /*!
@@ -108,12 +107,7 @@ private slots:
      *  Effectue une suite d'actions en fonction de l'action courante et de la position du clic.
      */
     void on_tableView_clicked(const QModelIndex &index);
-    /*!
-     *  \brief Slot pour un clic sur le bouton connect.
-     *
-     *  Active une action de connexion.
-     */
-    void on_connect_clicked();
+
     /*!
      *  \brief Slot pour un clic sur le bouton connect'entrée Settings.
      *
@@ -135,35 +129,61 @@ private slots:
     void on_actionSauvegarder_un_Fichier_triggered();
 
     /*!
-     *  \brief Slot pour un clic sur le bouton Place.
-     *
-     *  Place (ou annule l'action) un item selectionné dans la liste.
-     */
-    void on_Place_clicked();
-    /*!
-     *  \brief Slot pour un clic sur le bouton Delete.
-     *
-     *  Supprime un élément de la grille.
-     */
-    void on_Delete_clicked();
-    /*!
      *  \brief Slot pour un clic sur l'entrée Quit.
      *
      *  Quitte l'application.
      */
     void on_actionQuit_triggered();
 
+    /*!
+     *  \brief Slot de changement de valeur par défaut.
+     *  \param arg1 : Nouvelle valeur
+     *
+     *  Applique la nouvelle valeur par defaut à l'item courant.
+     */
     void on_def_value_valueChanged(int arg1);
 
+    /*!
+     *  \brief Slot lors d'un clic sur l'icone de modification.
+     *
+     *  Affiche la fenêtre de modification de l'objet courant.
+     */
     void on_modify_clicked();
 
+    /*!
+     *  \brief Slot lors d'un clic sur le bouton de la table de vérité.
+     *
+     *  Affiche la fenêtre de la table de vérité.
+     */
     void on_TableDeVerite_clicked();
 
+    /*!
+     *  \brief Slot lors d'un clic sur l'action Francais dans le menu langues.
+     *
+     *  Change la langue du programme en Francais.
+     */
     void on_actionFrench_triggered();
 
+    /*!
+     *  \brief Slot lors d'un clic sur l'action Anglais dans le menu langues.
+     *
+     *  Change la langue du programme en Anglais.
+     */
     void on_actionEnglish_triggered();
 
+    /*!
+     *  \brief Slot lors d'un clic sur l'action Nouveau dans le menu Fichier.
+     *
+     *  Crée une nouvelle grille.
+     */
     void on_actionNew_triggered();
+
+    /*!
+     *  \brief Slot lors d'un changement du mode.
+     *
+     *  Change l'action courante et applique les modifications associées.
+     */
+    void on_mode_activated(int index);
 
 private:
     Ui::MApp *ui; /*!< Interface de la classe*/

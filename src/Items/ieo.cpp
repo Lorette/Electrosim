@@ -1,14 +1,35 @@
+/***********************************************************************
+ * Module:  ieo.cpp
+ * Author:  SALMON PAUL
+ *          MONLOUIS Kevyn
+ *          DUREUIL Brice
+ * Modified: mardi 5 juin 2012 15:01:47
+ * Purpose: Implementation of the class IeO
+ ***********************************************************************/
+
 #include "ieo.h"
+
+////////////////////////////////////////////////////////////////////////
+// Name:       IeO::IeO(int n) : Item()
+// Purpose:    Implementation of IeO::IeO()
+// Return:
+////////////////////////////////////////////////////////////////////////
 
 IeO::IeO(int n) : Item()
 {
     this->image = ":/Images/ieo.png";
     this->description = "Input egal Output";
     this->aux = n;
-    this->classe = Item::IeO8;
+    this->classe = Item::IeO;
     this->inputs.resize(1); // 1 entrée ...
     this->outputs.resize(n); // ... et n sorties
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       bool IeO::_do()
+// Purpose:    Implementation of IeO::_do()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool IeO::_do() {
     for(int i = 0; i < this->outputs.size(); i++)
@@ -23,8 +44,13 @@ bool IeO::_do() {
     return true;
 }
 
-bool IeO::setAuxValue(int value) {
+////////////////////////////////////////////////////////////////////////
+// Name:       void IeO::setAuxValue(int value)
+// Purpose:    Implementation of IeO::setAuxValue()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void IeO::setAuxValue(int value) {
     this->aux = value;
     this->outputs.resize(this->aux);
-    return true;
 }

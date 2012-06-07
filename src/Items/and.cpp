@@ -1,13 +1,34 @@
+/***********************************************************************
+ * Module:  and.cpp
+ * Author:  SALMON PAUL
+ *          MONLOUIS Kevyn
+ *          DUREUIL Brice
+ * Modified: samedi 12 mai 2012 17:18:12
+ * Purpose: Implementation of the class And
+ ***********************************************************************/
+
 #include "and.h"
+
+////////////////////////////////////////////////////////////////////////
+// Name:       And::And() : Item()
+// Purpose:    Implementation of And::And()
+// Return:
+////////////////////////////////////////////////////////////////////////
 
 And::And() : Item()
 {
     this->image = ":/Images/and.png";
     this->description = "And";
-    this->classe = Item::And4;
+    this->classe = Item::And;
     this->inputs.resize(2); // 2 entrées ...
     this->outputs.resize(1); // ... et 1 sortie
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       bool And::_do()
+// Purpose:    Implementation of And::_do()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool And::_do() {
     if(this->outputs.at(0) == NULL) // Si il y'a pas de connection sur la premeire sortie

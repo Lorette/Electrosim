@@ -1,6 +1,19 @@
+/***********************************************************************
+ * Module:  gridview.cpp
+ * Author:  SALMON PAUL
+ *          MONLOUIS Kevyn
+ *          DUREUIL Brice
+ * Modified: samedi 12 mai 2012 18:37:49
+ * Purpose: Implementation of the class GridView
+ ***********************************************************************/
+
 #include "gridview.h"
-#include <QMessageBox>
-#include <QToolTip>
+
+////////////////////////////////////////////////////////////////////////
+// Name:       GridView::GridView(QWidget *parent) : QTableView(parent)
+// Purpose:    Implementation of GridView::GridView()
+// Return:
+////////////////////////////////////////////////////////////////////////
 
 GridView::GridView(QWidget *parent) : QTableView(parent) // Constructeur
 {
@@ -9,6 +22,11 @@ GridView::GridView(QWidget *parent) : QTableView(parent) // Constructeur
 
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       void GridView::mouseMoveEvent(QMouseEvent *event)
+// Purpose:    Implementation of GridView::mouseMoveEvent()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
 
 void GridView::mouseMoveEvent(QMouseEvent *event) { // Des que la souris bouge, cette fonction est appelée
     const QModelIndex index = this->indexAt(event->pos()); // Recupère l'index à la position de la souris
@@ -18,11 +36,23 @@ void GridView::mouseMoveEvent(QMouseEvent *event) { // Des que la souris bouge, 
 
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       void GridView::enableTracking(bool enable)
+// Purpose:    Implementation of GridView::enableTracking()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
 void GridView::enableTracking(bool enable) { // Active/désactive le suivi de la souris
     this->tracking = enable;
 
     this->model()->setData(QModelIndex(),0);
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       void GridView::paintEvent(QPaintEvent *event)
+// Purpose:    Implementation of GridView::paintEvent()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
 
 void GridView::paintEvent(QPaintEvent *event) { // !!!!!!!!! @@@@@@@@@@@ Paul
     // call QTableView's paint event first so we can draw over it

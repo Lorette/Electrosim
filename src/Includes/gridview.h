@@ -17,7 +17,7 @@
  *         MONLOUIS Kevyn
  *         DUREUIL Brice
  * \version 1.0
- * \date 12 mai 2011
+ * \date 12 mai 2012
  */
 
 #include <QTableView>
@@ -35,6 +35,7 @@ class GridView : public QTableView
 {
     Q_OBJECT
 public:
+
     /*!
      *  \brief Constructeur.
      *
@@ -42,6 +43,7 @@ public:
      *  \param parent : widget parent
      */
     explicit GridView(QWidget *parent = 0);
+
     /*!
      *  \brief Crée un index.
      *  \param row : numéro de la ligne
@@ -53,13 +55,22 @@ public:
     void enableTracking(bool enable);
 
 private:
-    bool tracking;
-
-signals :
-    void modelIndexChanged(const QModelIndex &index);
+    bool tracking; /*!< Booleen d'application du tracage de la souris*/
 
 public slots:
+
+    /*!
+     *  \brief Slot exécuté lors d'un mouvement de la souris.
+     *  \param event : Données du mouvement
+     *
+     */
     void mouseMoveEvent ( QMouseEvent * event );
+
+    /*!
+     *  \brief Slot exécuté lors d'une actualisation de la vue.
+     *  \param event : données d'actualisation
+     *
+     */
     void paintEvent (QPaintEvent* event);
 };
 

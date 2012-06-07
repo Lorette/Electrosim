@@ -1,6 +1,19 @@
+/***********************************************************************
+ * Module:  gridmodel.cpp
+ * Author:  SALMON PAUL
+ *          MONLOUIS Kevyn
+ *          DUREUIL Brice
+ * Modified: samedi 12 mai 2012 17:15:14
+ * Purpose: Implementation of the class GridModel
+ ***********************************************************************/
+
 #include "gridmodel.h"
 
-#include <QMessageBox>
+////////////////////////////////////////////////////////////////////////
+// Name:       GridModel::GridModel(int rows, int columns)
+// Purpose:    Implementation of GridModel::GridModel()
+// Return:
+////////////////////////////////////////////////////////////////////////
 
 GridModel::GridModel(int rows, int columns) //Constructeur
 {
@@ -16,11 +29,23 @@ GridModel::GridModel(int rows, int columns) //Constructeur
         this->items[i].resize(this->column_count); // ... ainsi que toutes les colonnes
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       GridModel::~GridModel()
+// Purpose:    Implementation of GridModel::~GridModel()
+// Return:
+////////////////////////////////////////////////////////////////////////
+
 GridModel::~GridModel() {
     for(int i = 0; i < this->row_count; i++)
         for(int j = 0; j < this->column_count; j++)
             this->removeItem(this->index(i,j));
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       QModelIndex GridModel::index(int row, int column, const QModelIndex &parent
+// Purpose:    Implementation of QModelIndex GridModel::index()
+// Return:     QModelIndex
+////////////////////////////////////////////////////////////////////////
 
 QModelIndex GridModel::index(int row, int column, const QModelIndex &parent) const { // Créer un index correct avec les bonnes coorodnnées
     QModelIndex index = this->createIndex(row,column);
@@ -29,6 +54,12 @@ QModelIndex GridModel::index(int row, int column, const QModelIndex &parent) con
    return index;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       QModelIndex GridModel::parent(const QModelIndex &child)
+// Purpose:    Implementation of GridModel::parent()
+// Return:     QModelIndex
+////////////////////////////////////////////////////////////////////////
+
 QModelIndex GridModel::parent(const QModelIndex &child) const { // Non utilisé, mais obligatoire
     QModelIndex index;
 
@@ -36,14 +67,32 @@ QModelIndex GridModel::parent(const QModelIndex &child) const { // Non utilisé, 
 
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       int GridModel::rowCount(const QModelIndex &parent)
+// Purpose:    Implementation of GridModel::rowCount()
+// Return:     int
+////////////////////////////////////////////////////////////////////////
+
 int GridModel::rowCount(const QModelIndex &parent) const { // Retourne le nombre de ligne
     return this->row_count;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       int GridModel::columnCount(const QModelIndex &parent)
+// Purpose:    Implementation of GridModel::columnCount()
+// Return:     int
+////////////////////////////////////////////////////////////////////////
 
 int GridModel::columnCount(const QModelIndex &parent) const { // Retourne le nombre de colonne
     return this->column_count;
 
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       QVariant GridModel::data(const QModelIndex &index, int role)
+// Purpose:    Implementation of GridModel::data()
+// Return:     QVariant
+////////////////////////////////////////////////////////////////////////
 
 QVariant GridModel::data(const QModelIndex &index, int role) const { // Retourne l'aspect d'un élément du tableau (QVariant est un type non défini pouvant être tout et n'importe quoi)
     Item *c;
@@ -64,14 +113,20 @@ QVariant GridModel::data(const QModelIndex &index, int role) const { // Retourne
     if(role == Qt::UserRole && ((c = this->items.at(index.row()).at(index.column())) != NULL)) // Paul !!!!! @@@@@ Retourne qqch ...
         return getConnexions(c);
 
-    if(role == Qt::UserRole+1 && ((c = this->items.at(index.row()).at(index.column())) != NULL) && c->getClass() == Item::Input0)
+    if(role == Qt::UserRole+1 && ((c = this->items.at(index.row()).at(index.column())) != NULL) && c->getClass() == Item::Input)
         return c->getAuxValue();
 
-    if(role == Qt::UserRole+2 && ((c = this->items.at(index.row()).at(index.column())) != NULL) && c->getClass() == Item::Output1)
+    if(role == Qt::UserRole+2 && ((c = this->items.at(index.row()).at(index.column())) != NULL) && c->getClass() == Item::Output)
         return c->getAuxValue();
 
     return QVariant();
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::insertColumn(int column, const QModelIndex &parent)
+// Purpose:    Implementation of GridModel::insertColumn()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool GridModel::insertColumn(int column, const QModelIndex &parent) { // Insertion d'une colonne
     this->beginInsertColumns(parent,this->column_count, this->column_count);
@@ -86,6 +141,12 @@ bool GridModel::insertColumn(int column, const QModelIndex &parent) { // Inserti
 
     return true;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::removeColumn(int column, const QModelIndex &parent)
+// Purpose:    Implementation of GridModel::removeColumn()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool GridModel::removeColumn(int column, const QModelIndex &parent) { // Suppression d'une colonne
     if(this->column_count == 0)
@@ -108,6 +169,12 @@ bool GridModel::removeColumn(int column, const QModelIndex &parent) { // Suppres
     return true;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::insertRow(int row, const QModelIndex &parent)
+// Purpose:    Implementation of GridModel::insertRow()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
+
 bool GridModel::insertRow(int row, const QModelIndex &parent) { // insertion d'une ligne
     this->beginInsertRows(parent, this->row_count, this->row_count);
 
@@ -120,6 +187,12 @@ bool GridModel::insertRow(int row, const QModelIndex &parent) { // insertion d'u
 
     return true;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::removeRow(int row, const QModelIndex &parent)
+// Purpose:    Implementation of GridModel::removeRow()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool GridModel::removeRow(int row, const QModelIndex &parent) { // Suppression d'une ligne
     if(this->row_count == 0)
@@ -142,6 +215,12 @@ bool GridModel::removeRow(int row, const QModelIndex &parent) { // Suppression d
     return true;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::insertColumns(int column, int count, const QModelIndex &parent)
+// Purpose:    Implementation of GridModel::insertColumns()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
+
 bool GridModel::insertColumns(int column, int count, const QModelIndex &parent) { // Insertion de plusieurs colonnes
     if(count == 0)
         return false;
@@ -158,6 +237,12 @@ bool GridModel::insertColumns(int column, int count, const QModelIndex &parent) 
 
     return true;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::removeColumns(int column, int count, const QModelIndex &parent)
+// Purpose:    Implementation of GridModel::removeColumns()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool GridModel::removeColumns(int column, int count, const QModelIndex &parent) {
     if(this->column_count - count < 0 || count == 0)
@@ -182,6 +267,12 @@ bool GridModel::removeColumns(int column, int count, const QModelIndex &parent) 
     return true;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::insertRows(int row, int count, const QModelIndex &parent)
+// Purpose:    Implementation of GridModel::insertRows()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
+
 bool GridModel::insertRows(int row, int count, const QModelIndex &parent) { // Insertion de plusieurs lignes
     if(count == 0)
         return false;
@@ -199,6 +290,12 @@ bool GridModel::insertRows(int row, int count, const QModelIndex &parent) { // I
 
     return true;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::removeRows(int row, int count, const QModelIndex &parent)
+// Purpose:    Implementation of GridModel::removeRows()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool GridModel::removeRows(int row, int count, const QModelIndex &parent) {
     if(this->row_count - count < 0 || count == 0)
@@ -223,12 +320,24 @@ bool GridModel::removeRows(int row, int count, const QModelIndex &parent) {
     return true;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       Item* GridModel::at(const QModelIndex &index)
+// Purpose:    Implementation of GridModel::at()
+// Return:     Item*
+////////////////////////////////////////////////////////////////////////
+
 Item* GridModel::at(const QModelIndex &index) { // Retourne l'élément à l'index indiqué
     if(index.row() < 0 || index.row() > this->row_count || index.column() < 0 || index.column() > this->column_count)
         return NULL;
 
     return this->items.at(index.row()).at(index.column());
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::addItem(const QModelIndex &index, Item* item)
+// Purpose:    Implementation of GridModel::addItem()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool GridModel::addItem(const QModelIndex &index, Item* item) { // Rajoute un item à l'index indiqué
     if(!item)
@@ -245,16 +354,22 @@ bool GridModel::addItem(const QModelIndex &index, Item* item) { // Rajoute un it
     //ajout de l'objet
     this->items[index.row()][index.column()] = item;
 
-    if(item->getClass() == Item::Input0) {
+    if(item->getClass() == Item::Input) {
         this->inputs << item;
         QObject::connect(this, SIGNAL(launch()), item, SLOT(recvSignal())); // On crée une connexion entre lui et le controlleur pour la simulation
     }
 
-    if(item->getClass() == Item::Output1)
+    if(item->getClass() == Item::Output)
         this->outputs << item;
 
     return true;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::setData ( const QModelIndex & index, const QVariant & value, int role)
+// Purpose:    Implementation of GridModel::setData()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool GridModel::setData ( const QModelIndex & index, const QVariant & value, int role) { // Mauvaise utilisation mais obligatoire
     this->current_modelIndex = index;
@@ -266,6 +381,12 @@ bool GridModel::setData ( const QModelIndex & index, const QVariant & value, int
     return true;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::connexion(Item::s_connect* conn)
+// Purpose:    Implementation of GridModel::connexion()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
+
 bool GridModel::connexion(Item::s_connect* conn) { // Rajoute une connection à l'emetteur
      if(!conn->sender->addNext(conn))
          return false;
@@ -276,6 +397,11 @@ bool GridModel::connexion(Item::s_connect* conn) { // Rajoute une connection à l
 
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::removeItem(const QModelIndex &index)
+// Purpose:    Implementation of GridModel::removeItem()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool GridModel::removeItem(const QModelIndex &index) { // Supprime un item à l'index indiqué
     Item *it = NULL;
@@ -287,9 +413,9 @@ bool GridModel::removeItem(const QModelIndex &index) { // Supprime un item à l'i
     QVector<Item::s_connect *> i_inputs = it->getInputs();
     QVector<Item::s_connect *> i_outputs = it->getOutputs();
 
-    if(it->getClass() == Item::Input0)
+    if(it->getClass() == Item::Input)
         this->inputs.removeOne(it);
-    if(it->getClass() == Item::Output1)
+    if(it->getClass() == Item::Output)
         this->outputs.removeOne(it);
 
     for(int i = 0; i < i_inputs.size(); i++)
@@ -303,6 +429,12 @@ bool GridModel::removeItem(const QModelIndex &index) { // Supprime un item à l'i
 
     return true;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::resetAllConnexions()
+// Purpose:    Implementation of GridModel::resetAllConnexions()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool GridModel::resetAllConnexions() { // Réinitialise toutes les connexions
     int n = this->connexions.size();
@@ -320,6 +452,12 @@ bool GridModel::resetAllConnexions() { // Réinitialise toutes les connexions
 
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       void GridModel::simulate()
+// Purpose:    Implementation of GridModel::simulate()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
 void GridModel::simulate() {
     this->resetAllConnexions();
     //initialise les sorties à -1 (-1 signifie que la valeur est inconnu car le circuit n'est pas complet)
@@ -327,6 +465,12 @@ void GridModel::simulate() {
         (*it)->setAuxValue(-1);
     emit launch();
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite()
+// Purpose:    Implementation of GridModel::verite()
+// Return:     QPair < QVector < QString > , QVector< QVector < int > > >
+////////////////////////////////////////////////////////////////////////
 
 QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
     QPair <QVector < QString >, QVector<QVector<int> > > resultat;
@@ -413,11 +557,17 @@ QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
     return resultat;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::setDefValueOnInput(Item *item, int value)
+// Purpose:    Implementation of GridModel::setDefValueOnInput()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
+
 bool GridModel::setDefValueOnInput(Item *item, int value) {
     if(item == NULL)
         return false;
 
-    if(item->getClass() != Item::Input0 && item->getClass() != Item::Mux5 && item->getClass() != Item::Demux6 && item->getClass() != Item::IeO8)
+    if(item->getClass() != Item::Input && item->getClass() != Item::Mux && item->getClass() != Item::Demux && item->getClass() != Item::IeO)
         return false;
 
     item->setAuxValue(value);
@@ -425,6 +575,12 @@ bool GridModel::setDefValueOnInput(Item *item, int value) {
 
     return true;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::saveInFile(QFile* file)
+// Purpose:    Implementation of GridModel::saveInFile()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool GridModel::saveInFile(QFile* file){
 
@@ -440,26 +596,27 @@ bool GridModel::saveInFile(QFile* file){
                 out << "composant\t" << this->items.at(i).at(j)->getName();
 
                 switch (this->items.at(i).at(j)->getClass()) {
-                case Item::Input0 :  out << "\tIN\t";
+                case Item::Input :  out << "\tIN\t";
                     break;
-                case Item::Output1 : out << "\tOUT\t";
+                case Item::Output : out << "\tOUT\t";
                     break;
-                case Item::Not2 : out << "\tNOT\t";
+                case Item::Not : out << "\tNOT\t";
                     break;
-                case Item::Or3 : out << "\tOR\t";
+                case Item::Or : out << "\tOR\t";
                     break;
-                case Item::And4 : out << "\tAND\t";
+                case Item::Xor : out << "\tXOR\t";
                     break;
-                case Item::Mux5 : out << "\tMUX\t";
+                case Item::XNOr : out << "\tXNOR\t";
                     break;
-                case Item::Demux6 : out << "\tDEMUX\t";
+                case Item::And : out << "\tAND\t";
                     break;
-                case Item::XNOr7 : out << "\tXNOR\t";
+                case Item::Mux : out << "\tMUX\t";
                     break;
-                case Item::IeO8 : out << "\tIEO\t";
+                case Item::Demux : out << "\tDEMUX\t";
                     break;
-                case Item::Xor9 : out << "\tXOR\t";
+                case Item::IeO : out << "\tIEO\t";
                     break;
+
                 }
 
                 out << i << "\t" << j << "\t" << QString::number(this->items.at(i).at(j)->getAuxValue()) << "\n";
@@ -471,6 +628,12 @@ bool GridModel::saveInFile(QFile* file){
 
     return true;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       GridModel* GridModel::loadFromFile(QFile* file)
+// Purpose:    Implementation of GridModel::loadFromFile()
+// Return:     GridModel*
+////////////////////////////////////////////////////////////////////////
 
 GridModel* GridModel::loadFromFile(QFile* file) {
     GridModel *model;
@@ -601,6 +764,12 @@ GridModel* GridModel::loadFromFile(QFile* file) {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       Item* GridModel::findChildByName(QString name)
+// Purpose:    Implementation of GridModel::findChildByName()
+// Return:     Item*
+////////////////////////////////////////////////////////////////////////
+
 Item* GridModel::findChildByName(QString name)
 {
     for( int i = 0 ; i < this->row_count ; i++)
@@ -611,6 +780,12 @@ Item* GridModel::findChildByName(QString name)
     return NULL;
 
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::nameIsCorrect(const QString& name)
+// Purpose:    Implementation of GridModel::nameIsCorrect()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 bool GridModel::nameIsCorrect(const QString& name) const
 {
@@ -626,6 +801,12 @@ bool GridModel::nameIsCorrect(const QString& name) const
     return true;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       bool GridModel::removeConnexion()
+// Purpose:    Implementation of GridModel::removeConnexion()
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
+
 bool GridModel::removeConnexion(Item::s_connect *conn) {
     if(conn == NULL || conn->sender == NULL || conn->receiver == NULL)
         return false;
@@ -638,6 +819,12 @@ bool GridModel::removeConnexion(Item::s_connect *conn) {
 
     return true;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       QList<QVariant> GridModel::getConnexions(Item *it)
+// Purpose:    Implementation of GridModel::getConnexions()
+// Return:     QList<QVariant>
+////////////////////////////////////////////////////////////////////////
 
 QList<QVariant> GridModel::getConnexions(Item *it) const {
     QVector<Item::s_connect *> it_outs = it->getOutputs();
@@ -657,6 +844,12 @@ QList<QVariant> GridModel::getConnexions(Item *it) const {
 
     return resultat;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       QModelIndex GridModel::getIndex(Item *item)
+// Purpose:    Implementation of GridModel::getIndex()
+// Return:     QModelIndex
+////////////////////////////////////////////////////////////////////////
 
 QModelIndex GridModel::getIndex(Item *item) const {
     for(int i = 0; i < this->items.size(); i++)

@@ -17,7 +17,7 @@
  *         MONLOUIS Kevyn
  *         DUREUIL Brice
  * \version 1.0
- * \date 12 mai 2011
+ * \date 12 mai 2012
  */
 
 #include <QAbstractItemModel>
@@ -254,6 +254,11 @@ public:
      */
     QPair <QVector < QString >, QVector< QVector < int > > >  verite();
 
+    /*! \brief Applique une variable auxiliaire à un élément.
+     *  \param item : l'élément auquel donnée la valeur
+     *  \param value : la valeur à appliquée
+     *  \return true si la valeur auxiliaire a bien été appliquée sinon false
+     */
     bool setDefValueOnInput(Item *item, int value);
 
     /*!
@@ -300,8 +305,20 @@ public:
      */
     bool removeConnexion(Item::s_connect* conn);
 
+    /*!
+     *  \brief Recupère les connexions d'un item et les transforment en ligne.
+     *  \param it : Item ciblé.
+     *
+     *  \return une liste de ligne casté en type variable.
+     */
     QList<QVariant> getConnexions(Item *it) const ;
 
+    /*!
+     *  \brief Recupère la position d'un item donnée dans la grille.
+     *  \param item : item cibl"
+     *
+     *  \return les positions sous forme d'index.
+     */
     QModelIndex getIndex(Item *item) const;
 signals:
     /*!
@@ -315,8 +332,8 @@ private :
     int column_count; /*!< Nombre de colonnes*/
     int row_count; /*!< Nombre de lignes*/
     QVector< QVector<Item*> > items; /*!< Données du modèle*/
-    QList <Item *> inputs;
-    QList <Item *> outputs;
+    QList <Item *> inputs; /*!< Entrées du modèle*/
+    QList <Item *> outputs; /*!< Sorties du modèle*/
     QModelIndex current_modelIndex; /*!< Index courant*/
     QList <Item::s_connect *> connexions; /*!< Connexions du modèle*/
 };

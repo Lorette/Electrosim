@@ -1,4 +1,19 @@
+/***********************************************************************
+ * Module:  item.cpp
+ * Author:  SALMON PAUL
+ *          MONLOUIS Kevyn
+ *          DUREUIL Brice
+ * Modified: lundi 7 mai 2012 22:45:20
+ * Purpose: Implementation of the class Item
+ ***********************************************************************/
+
 #include "item.h"
+
+////////////////////////////////////////////////////////////////////////
+// Name:       Item::Item(QObject *parent) : QObject(parent)
+// Purpose:    Implementation of Item::Item()
+// Return:
+////////////////////////////////////////////////////////////////////////
 
 Item::Item(QObject *parent) : QObject(parent) // Constructeur
 {
@@ -11,13 +26,12 @@ Item::Item(QObject *parent) : QObject(parent) // Constructeur
     this->aux = 0;
 }
 
-Item::~Item() // Destructeur
-{
-}
+////////////////////////////////////////////////////////////////////////
+// Name:       void Item::setAuxValue(int value)
+// Purpose:    Implementation of Item::setAuxValue()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
 
-bool Item::setAuxValue(int value) {
+void Item::setAuxValue(int value) {
     this->aux = value;
-
-    return true;
-
 }
