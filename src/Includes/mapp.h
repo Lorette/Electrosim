@@ -90,6 +90,12 @@ public:
      */
     Item* getItemInList();
 
+    /*!
+     *  \brief Met à jour les informations en fonction de l'item courant.
+     *
+     */
+    void updateInformations();
+
 private:
     /*!
      *  \brief Crée une connexion de type s_connect entre 2 Items.

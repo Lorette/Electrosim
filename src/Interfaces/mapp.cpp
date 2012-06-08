@@ -41,7 +41,6 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
     ui->listWidget->addItem(new QListWidgetItem("And")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("Multiplexer")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("Demultiplexer")); // Idem
-
     ui->listWidget->addItem(new QListWidgetItem("IeO")); // Idem
 
     ui->listWidget->setCurrentRow(0);
@@ -75,21 +74,10 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
     Item::s_connect *conn;
     this->currentIndex = index;
 
+    this->updateInformations();
+
     switch(this->currentAction) {
-    case VIEW : // SI l'action courante est la vue
-        if((aux = this->model->at(index)) != NULL) { // Et que l'Item séléctionné dans la grille existe
-            this->ui->name->setText(aux->getName()); // On met son nom dans la partie Informations
-            this->ui->modify->setEnabled(true); // On active la modification
-            this->ui->description->setText(aux->getDescription()); // On recupère la description
-            (aux->getClass() == Item::Input) ? this->ui->def_value->setValue(aux->getAuxValue()) : this->ui->def_value->setEnabled(false);
-            this->ui->def_value->setEnabled(true);
-        }
-        else {
-            this->ui->name->setText(""); // Sinon on ne met pas de nom ...
-            this->ui->def_value->setEnabled(false); // Désactivation valeur par default
-            this->ui->description->setText(""); // Pas de description
-            this->ui->modify->setEnabled(false);
-        }
+    case VIEW :
         break;
     case PLACE : // Si l'action est le placement d'un nouvel Item
         if((aux = this->getItemInList()) != NULL) {
@@ -123,7 +111,6 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
             }
         }
         break;
-
     case CONNECT1 : // SI c'est la première fois qu'on clic sur la grille alors qu'on veut faire une connection
         if((this->currentItem = this->model->at(index)) == NULL) // Si il n'y a pas d'item à l'endroit séléctionné + on sauvegarde cet Item
             QMessageBox::critical(this,tr("Error"),tr("You have to select a component.")); // On l'indique
@@ -134,19 +121,15 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
         break;
     case CONNECT2 : // Si c'est la deuxième fois qu'on clic sur la grille alors qu'on veut faire une connection
         if((aux = this->model->at(index)) != NULL && aux != this->currentItem) { // Si le deuxième Item séléctionné existe et qu'il est différent du premier
-            conn = this->autoS_connect(this->currentItem, aux); // On crée une connection entre ces deux Items
-
-            if(conn != NULL)  // Si la connection s'est correctement crée
+            if((conn = this->autoS_connect(this->currentItem, aux)) != NULL)  // Si la connection s'est correctement crée
                 if(!this->model->connexion(conn))  // On le rajoute au model
                     QMessageBox::critical(this,tr("Error"),tr("Unable to connect those components.")); // On indique une erreur
-
         }
         else {
             QMessageBox::critical(this,tr("Error"),tr("You have to select a second component.")); // On indique une erreur
             break;
         }
-
-        this->ui->statusBar->showMessage(tr("You have two click on the first component (sender)."));
+        this->ui->statusBar->showMessage(tr("You have to click on the first component (sender)."));
         this->currentAction = CONNECT1;
         break; 
     case DELETE :
@@ -155,7 +138,7 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
         break;
     }
 
-    this->model->setData(QModelIndex(), QVariant(), 0);
+    this->updateInformations();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -215,7 +198,6 @@ Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) { // Affichag
 
 void MApp::on_actionSettings_triggered() // Fenetre des options pour l'application
 {
-
     QDialog *wSettings = new QDialog(this); // On initialise la fenetre ...
     Ui::Settings *uSettings = new Ui::Settings; // ... l'interface ...
     uSettings->setupUi(wSettings); // ... et on les lie
@@ -369,7 +351,7 @@ void MApp::on_actionQuit_triggered()
 void MApp::on_def_value_valueChanged(int arg1)
 {
     this->model->setDefValueOnInput(this->model->at(this->currentIndex), this->ui->def_value->value());
-    emit this->ui->tableView->setFocus(); // On met le focus sur la grille (provoque une mise a jour visuelle)
+    this->updateInformations();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -384,30 +366,30 @@ void MApp::on_modify_clicked()
     Ui::Modify *uModify = new Ui::Modify; // ... l'interface ...
     QVector <QCheckBox *> box_i;
     QVector <QCheckBox *> box_o;
-    Item *it;
+    Item *item;
     int plc;
 
-    if((it = this->model->at(this->currentIndex)) == NULL)
+    if((item = this->model->at(this->currentIndex)) == NULL)
             return;
 
-    QVector<Item::s_connect *> outputs = it->getOutputs(); // On recupere les connections sortantes
-    QVector<Item::s_connect *> inputs = it->getInputs(); // On recupere les connections entrantes
+    QVector<Item::s_connect *> outputs = item->getOutputs(); // On recupere les connections sortantes
+    QVector<Item::s_connect *> inputs = item->getInputs(); // On recupere les connections entrantes
     box_i.resize(inputs.size());
     box_o.resize(outputs.size());
 
     uModify->setupUi(wModify); // ... et on les lie
-    wModify->setWindowTitle(tr("Modifying") +" " +it->getName());
+    wModify->setWindowTitle(tr("Modifying") +" " +item->getName());
 
-    uModify->name->setText(it->getName());
-    if(it->getClass() == Item::Mux || it->getClass() == Item::Demux || it->getClass() == Item::IeO)
+    uModify->name->setText(item->getName());
+    if(item->getClass() == Item::Mux || item->getClass() == Item::Demux || item->getClass() == Item::IeO)
         uModify->Inputs->setVisible(true);
     else
         uModify->Inputs->setVisible(false);
 
-    if(it->getClass() == Item::IeO)
+    if(item->getClass() == Item::IeO)
         uModify->Inputs->setSuffix(tr(" Outputs"));
 
-    uModify->Inputs->setValue(it->getAuxValue());
+    uModify->Inputs->setValue(item->getAuxValue());
 
     plc = 0;
     for(QVector<Item::s_connect *>::iterator it = inputs.begin(); it != inputs.end(); it++) {
@@ -437,12 +419,12 @@ void MApp::on_modify_clicked()
     }
 
     if(wModify->exec() == QDialog::Accepted) { // Fenetre bloquante
-        if(uModify->name->text() != it->getName())
+        if(uModify->name->text() != item->getName())
         {
             if(!(this->model->nameIsCorrect(uModify->name->text())))
                 QMessageBox::critical(0,tr("Incorrect name"), tr("A name have to be unique and without space."));
             else
-                it->setName(uModify->name->text());
+                item->setName(uModify->name->text());
         }
 
         for(int i = 0; i < box_i.size(); i++)
@@ -453,27 +435,26 @@ void MApp::on_modify_clicked()
             if(box_o.at(i) != NULL && !box_o.at(i)->isChecked())
                 this->model->removeConnexion(outputs.at(i));
 
-        if(it->getClass() == Item::Mux && uModify->Inputs->value() < it->getAuxValue())
-            for(int i = uModify->Inputs->value() +1; i < it->getAuxValue() + log2(it->getAuxValue()); i++)
+        if(item->getClass() == Item::Mux && uModify->Inputs->value() < item->getAuxValue())
+            for(int i = uModify->Inputs->value() +1; i < item->getAuxValue() + log2(item->getAuxValue()); i++)
                 this->model->removeConnexion(inputs.at(i));
 
-        if(it->getClass() == Item::Demux && uModify->Inputs->value() < it->getAuxValue()) {
-            for(int i = uModify->Inputs->value(); i < it->getAuxValue(); i++)
+        if(item->getClass() == Item::Demux && uModify->Inputs->value() < item->getAuxValue()) {
+            for(int i = uModify->Inputs->value(); i < item->getAuxValue(); i++)
                 this->model->removeConnexion(inputs.at(i));
-            for(int i = qPow(2,uModify->Inputs->value()); i < qPow(2,it->getAuxValue()); i++)
+            for(int i = qPow(2,uModify->Inputs->value()); i < qPow(2,item->getAuxValue()); i++)
                 this->model->removeConnexion(outputs.at(i));
         }
 
-        if(it->getClass() == Item::IeO && uModify->Inputs->value() < it->getAuxValue())
-            for(int i = uModify->Inputs->value(); i < it->getAuxValue(); i++)
+        if(item->getClass() == Item::IeO && uModify->Inputs->value() < item->getAuxValue())
+            for(int i = uModify->Inputs->value(); i < item->getAuxValue(); i++)
                 this->model->removeConnexion(outputs.at(i));
 
-         this->model->setDefValueOnInput(it, uModify->Inputs->value());
+         this->model->setDefValueOnInput(item, uModify->Inputs->value());
     }
 
     delete uModify; // On détruit l'interface ...
     delete wModify; // ... et la fenetre
-    this->on_tableView_clicked(this->currentIndex);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -566,26 +547,50 @@ void MApp::on_actionNew_triggered()
 
 void MApp::on_mode_activated(int index)
 {
+    this->updateInformations();
+    this->ui->tableView->enableTracking(false); // On desactive la coloration des cases
+
     switch(index) {
     case VIEW : this->currentAction = VIEW;
-        this->ui->tableView->enableTracking(false); // On desactive la coloration des cases
         this->ui->statusBar->showMessage(tr("Select a component on the grid."));
         break;
     case PLACE : this->currentAction = PLACE;
-        this->ui->modify->setEnabled(false);
         this->ui->tableView->enableTracking(true); // On active la coloration des cases
         this->ui->statusBar->showMessage(tr("You have to select a position on the grid to place this component."));
         break;
 
     case CONNECT1 : this->currentAction = CONNECT1;
-        this->ui->modify->setEnabled(false);
-        this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
         this->ui->statusBar->showMessage(tr("You have two click on the first component (sender)."));
         break;
     case DELETE : this->currentAction = DELETE;
-        this->ui->modify->setEnabled(false);
-        this->ui->tableView->enableTracking(false); // On désactive la coloration des cases pour le placement
         this->ui->statusBar->showMessage(tr("Click one of the component in the grid to delete it."));
         break;
     }
+
+    this->updateInformations();
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       void MApp::updateInformations()
+// Purpose:    Implementation of MApp::updateInformations()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void MApp::updateInformations() {
+    Item *it = this->model->at(this->currentIndex);
+
+    if(it == NULL) {
+        this->ui->name->setText(""); // On met son nom dans la partie Informations
+        this->ui->description->setText(""); // On recupère la description
+        this->ui->def_value->setValue(0);
+        this->ui->def_value->setEnabled(false);
+    }
+    else {
+        this->ui->name->setText(it->getName()); // On met son nom dans la partie Informations
+        this->ui->description->setText(it->getDescription()); // On recupère la description
+        this->ui->def_value->setValue((it->getClass() == Item::Input && this->currentAction == VIEW) ? it->getAuxValue() : 0);
+        this->ui->def_value->setEnabled((it->getClass() == Item::Input && this->currentAction == VIEW) ? true : false);
+    }
+
+    this->model->setData(QModelIndex(), QVariant(), 0);
 }
