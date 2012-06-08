@@ -97,8 +97,23 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
                 QMessageBox::critical(0,tr("Error"),tr("Position already used.")); // On indique que l'endroit est déjà pris
             else {
                 int i = 0;
-                 while(!(this->model->nameIsCorrect("Item" +QString::number(i)))) { i++; }
-                if((name = QInputDialog::getText(this,tr("Give a name"),tr("Give a name to this component."), QLineEdit::Normal, "Item" +QString::number(i))) != "") { // Sinon on demande un nom
+                QString default_name;
+
+                //Choisi un bon nom par défaut
+                switch (aux->getClass())
+                {
+                    case Item::Input :
+                        default_name = "In";
+                        break;
+                    case Item::Output :
+                        default_name = "Out";
+                        break;
+                    default :
+                        default_name = "Item";
+                }
+
+                 while(!(this->model->nameIsCorrect(default_name +QString::number(i)))) { i++; }
+                if((name = QInputDialog::getText(this,tr("Give a name"),tr("Give a name to this component."), QLineEdit::Normal, default_name +QString::number(i))) != "") { // Sinon on demande un nom
                     aux->setName(name); // On met le nom à l'Item en cours de placement
                     if(!this->model->addItem(index, aux)) // On le rajoute au model
                         QMessageBox::critical(0,tr("Incorrect name"), tr("A name have to be unique and without space.")); //le nom doit etre unique
