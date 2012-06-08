@@ -159,14 +159,25 @@ Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) { // Affichag
     uConnOpt->name_1->setText(sender->getName()); // On recupere les noms ...
     uConnOpt->name_2->setText(receiver->getName()); // ... et on les affiche
 
+
+    if(receiver->getClass() == Item::Mux) {
+        int i;
+        for(i = 0; i < receiver->getAuxValue(); i++) // Ici ...
+            if(inputs.at(i) == NULL) // ... on indique les entrées disponibles ...
+                uConnOpt->chk_inputs->addItem(tr("Input") +" " +(QString::number(i))); // ... pour le 2eme Item (Récepteur)
+        for(i; i < inputs.size();i++ )
+            if(inputs.at(i) == NULL)
+                uConnOpt->chk_inputs->addItem(tr("Adress") +" " +(QString::number(i))); // ... pour le 2eme Item (Récepteur)
+    }
+    else
+        for(int i = 0; i < inputs.size(); i++) // Ici ...
+            if(inputs.at(i) == NULL) // ... on indique les entrées disponibles ...
+                uConnOpt->chk_inputs->addItem(tr("Input") +" " +(QString::number(i))); // ... pour le 2eme Item (Récepteur)
+
     for(int i = 0; i < outputs.size(); i++) // Ici ...
         if(outputs.at(i) == NULL) // ... on indique les sorties disponibles ...
-            uConnOpt->chk_outputs->addItem(QString::number(i));  // ... pour le 1er Item (Emetteur)
+            uConnOpt->chk_outputs->addItem(tr("Output") +" " +(QString::number(i)));  // ... pour le 1er Item (Emetteur)
 
-
-    for(int i = 0; i < inputs.size(); i++) // Ici ...
-        if(inputs.at(i) == NULL) // ... on indique les entrées disponibles ...
-            uConnOpt->chk_inputs->addItem(QString::number(i)); // ... pour le 2eme Item (Récepteur)
 
     if(wConnOpt->exec() == QDialog::Accepted) { // On affiche la fenetre (exec va bloquer l'application sur cette fenetre)
 
@@ -175,9 +186,9 @@ Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) { // Affichag
 
         conn = new Item::s_connect;
         conn->sender = sender; // On indique l'emetteur
-        conn->output = uConnOpt->chk_outputs->currentText().toInt(); // la sortie
+        conn->output = uConnOpt->chk_outputs->currentText().split(" ").last().toInt(); // la sortie
         conn->receiver = receiver; // le recepteur
-        conn->input = uConnOpt->chk_inputs->currentText().toInt(); // l'entrée
+        conn->input = uConnOpt->chk_inputs->currentText().split(" ").last().toInt(); // l'entrée
         conn->value = NULL; // et la valeur
     }
     else
@@ -387,8 +398,9 @@ void MApp::on_modify_clicked()
         uModify->Inputs->setVisible(false);
 
     if(item->getClass() == Item::IeO)
-        uModify->Inputs->setSuffix(tr(" Outputs"));
-
+        uModify->Inputs->setSuffix(" " +tr("Outputs"));
+    else
+        uModify->Inputs->setSuffix(" " +tr("Inputs"));
     uModify->Inputs->setValue(item->getAuxValue());
 
     plc = 0;

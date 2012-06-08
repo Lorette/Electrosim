@@ -46,7 +46,7 @@
    <item row="2" column="0">
     <widget class="QSpinBox" name="Inputs">
      <property name="suffix">
-      <string> Inputs</string>
+      <string/>
      </property>
     </widget>
    </item>
