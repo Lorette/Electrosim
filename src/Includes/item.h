@@ -120,7 +120,7 @@ public:
      *
      *  \return true si la connexion est réussi sinon false
      */
-    inline bool addNext(s_connect* conn) { if((conn->output > this->outputs.size()) || (this->outputs.at(conn->output) != NULL) || (!conn->receiver->askForConnection(conn))) return false; this->outputs[conn->output] = conn; QObject::connect(this, SIGNAL(sendSignal()), conn->receiver, SLOT(recvSignal())); this->deleted = false; return true; }
+    inline bool addNext(s_connect* conn) { if((conn->output > this->outputs.size()) || (this->outputs.at(conn->output) != NULL) || (!conn->receiver->askForConnection(conn))) return false; this->outputs[conn->output] = conn; this->deleted = false; return true; }
 
     /*!
      *  \brief Rajoute une connexion à l'item courant en entrée.

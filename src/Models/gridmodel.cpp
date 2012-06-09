@@ -392,6 +392,7 @@ bool GridModel::connexion(Item::s_connect* conn) { // Rajoute une connection à l
          return false;
 
      this->connexions << conn;
+     QObject::connect(conn->sender, SIGNAL(sendSignal()), conn->receiver, SLOT(recvSignal()));
      conn->sender->recvSignal();
      return true;
 

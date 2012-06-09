@@ -165,7 +165,7 @@ Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) { // Affichag
         for(i = 0; i < receiver->getAuxValue(); i++) // Ici ...
             if(inputs.at(i) == NULL) // ... on indique les entrées disponibles ...
                 uConnOpt->chk_inputs->addItem(tr("Input") +" " +(QString::number(i))); // ... pour le 2eme Item (Récepteur)
-        for(i; i < inputs.size();i++ )
+        for(i = i; i < inputs.size();i++ )
             if(inputs.at(i) == NULL)
                 uConnOpt->chk_inputs->addItem(tr("Adress") +" " +(QString::number(i))); // ... pour le 2eme Item (Récepteur)
     }
