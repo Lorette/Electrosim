@@ -751,7 +751,9 @@ GridModel* GridModel::loadFromFile(QFile* file) {
             link->input = (list[4]).toInt();
             link->value = NULL;
 
-
+            //si l'un des composants de la liaison existe pas on annule le chargement
+            if( link->sender == NULL || link->receiver == NULL )
+                return NULL;
 
             if( !model->connexion(link) )
                 return NULL;
