@@ -42,12 +42,12 @@ GridModel::~GridModel() {
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       QModelIndex GridModel::index(int row, int column, const QModelIndex &parent
+// Name:       QModelIndex GridModel::index(int row, int column, const QModelIndex&)
 // Purpose:    Implementation of QModelIndex GridModel::index()
 // Return:     QModelIndex
 ////////////////////////////////////////////////////////////////////////
 
-QModelIndex GridModel::index(int row, int column, const QModelIndex &parent) const { // Créer un index correct avec les bonnes coorodnnées
+QModelIndex GridModel::index(int row, int column, const QModelIndex&) const { // Créer un index correct avec les bonnes coorodnnées
     QModelIndex index = this->createIndex(row,column);
 
 
@@ -55,12 +55,12 @@ QModelIndex GridModel::index(int row, int column, const QModelIndex &parent) con
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       QModelIndex GridModel::parent(const QModelIndex &child)
+// Name:       QModelIndex GridModel::parent(const QModelIndex&)
 // Purpose:    Implementation of GridModel::parent()
 // Return:     QModelIndex
 ////////////////////////////////////////////////////////////////////////
 
-QModelIndex GridModel::parent(const QModelIndex &child) const { // Non utilisé, mais obligatoire
+QModelIndex GridModel::parent(const QModelIndex&) const { // Non utilisé, mais obligatoire
     QModelIndex index;
 
     return index;
@@ -68,22 +68,22 @@ QModelIndex GridModel::parent(const QModelIndex &child) const { // Non utilisé, 
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       int GridModel::rowCount(const QModelIndex &parent)
+// Name:       int GridModel::rowCount(const QModelIndex&)
 // Purpose:    Implementation of GridModel::rowCount()
 // Return:     int
 ////////////////////////////////////////////////////////////////////////
 
-int GridModel::rowCount(const QModelIndex &parent) const { // Retourne le nombre de ligne
+int GridModel::rowCount(const QModelIndex&) const { // Retourne le nombre de ligne
     return this->row_count;
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       int GridModel::columnCount(const QModelIndex &parent)
+// Name:       int GridModel::columnCount(const QModelIndex&)
 // Purpose:    Implementation of GridModel::columnCount()
 // Return:     int
 ////////////////////////////////////////////////////////////////////////
 
-int GridModel::columnCount(const QModelIndex &parent) const { // Retourne le nombre de colonne
+int GridModel::columnCount(const QModelIndex&) const { // Retourne le nombre de colonne
     return this->column_count;
 
 }
@@ -123,12 +123,12 @@ QVariant GridModel::data(const QModelIndex &index, int role) const { // Retourne
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       bool GridModel::insertColumn(int column, const QModelIndex &parent)
+// Name:       bool GridModel::insertColumn(int, const QModelIndex &parent)
 // Purpose:    Implementation of GridModel::insertColumn()
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::insertColumn(int column, const QModelIndex &parent) { // Insertion d'une colonne
+bool GridModel::insertColumn(int, const QModelIndex &parent) { // Insertion d'une colonne
     this->beginInsertColumns(parent,this->column_count, this->column_count);
 
     for(int i = 0; i < this->row_count; i++)
@@ -143,12 +143,12 @@ bool GridModel::insertColumn(int column, const QModelIndex &parent) { // Inserti
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       bool GridModel::removeColumn(int column, const QModelIndex &parent)
+// Name:       bool GridModel::removeColumn(int, const QModelIndex &parent)
 // Purpose:    Implementation of GridModel::removeColumn()
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::removeColumn(int column, const QModelIndex &parent) { // Suppression d'une colonne
+bool GridModel::removeColumn(int, const QModelIndex &parent) { // Suppression d'une colonne
     if(this->column_count == 0)
         return false;
 
@@ -170,12 +170,12 @@ bool GridModel::removeColumn(int column, const QModelIndex &parent) { // Suppres
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       bool GridModel::insertRow(int row, const QModelIndex &parent)
+// Name:       bool GridModel::insertRow(int, const QModelIndex &parent)
 // Purpose:    Implementation of GridModel::insertRow()
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::insertRow(int row, const QModelIndex &parent) { // insertion d'une ligne
+bool GridModel::insertRow(int, const QModelIndex &parent) { // insertion d'une ligne
     this->beginInsertRows(parent, this->row_count, this->row_count);
 
     this->items.resize(this->row_count +1);
@@ -189,12 +189,12 @@ bool GridModel::insertRow(int row, const QModelIndex &parent) { // insertion d'u
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       bool GridModel::removeRow(int row, const QModelIndex &parent)
+// Name:       bool GridModel::removeRow(int, const QModelIndex &parent)
 // Purpose:    Implementation of GridModel::removeRow()
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::removeRow(int row, const QModelIndex &parent) { // Suppression d'une ligne
+bool GridModel::removeRow(int, const QModelIndex &parent) { // Suppression d'une ligne
     if(this->row_count == 0)
         return false;
 
@@ -216,12 +216,12 @@ bool GridModel::removeRow(int row, const QModelIndex &parent) { // Suppression d
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       bool GridModel::insertColumns(int column, int count, const QModelIndex &parent)
+// Name:       bool GridModel::insertColumns(int, int count, const QModelIndex &parent)
 // Purpose:    Implementation of GridModel::insertColumns()
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::insertColumns(int column, int count, const QModelIndex &parent) { // Insertion de plusieurs colonnes
+bool GridModel::insertColumns(int, int count, const QModelIndex &parent) { // Insertion de plusieurs colonnes
     if(count == 0)
         return false;
 
@@ -239,12 +239,12 @@ bool GridModel::insertColumns(int column, int count, const QModelIndex &parent) 
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       bool GridModel::removeColumns(int column, int count, const QModelIndex &parent)
+// Name:       bool GridModel::removeColumns(int, int count, const QModelIndex &parent)
 // Purpose:    Implementation of GridModel::removeColumns()
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::removeColumns(int column, int count, const QModelIndex &parent) {
+bool GridModel::removeColumns(int, int count, const QModelIndex &parent) {
     if(this->column_count - count < 0 || count == 0)
         return false;
 
@@ -268,12 +268,12 @@ bool GridModel::removeColumns(int column, int count, const QModelIndex &parent) 
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       bool GridModel::insertRows(int row, int count, const QModelIndex &parent)
+// Name:       bool GridModel::insertRows(int, int count, const QModelIndex &parent)
 // Purpose:    Implementation of GridModel::insertRows()
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::insertRows(int row, int count, const QModelIndex &parent) { // Insertion de plusieurs lignes
+bool GridModel::insertRows(int, int count, const QModelIndex &parent) { // Insertion de plusieurs lignes
     if(count == 0)
         return false;
 
@@ -292,12 +292,12 @@ bool GridModel::insertRows(int row, int count, const QModelIndex &parent) { // I
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       bool GridModel::removeRows(int row, int count, const QModelIndex &parent)
+// Name:       bool GridModel::removeRows(int, int count, const QModelIndex &parent)
 // Purpose:    Implementation of GridModel::removeRows()
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::removeRows(int row, int count, const QModelIndex &parent) {
+bool GridModel::removeRows(int, int count, const QModelIndex &parent) {
     if(this->row_count - count < 0 || count == 0)
         return false;
 
@@ -366,12 +366,12 @@ bool GridModel::addItem(const QModelIndex &index, Item* item) { // Rajoute un it
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       bool GridModel::setData ( const QModelIndex & index, const QVariant & value, int role)
+// Name:       bool GridModel::setData ( const QModelIndex & index, const QVariant&, int)
 // Purpose:    Implementation of GridModel::setData()
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::setData ( const QModelIndex & index, const QVariant & value, int role) { // Mauvaise utilisation mais obligatoire
+bool GridModel::setData ( const QModelIndex & index, const QVariant&, int) { // Mauvaise utilisation mais obligatoire
     this->current_modelIndex = index;
 
     QModelIndex topleft = this->createIndex(0,0);

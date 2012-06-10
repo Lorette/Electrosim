@@ -47,7 +47,7 @@ SOURCES += main.cpp \
                    Items/output.cpp \
                    Views/gridview.cpp \
                 Items/not.cpp \
-    Models/imagedelegate.cpp \
+    Views/imagedelegate.cpp \
     Items/or.cpp \
     Items/and.cpp \
     Items/multiplexer.cpp \

@@ -26,152 +26,149 @@
         <translation type="obsolete">Connecter</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="180"/>
         <source>Informations</source>
-        <translation>Informations</translation>
+        <translation type="obsolete">Informations</translation>
     </message>
     <message>
         <source>Delete</source>
         <translation type="obsolete">Supprimer</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="186"/>
         <source>Default :</source>
-        <translation>Defaut :</translation>
+        <translation type="obsolete">Defaut :</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="238"/>
         <source>M</source>
-        <translation>M</translation>
+        <translation type="obsolete">M</translation>
     </message>
     <message>
         <source>Place</source>
         <translation type="obsolete">Placer</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="310"/>
+        <location filename="../../Forms/mapp.ui" line="165"/>
         <source>Rows :</source>
         <translation>Lignes :</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="317"/>
-        <location filename="../../Forms/mapp.ui" line="331"/>
+        <location filename="../../Forms/mapp.ui" line="172"/>
+        <location filename="../../Forms/mapp.ui" line="186"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="324"/>
+        <location filename="../../Forms/mapp.ui" line="179"/>
         <source>Colmuns :</source>
         <translation>Colonnes :</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="364"/>
+        <location filename="../../Forms/mapp.ui" line="219"/>
         <source>Truth Table</source>
         <translation>Table de Vérité</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="390"/>
+        <location filename="../../Forms/mapp.ui" line="245"/>
         <source>View mode</source>
         <translation>Mode vue</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="395"/>
+        <location filename="../../Forms/mapp.ui" line="250"/>
         <source>Place mode</source>
         <translation>Mode Placement</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="400"/>
+        <location filename="../../Forms/mapp.ui" line="255"/>
         <source>Connexion mode</source>
         <translation>Mode connexion</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="405"/>
+        <location filename="../../Forms/mapp.ui" line="260"/>
         <source>Delete mode</source>
         <translation>Mode suppression</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="430"/>
+        <location filename="../../Forms/mapp.ui" line="285"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="440"/>
+        <location filename="../../Forms/mapp.ui" line="295"/>
         <source>Options</source>
         <translation>Options</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="446"/>
+        <location filename="../../Forms/mapp.ui" line="301"/>
         <source>Language</source>
         <translation>Langue</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="458"/>
+        <location filename="../../Forms/mapp.ui" line="313"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="461"/>
+        <location filename="../../Forms/mapp.ui" line="316"/>
         <source>Alt+S</source>
         <translation>Alt+S</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="466"/>
+        <location filename="../../Forms/mapp.ui" line="321"/>
         <source>Quit</source>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="469"/>
+        <location filename="../../Forms/mapp.ui" line="324"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="474"/>
+        <location filename="../../Forms/mapp.ui" line="329"/>
         <source>Load</source>
         <translation>Charger</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="477"/>
+        <location filename="../../Forms/mapp.ui" line="332"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="482"/>
+        <location filename="../../Forms/mapp.ui" line="337"/>
         <source>Save as ...</source>
         <translation>Sauvegarder sous ...</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="485"/>
+        <location filename="../../Forms/mapp.ui" line="340"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="493"/>
+        <location filename="../../Forms/mapp.ui" line="348"/>
         <source>English</source>
         <translation>Anglais</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="501"/>
+        <location filename="../../Forms/mapp.ui" line="356"/>
         <source>French</source>
         <translation>Francais</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="506"/>
+        <location filename="../../Forms/mapp.ui" line="361"/>
         <source>New</source>
         <translation>Nouveau</translation>
     </message>
     <message>
-        <location filename="../../Forms/mapp.ui" line="509"/>
+        <location filename="../../Forms/mapp.ui" line="364"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="167"/>
-        <location filename="../../Interfaces/mapp.cpp" line="175"/>
+        <location filename="../../Interfaces/mapp.cpp" line="165"/>
+        <location filename="../../Interfaces/mapp.cpp" line="173"/>
         <source>Input</source>
         <translation>Entrée</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="179"/>
+        <location filename="../../Interfaces/mapp.cpp" line="177"/>
         <source>Output</source>
         <translation>Sortie</translation>
     </message>
@@ -192,51 +189,51 @@
         <translation type="obsolete">Objet</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="104"/>
+        <location filename="../../Interfaces/mapp.cpp" line="102"/>
         <source>Give a name</source>
         <translation>Donnez un nom</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="104"/>
+        <location filename="../../Interfaces/mapp.cpp" line="102"/>
         <source>Give a name to this component.</source>
         <translation>Donnez un nom à cet élément.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="85"/>
-        <location filename="../../Interfaces/mapp.cpp" line="116"/>
-        <location filename="../../Interfaces/mapp.cpp" line="126"/>
-        <location filename="../../Interfaces/mapp.cpp" line="129"/>
-        <location filename="../../Interfaces/mapp.cpp" line="260"/>
-        <location filename="../../Interfaces/mapp.cpp" line="272"/>
-        <location filename="../../Interfaces/mapp.cpp" line="296"/>
+        <location filename="../../Interfaces/mapp.cpp" line="83"/>
+        <location filename="../../Interfaces/mapp.cpp" line="114"/>
+        <location filename="../../Interfaces/mapp.cpp" line="124"/>
+        <location filename="../../Interfaces/mapp.cpp" line="127"/>
+        <location filename="../../Interfaces/mapp.cpp" line="258"/>
+        <location filename="../../Interfaces/mapp.cpp" line="270"/>
+        <location filename="../../Interfaces/mapp.cpp" line="294"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="85"/>
+        <location filename="../../Interfaces/mapp.cpp" line="83"/>
         <source>Position already used.</source>
         <translation>Position déjà utilisée.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="107"/>
-        <location filename="../../Interfaces/mapp.cpp" line="437"/>
+        <location filename="../../Interfaces/mapp.cpp" line="105"/>
+        <location filename="../../Interfaces/mapp.cpp" line="435"/>
         <source>Incorrect name</source>
         <translatorcomment>Un nom doit être unique et ne doit contenir aucun espace.</translatorcomment>
         <translation>Nom incorrect</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="107"/>
-        <location filename="../../Interfaces/mapp.cpp" line="437"/>
+        <location filename="../../Interfaces/mapp.cpp" line="105"/>
+        <location filename="../../Interfaces/mapp.cpp" line="435"/>
         <source>A name have to be unique and without space.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="109"/>
+        <location filename="../../Interfaces/mapp.cpp" line="107"/>
         <source>The component has been correctly place on the grid.</source>
         <translation>Le composant a été correctement placé.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="116"/>
+        <location filename="../../Interfaces/mapp.cpp" line="114"/>
         <source>You have to select a component.</source>
         <translation>Vous devez sélectionner un composant.</translation>
     </message>
@@ -245,12 +242,12 @@
         <translation type="obsolete">Vous devez sélectionner the second composant (récepteur).</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="126"/>
+        <location filename="../../Interfaces/mapp.cpp" line="124"/>
         <source>Unable to connect those components.</source>
         <translation>Impossible de connecter ces composants.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="578"/>
+        <location filename="../../Interfaces/mapp.cpp" line="575"/>
         <source>Click one of the component in the grid to delete it.</source>
         <translation>Cliquez sur un des composants dans la grilel pour le supprimer.</translation>
     </message>
@@ -263,19 +260,19 @@
         <translation type="obsolete">Ce composant a déjà été sélectionné pour une connexion.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="575"/>
+        <location filename="../../Interfaces/mapp.cpp" line="572"/>
         <source>You have two click on the first component (sender).</source>
         <translation>Vous devez sélectionner le premier composant (émetteur).</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="250"/>
-        <location filename="../../Interfaces/mapp.cpp" line="287"/>
+        <location filename="../../Interfaces/mapp.cpp" line="248"/>
+        <location filename="../../Interfaces/mapp.cpp" line="285"/>
         <source>Choose a file</source>
         <translation>Choisissez un fichier</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="250"/>
-        <location filename="../../Interfaces/mapp.cpp" line="287"/>
+        <location filename="../../Interfaces/mapp.cpp" line="248"/>
+        <location filename="../../Interfaces/mapp.cpp" line="285"/>
         <source>Elec Files (*.elec);;Texts Files (*.txt)</source>
         <translation>Fichiers Elec (*.elec);;Fichiers Textes (*.txt)</translation>
     </message>
@@ -300,83 +297,83 @@
         <translation type="obsolete">Texts Files (*.txt);;Elec Files(*.elec)</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="260"/>
-        <location filename="../../Interfaces/mapp.cpp" line="296"/>
+        <location filename="../../Interfaces/mapp.cpp" line="258"/>
+        <location filename="../../Interfaces/mapp.cpp" line="294"/>
         <source>Unable to open this file.</source>
         <translation>Impossible d&apos;ouvrir ce fichier.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="269"/>
+        <location filename="../../Interfaces/mapp.cpp" line="267"/>
         <source>The grid has been correctly loaded.</source>
         <translation>La grille a été correctement chargé.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="272"/>
+        <location filename="../../Interfaces/mapp.cpp" line="270"/>
         <source>Corrupted file.</source>
         <translation>Fichier corrompu.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="300"/>
+        <location filename="../../Interfaces/mapp.cpp" line="298"/>
         <source>The grid has been correctly saved into </source>
         <translation>La grille a été correctement sauvegardé dans le fichier </translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="302"/>
+        <location filename="../../Interfaces/mapp.cpp" line="300"/>
         <source>A problem occured during the save.</source>
         <translation>A problème a survenu durant la sauvegarde.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="401"/>
+        <location filename="../../Interfaces/mapp.cpp" line="399"/>
         <source>Outputs</source>
         <translation>Sorties</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="403"/>
+        <location filename="../../Interfaces/mapp.cpp" line="401"/>
         <source>Inputs</source>
         <translation>Entrées</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="567"/>
+        <location filename="../../Interfaces/mapp.cpp" line="564"/>
         <source>Select a component on the grid.</source>
         <translation>Selectionnez un composant dans la grille.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="571"/>
+        <location filename="../../Interfaces/mapp.cpp" line="568"/>
         <source>You have to select a position on the grid to place this component.</source>
         <translation>Vous devez sélectionner une position sur la grille pour placer ce composant.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="137"/>
+        <location filename="../../Interfaces/mapp.cpp" line="135"/>
         <source>The component has been deleted.</source>
         <translation>Le composant a été supprimer.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="119"/>
+        <location filename="../../Interfaces/mapp.cpp" line="117"/>
         <source>You have to click on the second component (receiver).</source>
         <translation>Vous devez sélectionner the second composant (récepteur).</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="129"/>
+        <location filename="../../Interfaces/mapp.cpp" line="127"/>
         <source>You have to select a second component.</source>
         <translation>Vous devez sélectionner un deuxième composant.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="132"/>
+        <location filename="../../Interfaces/mapp.cpp" line="130"/>
         <source>You have to click on the first component (sender).</source>
         <translation>Vous devez sélectionner the premier composant (émetteur).</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="137"/>
+        <location filename="../../Interfaces/mapp.cpp" line="135"/>
         <source>A problem occured during the deletion.</source>
         <translation>Un problème a survenu durant la suppression.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="170"/>
+        <location filename="../../Interfaces/mapp.cpp" line="168"/>
         <source>Adress</source>
         <translation>Adressage</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="392"/>
+        <location filename="../../Interfaces/mapp.cpp" line="390"/>
         <source>Modifying</source>
         <translation>Modification</translation>
     </message>

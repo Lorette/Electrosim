@@ -18,7 +18,6 @@
 Input::Input() : Item()
 {
     this->image = ":/Images/input.png"; // Image du composant
-    this->description = "Input"; // Description à la con
     this->classe = Item::Input;
     this->outputs.resize(1); // Indique 1 sortie
 }

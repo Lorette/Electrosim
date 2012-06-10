@@ -18,7 +18,6 @@
 Or::Or() : Item()
 {
     this->image = ":/Images/or.png";
-    this->description = "Or";
     this->classe = Item::Or;
     this->inputs.resize(2); // 2 entrées ...
     this->outputs.resize(1); // ... et 1 sortie

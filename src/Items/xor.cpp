@@ -18,7 +18,6 @@
 Xor::Xor() : Item()
 {
     this->image = ":/Images/xor.png";
-    this->description = "Xor";
     this->classe = Item::Xor;
     this->inputs.resize(2); // 2 entrée ...
     this->outputs.resize(1); // ... et 1 sortie

@@ -18,7 +18,6 @@
 IeO::IeO(int n) : Item()
 {
     this->image = ":/Images/ieo.png";
-    this->description = "Input egal Output";
     this->aux = n;
     this->classe = Item::IeO;
     this->inputs.resize(1); // 1 entrée ...

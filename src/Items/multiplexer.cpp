@@ -19,7 +19,6 @@ Multiplexer::Multiplexer(int n) : Item()
 {
     int i;
     this->image = ":/Images/mux.png";
-    this->description = "Multiplexer";
     this->classe = Item::Mux;
     this->aux = n;
     for(i = 0; n > qPow(2,i); i++); // Calcul du nombre d'entrée supplémentaire (Adressage)

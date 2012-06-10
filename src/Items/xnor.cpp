@@ -18,7 +18,6 @@
 XNOr::XNOr() : Item()
 {
     this->image = ":/Images/xnor.png";
-    this->description = "Equivalence";
     this->classe = Item::XNOr;
     this->inputs.resize(2); // 2 entrées ...
     this->outputs.resize(1); // ... et 1 sortie

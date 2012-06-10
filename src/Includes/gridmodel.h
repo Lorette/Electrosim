@@ -309,7 +309,7 @@ public:
      *  \brief Recupère les connexions d'un item et les transforment en ligne.
      *  \param it : Item ciblé.
      *
-     *  \return une liste de ligne casté en type variable.
+     *  \return une liste de ligne cast en type variable.
      */
     QList<QVariant> getConnexions(Item *it) const ;
 

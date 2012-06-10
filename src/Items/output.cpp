@@ -18,7 +18,6 @@
 Output::Output() : Item()
 {
     this->image = ":/Images/output.png";
-    this->description = "An output gets one of the final value of the circuit.";
     this->classe = Item::Output;
     this->inputs.resize(1); // 1 entrée
     this->aux = -1;

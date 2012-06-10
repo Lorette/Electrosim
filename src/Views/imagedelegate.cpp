@@ -22,12 +22,12 @@ ImageDelegate::ImageDelegate(QObject * parent) : QStyledItemDelegate(parent) // 
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       QSize ImageDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index)
+// Name:       QSize ImageDelegate::sizeHint(const QStyleOptionViewItem&, const QModelIndex&)
 // Purpose:    Implementation of ImageDelegate::sizeHint()
 // Return:     QSize
 ////////////////////////////////////////////////////////////////////////
 
-QSize ImageDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const
+QSize ImageDelegate::sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const
 {
     return QSize(50,50); // Taille des cases (50 pixels x 50 pixels)
 }

@@ -22,7 +22,7 @@
 
 MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
 {
-    model = new GridModel(13,14); // Initialise le model de 13x14 par defaut
+    model = new GridModel(13,20); // Initialise le model de 13x14 par defaut
     ui->setupUi(this); // Relie l'interface à cet objet
 
     this->on_actionFrench_triggered(); // On le traduit en francais
@@ -73,8 +73,6 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
     QString name;
     Item::s_connect *conn;
     this->currentIndex = index;
-
-    this->updateInformations();
 
     switch(this->currentAction) {
     case VIEW :
@@ -138,7 +136,7 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
         break;
     }
 
-    this->updateInformations();
+    this->ui->tableView->update(index);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -354,24 +352,24 @@ void MApp::on_actionQuit_triggered()
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       void MApp::on_def_value_valueChanged(int arg1)
-// Purpose:    Implementation of MApp::on_def_value_valueChanged()
+// Name:       void MApp::def_value_valueChanged()
+// Purpose:    Implementation of MApp::def_value_valueChanged()
 // Return:     void
 ////////////////////////////////////////////////////////////////////////
 
-void MApp::on_def_value_valueChanged(int arg1)
+void MApp::def_value_valueChanged()
 {
-    this->model->setDefValueOnInput(this->model->at(this->currentIndex), this->ui->def_value->value());
-    this->updateInformations();
+    Item *item = this->model->at(this->currentIndex);
+    this->model->setDefValueOnInput(item, 1 - item->getAuxValue());
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       void MApp::on_modify_clicked()
-// Purpose:    Implementation of MApp::on_modify_clicked()
+// Name:       void MApp::modify_clicked()
+// Purpose:    Implementation of MApp::modify_clicked()
 // Return:     void
 ////////////////////////////////////////////////////////////////////////
 
-void MApp::on_modify_clicked()
+void MApp::modify_clicked()
 {
     QDialog *wModify = new QDialog(this); // On initialise la fenetre ...
     Ui::Modify *uModify = new Ui::Modify; // ... l'interface ...
@@ -559,7 +557,6 @@ void MApp::on_actionNew_triggered()
 
 void MApp::on_mode_activated(int index)
 {
-    this->updateInformations();
     this->ui->tableView->enableTracking(false); // On desactive la coloration des cases
 
     switch(index) {
@@ -579,30 +576,26 @@ void MApp::on_mode_activated(int index)
         break;
     }
 
-    this->updateInformations();
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       void MApp::updateInformations()
-// Purpose:    Implementation of MApp::updateInformations()
+// Name:       void MApp::on_tableView_customContextMenuRequested(const QPoint &pos)
+// Purpose:    Implementation of MApp::on_tableView_customContextMenuRequested()
 // Return:     void
 ////////////////////////////////////////////////////////////////////////
 
-void MApp::updateInformations() {
-    Item *it = this->model->at(this->currentIndex);
+void MApp::on_tableView_customContextMenuRequested(const QPoint &pos)
+{
+    if(this->currentAction != VIEW) // Si le mode Vue n'est pas activé, on annulé
+        return;
 
-    if(it == NULL) {
-        this->ui->name->setText(""); // On met son nom dans la partie Informations
-        this->ui->description->setText(""); // On recupère la description
-        this->ui->def_value->setValue(0);
-        this->ui->def_value->setEnabled(false);
-    }
-    else {
-        this->ui->name->setText(it->getName()); // On met son nom dans la partie Informations
-        this->ui->description->setText(it->getDescription()); // On recupère la description
-        this->ui->def_value->setValue((it->getClass() == Item::Input && this->currentAction == VIEW) ? it->getAuxValue() : 0);
-        this->ui->def_value->setEnabled((it->getClass() == Item::Input && this->currentAction == VIEW) ? true : false);
-    }
+    QMenu *menu = new QMenu("Menu", this); // On crée un nouveau menu
+    this->currentIndex = this->ui->tableView->indexAt(pos); // On recupère l'index dans la grille par rapport à la position de la souris
+    Item *item = this->model->at(this->currentIndex); // On recupère le composant par rapport à cet index
+    if(item != NULL && item->getClass() == Item::Input) // Si le composant est un Input
+        QObject::connect(menu->addAction("Change value to " +QString::number(1 - item->getAuxValue())), SIGNAL(triggered()), this, SLOT(def_value_valueChanged())); // On offre la possibilité de changer la valeur par defaut
 
-    this->model->setData(QModelIndex(), QVariant(), 0);
+    menu->addAction("Edit", this, SLOT(modify_clicked()))->setEnabled((item == NULL) ? false : true); // On offre la possibilité d'accéder à la fen^etre d'édition
+    menu->move(this->ui->tableView->mapToGlobal(pos)); // On déplace le menu contexuel à la position de la souris
+    menu->show(); // On l'affiche
 }

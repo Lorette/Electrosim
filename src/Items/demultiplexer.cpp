@@ -18,7 +18,6 @@
 Demultiplexer::Demultiplexer(int n) : Item()
 {
     this->image = ":/Images/demux.png";
-    this->description = "Demultiplexer";
     this->classe = Item::Demux;
     this->aux = n;
     this->inputs.resize(n); // n entrées

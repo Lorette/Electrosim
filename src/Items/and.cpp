@@ -18,7 +18,6 @@
 And::And() : Item()
 {
     this->image = ":/Images/and.png";
-    this->description = "And";
     this->classe = Item::And;
     this->inputs.resize(2); // 2 entrées ...
     this->outputs.resize(1); // ... et 1 sortie

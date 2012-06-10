@@ -32,6 +32,7 @@
 #include <QLabel>
 #include <QVector>
 #include <QCheckBox>
+#include <QMenu>
 
 #include "item.h"
 #include "input.h"
@@ -66,7 +67,7 @@ class MApp : public QMainWindow
     Q_OBJECT
 
 public:
-    enum Actions {VIEW, PLACE, CONNECT1, DELETE, CONNECT2}; /*!< Enumération des actions*/
+    enum Modes {VIEW, PLACE, CONNECT1, DELETE, CONNECT2}; /*!< Enumération des actions*/
 
     /*!
      *  \brief Constructeur.
@@ -89,12 +90,6 @@ public:
      *  \return Un item instancié prêt à être placé.
      */
     Item* getItemInList();
-
-    /*!
-     *  \brief Met à jour les informations en fonction de l'item courant.
-     *
-     */
-    void updateInformations();
 
 private:
     /*!
@@ -147,14 +142,14 @@ private slots:
      *
      *  Applique la nouvelle valeur par defaut à l'item courant.
      */
-    void on_def_value_valueChanged(int arg1);
+    void def_value_valueChanged();
 
     /*!
      *  \brief Slot lors d'un clic sur l'icone de modification.
      *
      *  Affiche la fenêtre de modification de l'objet courant.
      */
-    void on_modify_clicked();
+    void modify_clicked();
 
     /*!
      *  \brief Slot lors d'un clic sur le bouton de la table de vérité.
@@ -191,12 +186,19 @@ private slots:
      */
     void on_mode_activated(int index);
 
+    /*!
+     *  \brief Slot pour afficher le menu contextuel.
+     *  \param pos : position de la souris
+     *
+     */
+    void on_tableView_customContextMenuRequested(const QPoint &pos);
+
 private:
     Ui::MApp *ui; /*!< Interface de la classe*/
     GridModel *model; /*!< Instance du modele courant*/
     Item *currentItem; /*!< Instance du composant séléctionné dans la liste*/
     QModelIndex currentIndex; /*!< Instance de la case dans la grille sélectionné*/
-    int currentAction; /*!< Action courante*/
+    Modes currentAction; /*!< Action courante*/
 
 };
 
