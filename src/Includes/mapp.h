@@ -33,6 +33,7 @@
 #include <QVector>
 #include <QCheckBox>
 #include <QMenu>
+#include <QPixmap>
 
 #include "item.h"
 #include "input.h"
@@ -59,6 +60,7 @@ namespace Ui {
     class Settings;
     class Modify;
     class Verite;
+    class About_component;
 }
 
 /*! \class MApp
@@ -192,11 +194,25 @@ private slots:
     void on_mode_activated(int index);
 
     /*!
-     *  \brief Slot pour afficher le menu contextuel.
+     *  \brief Slot pour afficher le menu contextuel de la grille.
      *  \param pos : position de la souris
      *
      */
     void on_tableView_customContextMenuRequested(const QPoint &pos);
+
+    /*!
+     *  \brief Slot pour afficher le apropos.
+     *
+     *  Affiche dans une nouvelle fenetre bloquante des informations a propos du programme
+     */
+    void on_actionAbout_us_triggered();
+
+    /*!
+     *  \brief Slot pour afficher les informations du un composant.
+     *  \param pos : position de la souris
+     *
+     */
+    void on_listWidget_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::MApp *ui; /*!< Interface de la classe*/

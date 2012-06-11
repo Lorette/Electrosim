@@ -661,7 +661,7 @@ GridModel* GridModel::loadFromFile(QFile* file) {
         QStringList list = line.split("\t" , QString::SkipEmptyParts);
 
         //si on lit la premiere partie, le premier element de la liste est "composant"
-        if( list[0] == "composant" )
+        if( list.size() > 0 && list[0] == "composant" )
         {
             // on prend les indices de lignes et de colonne (pareil tout composant confondu)
             i = list[3].toInt();
@@ -742,7 +742,7 @@ GridModel* GridModel::loadFromFile(QFile* file) {
         }
 
         //si le premier element n'est pas "composant" on voit les liaisons, par verification on rajoute le test
-        else if( list[0] == "liaison" )
+        else if( list.size() > 0 &&  list[0] == "liaison" )
         {
             Item::s_connect *link = new Item::s_connect;
             link->sender = model->findChildByName( list[1] );

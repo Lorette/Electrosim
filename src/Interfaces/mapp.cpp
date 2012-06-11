@@ -13,6 +13,7 @@
 #include "ui_settings.h"
 #include "ui_modify.h"
 #include "ui_verite.h"
+#include "ui_about_component.h"
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
@@ -32,16 +33,16 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
     ui->tableView->setModel(model); //Indique a la vue d'utiliserle model cree
     ui->tableView->setItemDelegate(new ImageDelegate(this)); // Creer un delegue
 
-    ui->listWidget->addItem(new QListWidgetItem("Input")); // Rajoute une entree a la liste des composants
-    ui->listWidget->addItem(new QListWidgetItem("Output")); // Idem
-    ui->listWidget->addItem(new QListWidgetItem("Not")); // Idem
-    ui->listWidget->addItem(new QListWidgetItem("Or")); // Idem
-    ui->listWidget->addItem(new QListWidgetItem("Xor")); // Idem
-    ui->listWidget->addItem(new QListWidgetItem("Equivalence")); // Idem
-    ui->listWidget->addItem(new QListWidgetItem("And")); // Idem
-    ui->listWidget->addItem(new QListWidgetItem("Multiplexer")); // Idem
-    ui->listWidget->addItem(new QListWidgetItem("Demultiplexer")); // Idem
-    ui->listWidget->addItem(new QListWidgetItem("IeO")); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Input"))); // Rajoute une entree a la liste des composants
+    ui->listWidget->addItem(new QListWidgetItem(tr("Output"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Not"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Or"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Xor"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Equivalence"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("And"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Multiplexer"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Demultiplexer"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("IeO"))); // Idem
 
     ui->listWidget->setCurrentRow(0);
 
@@ -589,13 +590,90 @@ void MApp::on_tableView_customContextMenuRequested(const QPoint &pos)
     if(this->currentAction != VIEW) // Si le mode Vue n'est pas active, on annule
         return;
 
-    QMenu *menu = new QMenu("Menu", this); // On cree un nouveau menu
+    QMenu *menu = new QMenu(tr("Menu"), this); // On cree un nouveau menu
     this->currentIndex = this->ui->tableView->indexAt(pos); // On recupere l'index dans la grille par rapport a la position de la souris
     Item *item = this->model->at(this->currentIndex); // On recupere le composant par rapport a cet index
     if(item != NULL && item->getClass() == Item::Input) // Si le composant est un Input
-        QObject::connect(menu->addAction("Change value to " +QString::number(1 - item->getAuxValue())), SIGNAL(triggered()), this, SLOT(def_value_valueChanged())); // On offre la possibilite de changer la valeur par defaut
+        QObject::connect(menu->addAction(tr("Change value to ") +QString::number(1 - item->getAuxValue())), SIGNAL(triggered()), this, SLOT(def_value_valueChanged())); // On offre la possibilite de changer la valeur par defaut
 
-    menu->addAction("Edit", this, SLOT(modify_clicked()))->setEnabled((item == NULL) ? false : true); // On offre la possibilite d'acceder a la fen^etre d'edition
+    menu->addAction(tr("Edit"), this, SLOT(modify_clicked()))->setEnabled((item == NULL) ? false : true); // On offre la possibilite d'acceder a la fen^etre d'edition
     menu->move(this->ui->tableView->mapToGlobal(pos)); // On deplace le menu contexuel a la position de la souris
     menu->show(); // On l'affiche
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       void MApp::on_actionAbout_us_triggered()
+// Purpose:    Implementation of MApp::on_actionAbout_us_triggered()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void MApp::on_actionAbout_us_triggered()
+{
+    QDialog* wApropos = new QDialog (this);
+    QVBoxLayout *layout = new QVBoxLayout;
+    QString propos = "<strong>"+QObject::tr("Electrosim project")+"</strong>:<br/><br/><u><i>"+QObject::tr("Made by")+"</i></u>:<ul><li>Kevyn MONLOUIS</li><li>Paul SALMON</li><li>Brice DUREUIL</li></ul><br/><u><i>"+QObject::tr("Programming language used")+"</u></i>:<ul><li>"+QObject::tr("Langage C++")+"</li></ul><br/><u><i>"+QObject::tr("Framework used")+"</u></i>:<ul><li>Qt 4.8</li></ul><br/><br/>"+QObject::tr("For more informations, visit our")+" <a href=\"http://lorette.github.com/electrosim\">"+QObject::tr("website")+"</a>.";
+    QLabel *text = new QLabel(propos);
+    text->setOpenExternalLinks(true);
+    layout->addWidget(text);
+    wApropos->setLayout(layout);
+    wApropos->setFixedSize(300,350);
+    wApropos->exec();
+
+    delete wApropos;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       void MApp::on_listWidget_customContextMenuRequested(const QPoint&)
+// Purpose:    Implementation of MApp::on_listWidget_customContextMenuRequested()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void MApp::on_listWidget_customContextMenuRequested(const QPoint&)
+{
+    QDialog *wAcomponent = new QDialog(this); // On initialise la fenetre ...
+    Ui::About_component *uAcomponent = new Ui::About_component; // ... l'interface ...
+    Item *item = this->getItemInList(); // On recupere un element de la liste
+
+    uAcomponent->setupUi(wAcomponent); // ... on lie la fenetre et l'interface
+    uAcomponent->image->setPixmap(QPixmap(item->getImage())); // On affiche l'image
+
+    switch(item->getClass()) { // Selon la classe, on affiche des informations
+    case Item::Input : uAcomponent->name->setText(tr("Input"));
+        uAcomponent->text->setText("<center><strong>" +tr("Input") +"</strong></center><br /><p>" +tr("An input is where comes from the power supply. The component has only one output but you can place all the inputs you want on the circuit.") +"</p>");
+        break;
+    case Item::Output : uAcomponent->name->setText(tr("Output"));
+        uAcomponent->text->setText("<center><strong>" +tr("Output") +"</strong></center><br /><p>" +tr("An output is where comes out a value of the circuit. The component has only one input but you can place all the outputs you want.") +"</p>");
+        break;
+    case Item::Not : uAcomponent->name->setText(tr("Not"));
+        uAcomponent->text->setText("<center><strong>" +tr("Not") +"</strong></center><br /><p>" +tr("A not gate is a component taking a value as an input and puts the invert of this value on the only one output it has.") +"<br /><br />" +tr("It's the implementation of the logical negation.") +"</p>");
+        break;
+    case Item::Or : uAcomponent->name->setText(tr("Or"));
+        uAcomponent->text->setText("<center><strong>" +tr("Or") +"</strong></center><br /><p>" +tr("A or gate is a component taking 2 values as inputs and puts on its output 1 if one of its inputs is 1 else 0.") +"<br /><br />" +tr("It's the implementation of a type of logical disjunction.") +"</p>");
+        break;
+    case Item::Xor : uAcomponent->name->setText(tr("Exclusive Or"));
+        uAcomponent->text->setText("<center><strong>" +tr("Exclusive Or") +"</strong></center><br /><p>" +tr("A exclusive or gate (or XOr gate) is a component taking 2 values as inputs and puts on its output 1 if only one of its inputs is 1 else 0.") +"<br /><br />" +tr("It's the implementation of a type of logical disjunction.") +"</p>");
+        break;
+    case Item::XNOr : uAcomponent->name->setText(tr("XNor"));
+        uAcomponent->text->setText("<center><strong>" +tr("XNor") +"</strong></center><br /><p>" +tr("A xnor gate (or enor gate) is a component taking 2 values as inputs and puts on its output 1 if the two inputs have the same value else 0.") +"<br /><br />" +tr("It's the implementation of the logical equivalence.") +"</p>");
+        break;
+    case Item::And : uAcomponent->name->setText(tr("And"));
+        uAcomponent->text->setText("<center><strong>" +tr("And") +"</strong></center><br /><p>" +tr("A and gate is a component taking 2 values as inputs and puts on its output 1 if the two inputs have 1 else 0.") +"<br /><br />" +tr("It's the implementation of the logical conjunction.") +"</p>");
+        break;
+    case Item::Mux : uAcomponent->name->setText(tr("Multiplexer"));
+        uAcomponent->text->setText("<center><strong>" +tr("Multiplexer") +"</strong></center><br /><p>" +tr("A multiplexer (or mux) is component selecting one or several inputs and forward to his output the correct value of the input selected by the adress inputs.") +"</p>");
+        break;
+    case Item::Demux : uAcomponent->name->setText(tr("Demultiplexer"));
+        uAcomponent->text->setText("<center><strong>" +tr("Demultiplexer") +"</strong></center><br /><p>" +tr("A demultiplexer (or demux) is component selecting one input and forward it value to the selected output by the adress inputs.") +"</p>");
+        break;
+    case Item::IeO : uAcomponent->name->setText(tr("Input Egal Output"));
+        uAcomponent->text->setText("<center><strong>" +tr("Input Egal Output") +"</strong></center><br /><p>" +tr("A input egal output (or IeO) is a component taking only one input and forward it value to one or more outputs.") +"</p>");
+        break;
+    }
+
+    wAcomponent->exec(); // On affiche le tout
+
+    delete item; // On supprime ...
+    delete uAcomponent; // ... tout ...
+    delete wAcomponent; // ...
+
 }

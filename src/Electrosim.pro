@@ -37,7 +37,8 @@ FORMS += Forms/mapp.ui \
     Forms/conn_option.ui \
     Forms/settings.ui \
     Forms/modify.ui \
-    Forms/verite.ui
+    Forms/verite.ui \
+    Forms/about_component.ui
 
 SOURCES += main.cpp \
            Interfaces/mapp.cpp \
