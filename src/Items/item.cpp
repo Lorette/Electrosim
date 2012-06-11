@@ -19,7 +19,7 @@ Item::Item(QObject *parent) : QObject(parent) // Constructeur
 {
     this->name = "";
     this->image = ":/Images/item.png"; // Image par default
-    this->inputs.resize(0); // Pas d'entrée ...
+    this->inputs.resize(0); // Pas d'entree ...
     this->outputs.resize(0); // et de sortie par default
     this->deleted = true;
     this->aux = 0;
@@ -122,9 +122,9 @@ void Item::setAuxValue(int value)
 bool Item::addNext(s_connect* conn)
 {
     if((conn->output > this->outputs.size()) || (this->outputs.at(conn->output) != NULL) || (!conn->receiver->askForConnection(conn)))
-        return false; // Si le numéro de la sortie est incorrect ou si la sortie est déjà utilisé ou que la connection avec le composant récepteur ne se fait pas, on annule
+        return false; // Si le numero de la sortie est incorrect ou si la sortie est deja utilise ou que la connection avec le composant recepteur ne se fait pas, on annule
 
-    this->outputs[conn->output] = conn; // On le rajoute à la liste des connexions du composant courant
+    this->outputs[conn->output] = conn; // On le rajoute a la liste des connexions du composant courant
     this->deleted = false; // Il existe des connections dans ce composant
     return true;
 }
@@ -137,10 +137,10 @@ bool Item::addNext(s_connect* conn)
 
 bool Item::askForConnection(s_connect* conn)
 {
-    if((conn->input > this->inputs.size()) || this->inputs.at(conn->input) != NULL) // Si le numéro de l'entrée est incorrect ou déjà utilisé
+    if((conn->input > this->inputs.size()) || this->inputs.at(conn->input) != NULL) // Si le numero de l'entree est incorrect ou deja utilise
         return false; // On annule
 
-    this->inputs[conn->input] = conn; // On rajoute la connexion à la liste de celles en entrées
+    this->inputs[conn->input] = conn; // On rajoute la connexion a la liste de celles en entrees
     this->deleted = false; // Il existe des connexions dans ce composant
     return true;
 }
@@ -153,8 +153,8 @@ bool Item::askForConnection(s_connect* conn)
 
 bool Item::checkAllValueReceived()
 {
-    for(int i = 0; i < this->inputs.size(); ++i) // Pour toutes les entrées
-        if(this->inputs.at(i) == NULL || this->inputs.at(i)->value == NULL ) // SI une entrée n'est pas connectée ou qu'une d'entre elle n'a pas de valeur en entrée
+    for(int i = 0; i < this->inputs.size(); ++i) // Pour toutes les entrees
+        if(this->inputs.at(i) == NULL || this->inputs.at(i)->value == NULL ) // SI une entree n'est pas connectee ou qu'une d'entre elle n'a pas de valeur en entree
             return false; // C'est pas bon
 
     return true;
@@ -169,11 +169,11 @@ bool Item::checkAllValueReceived()
 Item::s_connect* Item::deleteInput(int input)
 {
     Item::s_connect *conn;
-    if(input < 0 || input > inputs.size()) //  Si l'entrée n'existe pas
+    if(input < 0 || input > inputs.size()) //  Si l'entree n'existe pas
         return NULL; // C'est pas bon
 
     conn = inputs.at(input); // On sauvegarde la connexion pour le retour
-    inputs[input] = NULL; // Plus de connexion à cette entrée
+    inputs[input] = NULL; // Plus de connexion a cette entree
     return conn;
 }
 
@@ -190,7 +190,7 @@ Item::s_connect* Item::deleteOutput(int output)
         return NULL; // C'est pas bon
 
     conn = outputs.at(output); // On sauvegarde la connexion pour le retour
-    outputs[output] = NULL; // Plus de connexion à cette sortie
+    outputs[output] = NULL; // Plus de connexion a cette sortie
     return conn;
 }
 
@@ -202,7 +202,7 @@ Item::s_connect* Item::deleteOutput(int output)
 
 void Item::recvSignal()
 {
-    if(this->checkAllValueReceived()) // SI toutes les valeurs ont été reçu et
-        if(this->_do()) // Si le traitement a été correctement effectué
+    if(this->checkAllValueReceived()) // SI toutes les valeurs ont ete reçu et
+        if(this->_do()) // Si le traitement a ete correctement effectue
             emit sendSignal(); // On indique au composant suivant que les valeurs sont disponibles
 }

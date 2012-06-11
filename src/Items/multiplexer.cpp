@@ -21,8 +21,8 @@ Multiplexer::Multiplexer(int n) : Item()
     this->image = ":/Images/mux.png";
     this->classe = Item::Mux;
     this->aux = n;
-    for(i = 0; n > qPow(2,i); i++); // Calcul du nombre d'entrée supplémentaire (Adressage)
-    this->inputs.resize(n + i); // n entrées + nombre d'entrée supplémentaire
+    for(i = 0; n > qPow(2,i); i++); // Calcul du nombre d'entree supplementaire (Adressage)
+    this->inputs.resize(n + i); // n entrees + nombre d'entree supplementaire
     this->outputs.resize(1); // ... et 1 sortie
 }
 
@@ -40,9 +40,9 @@ bool Multiplexer::_do() {
         return false; // Ba c'est pas bon ...
 
     for(int i = 0; i < log2(this->aux); i++) // Fonction du multiplexeur et
-        in += (*(this->inputs.at(s - i)->value)) * qPow(2,i); // calcul de l'entrée sur laquelle prendre la valeur
+        in += (*(this->inputs.at(s - i)->value)) * qPow(2,i); // calcul de l'entree sur laquelle prendre la valeur
 
-    if(in > this->aux) // Si l'entrée n'existe pas ...
+    if(in > this->aux) // Si l'entree n'existe pas ...
         return false; // faux
 
     this->outputs.at(0)->value = new int;
@@ -61,6 +61,6 @@ bool Multiplexer::_do() {
 void Multiplexer::setAuxValue(int value) {
     int i;
     this->aux = value;
-    for(i = 0; value > qPow(2,i); i++); // Calcul du nombre d'entrée supplémentaire (Adressage)
-    this->inputs.resize(value + i); // n entrées + nombre d'entrée supplémentaire
+    for(i = 0; value > qPow(2,i); i++); // Calcul du nombre d'entree supplementaire (Adressage)
+    this->inputs.resize(value + i); // n entrees + nombre d'entree supplementaire
 }

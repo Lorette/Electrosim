@@ -12,7 +12,7 @@
 
 /*!
  * \file imageDelegate.h
- * \brief Fichier du délégué ImageDelegate
+ * \brief Fichier du delegue ImageDelegate
  * \author SALMON PAUL
  *         MONLOUIS Kevyn
  *         DUREUIL Brice
@@ -29,7 +29,7 @@
 /*! \class ImageDelegate
   * \brief Classe ImageDelegate :
   *
-  *  Classe du délégué ImageDelegate.
+  *  Classe du delegue ImageDelegate.
   */
 
 class ImageDelegate : public QStyledItemDelegate
@@ -46,18 +46,18 @@ public:
     /*!
      *  \brief Fonction d'affichage d'une case de la grille.
      *  \param painter : Affichage
-     *  \param option : options supplémentaires
+     *  \param option : options supplementaires
      *  \param index : position d'une case de la grille
      *
      */
     void paint(QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index) const;
 
     /*!
-     *  \brief Fonction de détermination de la taille d'une case.
-     *  \param option : options supplémentaires
+     *  \brief Fonction de determination de la taille d'une case.
+     *  \param option : options supplementaires
      *  \param index : position d'une case de la grille
      *
-     *  \return la taille de la case à afficher
+     *  \return la taille de la case a afficher
      */
     QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
 };

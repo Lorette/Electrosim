@@ -21,7 +21,7 @@ GridModel::GridModel(int rows, int columns) //Constructeur
     this->column_count = columns; // Nombre de colonnes
     this->current_modelIndex = QModelIndex(); // currentModelIndex a un faux index
 
-    /* Initialisé avec son constructeur, QmodelIndex() sera faux ... il faut le créer avec createIndex */
+    /* Initialise avec son constructeur, QmodelIndex() sera faux ... il faut le creer avec createIndex */
 
     this->items.resize(this->row_count); // Redimensionne le tableau a la bonne longueur
 
@@ -47,7 +47,7 @@ GridModel::~GridModel() {
 // Return:     QModelIndex
 ////////////////////////////////////////////////////////////////////////
 
-QModelIndex GridModel::index(int row, int column, const QModelIndex&) const { // Créer un index correct avec les bonnes coorodnnées
+QModelIndex GridModel::index(int row, int column, const QModelIndex&) const { // Creer un index correct avec les bonnes coorodnnees
     QModelIndex index = this->createIndex(row,column);
 
 
@@ -60,7 +60,7 @@ QModelIndex GridModel::index(int row, int column, const QModelIndex&) const { //
 // Return:     QModelIndex
 ////////////////////////////////////////////////////////////////////////
 
-QModelIndex GridModel::parent(const QModelIndex&) const { // Non utilisé, mais obligatoire
+QModelIndex GridModel::parent(const QModelIndex&) const { // Non utilise, mais obligatoire
     QModelIndex index;
 
     return index;
@@ -94,14 +94,14 @@ int GridModel::columnCount(const QModelIndex&) const { // Retourne le nombre de 
 // Return:     QVariant
 ////////////////////////////////////////////////////////////////////////
 
-QVariant GridModel::data(const QModelIndex &index, int role) const { // Retourne l'aspect d'un élément du tableau (QVariant est un type non défini pouvant être tout et n'importe quoi)
+QVariant GridModel::data(const QModelIndex &index, int role) const { // Retourne l'aspect d'un element du tableau (QVariant est un type non defini pouvant etre tout et n'importe quoi)
     Item *c;
 
     if((role == Qt::DecorationRole) && ((c = this->items.at(index.row()).at(index.column())) != NULL)) // Si le role est l'affichage ...
         return c->getImage(); // ... on retourne le lien de l'image
 
-    if(role == Qt::BackgroundRole && this->current_modelIndex.isValid() && index == this->current_modelIndex) { // Si le role est l'arrière plan et que l'index est Valide et correspond à l'Index courant
-        if(this->items.at(index.row()).at(index.column()) != NULL) // Si l'item à l'endroit existe bien
+    if(role == Qt::BackgroundRole && this->current_modelIndex.isValid() && index == this->current_modelIndex) { // Si le role est l'arriere plan et que l'index est Valide et correspond a l'Index courant
+        if(this->items.at(index.row()).at(index.column()) != NULL) // Si l'item a l'endroit existe bien
             return "#FF0000"; // On indique rouge
         else
             return "#00FF00"; // Sinon vert
@@ -326,7 +326,7 @@ bool GridModel::removeRows(int, int count, const QModelIndex &parent) {
 // Return:     Item*
 ////////////////////////////////////////////////////////////////////////
 
-Item* GridModel::at(const QModelIndex &index) { // Retourne l'élément à l'index indiqué
+Item* GridModel::at(const QModelIndex &index) { // Retourne l'element a l'index indique
     if(index.row() < 0 || index.row() > this->row_count || index.column() < 0 || index.column() > this->column_count)
         return NULL;
 
@@ -339,15 +339,15 @@ Item* GridModel::at(const QModelIndex &index) { // Retourne l'élément à l'index 
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::addItem(const QModelIndex &index, Item* item) { // Rajoute un item à l'index indiqué
+bool GridModel::addItem(const QModelIndex &index, Item* item) { // Rajoute un item a l'index indique
     if(!item)
         return false;
 
-    //vérification qu'il ny a pas déjà un composant à cet emplacement
+    //verification qu'il ny a pas deja un composant a cet emplacement
     if(this->items[index.row()][index.column()])
         return false;
 
-    //Vérification du nom
+    //Verification du nom
     if(!(this->nameIsCorrect(item->getName())))
         return false;
 
@@ -356,7 +356,7 @@ bool GridModel::addItem(const QModelIndex &index, Item* item) { // Rajoute un it
 
     if(item->getClass() == Item::Input) {
         this->inputs << item;
-        QObject::connect(this, SIGNAL(launch()), item, SLOT(recvSignal())); // On crée une connexion entre lui et le controlleur pour la simulation
+        QObject::connect(this, SIGNAL(launch()), item, SLOT(recvSignal())); // On cree une connexion entre lui et le controlleur pour la simulation
     }
 
     if(item->getClass() == Item::Output)
@@ -377,7 +377,7 @@ bool GridModel::setData ( const QModelIndex & index, const QVariant&, int) { // 
     QModelIndex topleft = this->createIndex(0,0);
     QModelIndex bottomright = this->createIndex(this->row_count, this->column_count);
 
-    emit dataChanged(topleft,bottomright); // Provoque une mise à jour complète de la grille
+    emit dataChanged(topleft,bottomright); // Provoque une mise a jour complete de la grille
     return true;
 }
 
@@ -387,7 +387,7 @@ bool GridModel::setData ( const QModelIndex & index, const QVariant&, int) { // 
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::connexion(Item::s_connect* conn) { // Rajoute une connection à l'emetteur
+bool GridModel::connexion(Item::s_connect* conn) { // Rajoute une connection a l'emetteur
      if(!conn->sender->addNext(conn))
          return false;
 
@@ -404,7 +404,7 @@ bool GridModel::connexion(Item::s_connect* conn) { // Rajoute une connection à l
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::removeItem(const QModelIndex &index) { // Supprime un item à l'index indiqué
+bool GridModel::removeItem(const QModelIndex &index) { // Supprime un item a l'index indique
     Item *it = NULL;
 
     if(index.row() < 0 || index.row() > this->row_count || index.column() < 0 || index.column() > this->column_count || this->items.at(index.row()).at(index.column()) == NULL)
@@ -437,7 +437,7 @@ bool GridModel::removeItem(const QModelIndex &index) { // Supprime un item à l'i
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool GridModel::resetAllConnexions() { // Réinitialise toutes les connexions
+bool GridModel::resetAllConnexions() { // Reinitialise toutes les connexions
     int n = this->connexions.size();
 
     for(int i = 0; i < n; i++)
@@ -445,7 +445,7 @@ bool GridModel::resetAllConnexions() { // Réinitialise toutes les connexions
             this->connexions.removeAt(i);
         else
         {
-            delete (this->connexions.at(i)->value); //on l'alloue avec new dans les différents composants, il faut le delete
+            delete (this->connexions.at(i)->value); //on l'alloue avec new dans les differents composants, il faut le delete
             this->connexions.at(i)->value = NULL;
         }
 
@@ -461,7 +461,7 @@ bool GridModel::resetAllConnexions() { // Réinitialise toutes les connexions
 
 void GridModel::simulate() {
     this->resetAllConnexions();
-    //initialise les sorties à -1 (-1 signifie que la valeur est inconnu car le circuit n'est pas complet)
+    //initialise les sorties a -1 (-1 signifie que la valeur est inconnu car le circuit n'est pas complet)
     for(QList<Item*>::iterator it = this->outputs.begin(); it != this->outputs.end(); ++it)
         (*it)->setAuxValue(-1);
     emit launch();
@@ -476,18 +476,18 @@ void GridModel::simulate() {
 QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
     QPair <QVector < QString >, QVector<QVector<int> > > resultat;
     int nb_inputs = this->inputs.size();
-    int nb_lignes = qPow(2.0,nb_inputs); //nombre de lignes de la table de vérité = 2^(nombre d'entrées)
-    int nb_colonnes = nb_inputs+this->outputs.size(); //nombre de colonne = nombre d'entrées + nombre de sorties
-    QVector<int> save; //Pour sauvegarder l'état actuel des inputs
+    int nb_lignes = qPow(2.0,nb_inputs); //nombre de lignes de la table de verite = 2^(nombre d'entrees)
+    int nb_colonnes = nb_inputs+this->outputs.size(); //nombre de colonne = nombre d'entrees + nombre de sorties
+    QVector<int> save; //Pour sauvegarder l'etat actuel des inputs
 
-    //met les tableaux à la bonne taille
+    //met les tableaux a la bonne taille
     save.resize(this->inputs.size());
     resultat.first.resize(nb_colonnes); //il y a un nom de collonne pour chaque colonne.
     resultat.second.resize(nb_lignes);
     for(int i=0; i<nb_lignes; ++i)
         resultat.second[i].resize(nb_colonnes);
 
-    //rempli la légende
+    //rempli la legende
     int i=0;
     for(QList<Item*>::iterator it = this->inputs.begin(); it != this->inputs.end(); ++it)
     {
@@ -501,7 +501,7 @@ QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
         ++i;
     }
 
-    //rempli la partie des entrées
+    //rempli la partie des entrees
     for(int c=0; c<nb_inputs; ++c)
     {
         int n = qPow(2.0,c); //calcul de 2^c
@@ -525,18 +525,18 @@ QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
     //pour chaque ligne, remplie la partie des sorties
     for(int l=0; l<nb_lignes; ++l)
     {
-        //initialise les entrées
+        //initialise les entrees
         i=0;
         for(QList<Item*>::iterator it = this->inputs.begin(); it != this->inputs.end(); ++it)
         {
-            (*it)->setAuxValue(resultat.second[l][i]); //initialise l'input numéro i avec la valeur présente dans la case (l,i)
+            (*it)->setAuxValue(resultat.second[l][i]); //initialise l'input numero i avec la valeur presente dans la case (l,i)
             ++i;
         }
 
         //lance la simulation
         this->simulate();
 
-        //récupère les valeurs des sorties et rempli le tableau
+        //recupere les valeurs des sorties et rempli le tableau
         i=0;
         for(QList<Item*>::iterator it = this->outputs.begin(); it != this->outputs.end(); ++it)
         {
@@ -545,7 +545,7 @@ QPair < QVector < QString > , QVector< QVector < int > > > GridModel::verite() {
         }
     }
 
-    //Charge l'état des inputs avant la fonction
+    //Charge l'etat des inputs avant la fonction
     i=0;
     for(QList<Item*>::iterator it = this->inputs.begin(); it != this->inputs.end(); ++it)
     {
@@ -657,10 +657,10 @@ GridModel* GridModel::loadFromFile(QFile* file) {
     line = stream.readLine();
     while( !line.isNull() )
     {
-        //On sépare la ligne en liste, le délimiteur étant la tabulation \t
+        //On separe la ligne en liste, le delimiteur etant la tabulation \t
         QStringList list = line.split("\t" , QString::SkipEmptyParts);
 
-        //si on lit la premiere partie, le premier élément de la liste est "composant"
+        //si on lit la premiere partie, le premier element de la liste est "composant"
         if( list[0] == "composant" )
         {
             // on prend les indices de lignes et de colonne (pareil tout composant confondu)
@@ -741,7 +741,7 @@ GridModel* GridModel::loadFromFile(QFile* file) {
 
         }
 
-        //si le premier élément n'est pas "composant" on voit les liaisons, par verification on rajoute le test
+        //si le premier element n'est pas "composant" on voit les liaisons, par verification on rajoute le test
         else if( list[0] == "liaison" )
         {
             Item::s_connect *link = new Item::s_connect;
@@ -790,11 +790,11 @@ Item* GridModel::findChildByName(QString name)
 
 bool GridModel::nameIsCorrect(const QString& name) const
 {
-    //vérifie qu'il n'y a pas d'espace
+    //verifie qu'il n'y a pas d'espace
     if(name.contains(" ") || name.contains("\t"))
         return false;
 
-    //vérifie si le nom est aps déjà utilisé
+    //verifie si le nom est aps deja utilise
     for(int r=0; r<this->rowCount(); ++r)
         for(int c=0; c<this->columnCount(); ++c)
             if(this->items[r][c] && this->items[r][c]->getName() == name)

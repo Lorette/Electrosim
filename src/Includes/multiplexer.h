@@ -44,9 +44,9 @@ public:
     Multiplexer(int n);
 
     /*!
-     *  \brief Fonction de traitement des données.
+     *  \brief Fonction de traitement des donnees.
      *
-     *  \return true si les données ont été correctement traitées sinon false
+     *  \return true si les donnees ont ete correctement traitees sinon false
      */
     virtual bool _do();
 

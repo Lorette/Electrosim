@@ -31,15 +31,26 @@
 /*! \class Item
   * \brief Classe Item :
   *
-  *  Classe mère des composants de type Item.
+  *  Classe mere des composants de type Item.
   */
 
 class Item : public QObject
 {
     Q_OBJECT
 public:
-    typedef struct {Item* sender; int output; Item* receiver; int input; int* value; } s_connect; /*!< Structure d'une connexion*/
-    enum Items { Input, Output, Not, Or, Xor, XNOr, And, Mux, Demux, IeO }; /*!< Enumration de la liste des composants*/
+    /**
+     * \struct s_connect item.h
+     * \brief Structure d'une connexion
+     *
+     */
+    typedef struct {Item* sender; int output; Item* receiver; int input; int* value; } s_connect;
+
+    /**
+     * \enum Items
+     * \brief Enumeration de la liste des composants
+     *
+     */
+    enum Items { Input, Output, Not, Or, Xor, XNOr, And, Mux, Demux, IeO };
 
 public:
     /*!
@@ -52,49 +63,49 @@ public:
     explicit Item(QObject *parent = 0);
 
     /*!
-     *  \brief Récupère le nom de l'item.
+     *  \brief Recupere le nom de l'item.
      *
      *  \return Renvoie le nom de l'item courant
      */
     QString getName();
 
     /*!
-     *  \brief Récupère l'image de l'item.
+     *  \brief Recupere l'image de l'item.
      *
      *  \return Renvoie le lien de l'image de l'item courant
      */
     QString getImage();
 
     /*!
-     *  \brief Récupère la description de l'item.
+     *  \brief Recupere la description de l'item.
      *
      *  \return Renvoie la classe de l'item courant
      */
     Items getClass();
 
     /*!
-     *  \brief Récupère la valeur auxiliaire de l'item.
+     *  \brief Recupere la valeur auxiliaire de l'item.
      *
      *  \return Renvoie la valeur auxiliaire de l'item courant
      */
     int getAuxValue();
 
     /*!
-     *  \brief Récupère la liste des connexions sortantes de l'item.
+     *  \brief Recupere la liste des connexions sortantes de l'item.
      *
-     *  \return Renvoie un vecteur composés des connexions sortantes de l'item courant
+     *  \return Renvoie un vecteur composes des connexions sortantes de l'item courant
      */
     QVector<s_connect *> getOutputs();
 
     /*!
-     *  \brief Récupère la liste des connexions entrantes de l'item.
+     *  \brief Recupere la liste des connexions entrantes de l'item.
      *
-     *  \return Renvoie un vecteur composés des connexions entrantes de l'item courant
+     *  \return Renvoie un vecteur composes des connexions entrantes de l'item courant
      */
     QVector<s_connect *> getInputs();
 
     /*!
-     *  \brief Affecte le nom à un item.
+     *  \brief Affecte le nom a un item.
      *  \param name : nouveau nom pour l'item courant
      *
      */
@@ -108,66 +119,66 @@ public:
     virtual void setAuxValue(int value);
 
     /*!
-     *  \brief Rajoute une connexion à l'item courant et s'occupe de l'indiquer à l'item suivant.
-     *  \param conn : connexion à rajouter
+     *  \brief Rajoute une connexion a l'item courant et s'occupe de l'indiquer a l'item suivant.
+     *  \param conn : connexion a rajouter
      *
-     *  \return true si la connexion est réussi sinon false
+     *  \return true si la connexion est reussi sinon false
      */
      bool addNext(s_connect* conn);
 
     /*!
-     *  \brief Rajoute une connexion à l'item courant en entrée.
-     *  \param conn : connexion à rajouter
+     *  \brief Rajoute une connexion a l'item courant en entree.
+     *  \param conn : connexion a rajouter
      *
-     *  \return true si la connexion est réussi sinon false
+     *  \return true si la connexion est reussi sinon false
      */
      bool askForConnection(s_connect* conn);
 
     /*!
-     *  \brief Vérifie si toutes les connexions en entrée sont faites et qu'elles possèdent une valeur.
+     *  \brief Verifie si toutes les connexions en entree sont faites et qu'elles possedent une valeur.
      *
-     *  \return true si toutes les connexions possèdent une valeur sinon false
+     *  \return true si toutes les connexions possedent une valeur sinon false
      */
      bool checkAllValueReceived();
 
     /*!
-     *  \brief Retire mais ne supprime pas une connexion en entrée, renvoie cette dernière.
-     *  \param input : entrée sur laquelle retirer la connexion
+     *  \brief Retire mais ne supprime pas une connexion en entree, renvoie cette derniere.
+     *  \param input : entree sur laquelle retirer la connexion
      *
-     *  \return la connexion retirée
+     *  \return la connexion retiree
      */
      s_connect* deleteInput(int input);
 
     /*!
-     *  \brief Retire mais ne supprime pas une connexion en sortie, renvoie cette dernière.
+     *  \brief Retire mais ne supprime pas une connexion en sortie, renvoie cette derniere.
      *  \param output : sortie sur laquelle retirer la connexion
      *
-     *  \return la connexion retirée
+     *  \return la connexion retiree
      */
      s_connect* deleteOutput(int output);
 
 protected :
     /*!
-     *  \brief Fonction de traitement des données.
+     *  \brief Fonction de traitement des donnees.
      *
-     *  \return true si les données ont été correctement traitées sinon false
+     *  \return true si les donnees ont ete correctement traitees sinon false
      */
     virtual bool _do() = 0;
 
 signals :
     /*!
-     *  \brief Signal émis.
+     *  \brief Signal emis.
      *
-     *  Signal émis lorsque le composant courant a effectué son traitement
+     *  Signal emis lorsque le composant courant a effectue son traitement
      *
      */
     void sendSignal();
 
 public slots:
     /*!
-     *  \brief Slot executé lorsque un signal est émis.
+     *  \brief Slot execute lorsque un signal est emis.
      *
-     *  Slot executé lorsque un item précédent a envoyer son signal provoquant le traitement du composant courant
+     *  Slot execute lorsque un item precedent a envoyer son signal provoquant le traitement du composant courant
      *
      */
      void recvSignal();
@@ -178,7 +189,7 @@ protected :
     QString name; /*!< Nom de l'item*/
     QString image; /*!< Image de l'item*/
     QVector<s_connect *> outputs; /*!< Vecteur des connexions en sortie*/
-    QVector<s_connect *> inputs; /*!< Vecteur des connexions en entrées*/
+    QVector<s_connect *> inputs; /*!< Vecteur des connexions en entrees*/
 
 private :
     bool deleted; /*!< Variable indiquant que les connexions entrantes et sortantes sont supprimes*/

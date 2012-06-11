@@ -19,7 +19,7 @@ Output::Output() : Item()
 {
     this->image = ":/Images/output.png";
     this->classe = Item::Output;
-    this->inputs.resize(1); // 1 entrée
+    this->inputs.resize(1); // 1 entree
     this->aux = -1;
 }
 

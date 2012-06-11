@@ -23,16 +23,16 @@
 MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
 {
     model = new GridModel(13,20); // Initialise le model de 13x14 par defaut
-    ui->setupUi(this); // Relie l'interface à cet objet
+    ui->setupUi(this); // Relie l'interface a cet objet
 
     this->on_actionFrench_triggered(); // On le traduit en francais
     this->ui->row_count->setText(QString::number(this->model->rowCount()));
     this->ui->column_count->setText(QString::number(this->model->columnCount()));
 
-    ui->tableView->setModel(model); //Indique à la vue d'utiliserle model crée
-    ui->tableView->setItemDelegate(new ImageDelegate(this)); // Créer un délégué
+    ui->tableView->setModel(model); //Indique a la vue d'utiliserle model cree
+    ui->tableView->setItemDelegate(new ImageDelegate(this)); // Creer un delegue
 
-    ui->listWidget->addItem(new QListWidgetItem("Input")); // Rajoute une entrée à la liste des composants
+    ui->listWidget->addItem(new QListWidgetItem("Input")); // Rajoute une entree a la liste des composants
     ui->listWidget->addItem(new QListWidgetItem("Output")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("Not")); // Idem
     ui->listWidget->addItem(new QListWidgetItem("Or")); // Idem
@@ -45,7 +45,7 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
 
     ui->listWidget->setCurrentRow(0);
 
-    this->currentItem = NULL; // Indique qu'aucune sélection n'est faite ...
+    this->currentItem = NULL; // Indique qu'aucune selection n'est faite ...
     this->currentAction = VIEW; // Indique que l'action est la vue simple
 }
 
@@ -58,7 +58,7 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
 MApp::~MApp()
 {
     delete this->model;
-    delete ui; // Détruit l'interface
+    delete ui; // Detruit l'interface
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -79,13 +79,13 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
         break;
     case PLACE : // Si l'action est le placement d'un nouvel Item
         if((aux = this->getItemInList()) != NULL) {
-            if(this->model->at(index) != NULL) // Et qu'il y a un Item à l'endroit séléctionné
-                QMessageBox::critical(0,tr("Error"),tr("Position already used.")); // On indique que l'endroit est déjà pris
+            if(this->model->at(index) != NULL) // Et qu'il y a un Item a l'endroit selectionne
+                QMessageBox::critical(0,tr("Error"),tr("Position already used.")); // On indique que l'endroit est deja pris
             else {
                 int i = 0;
                 QString default_name;
 
-                //Choisi un bon nom par défaut
+                //Choisi un bon nom par defaut
                 switch (aux->getClass())
                 {
                     case Item::Input :
@@ -100,7 +100,7 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
 
                  while(!(this->model->nameIsCorrect(default_name +QString::number(i)))) { i++; }
                 if((name = QInputDialog::getText(this,tr("Give a name"),tr("Give a name to this component."), QLineEdit::Normal, default_name +QString::number(i))) != "") { // Sinon on demande un nom
-                    aux->setName(name); // On met le nom à l'Item en cours de placement
+                    aux->setName(name); // On met le nom a l'Item en cours de placement
                     if(!this->model->addItem(index, aux)) // On le rajoute au model
                         QMessageBox::critical(0,tr("Incorrect name"), tr("A name have to be unique and without space.")); //le nom doit etre unique
                     else
@@ -109,17 +109,17 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
             }
         }
         break;
-    case CONNECT1 : // SI c'est la première fois qu'on clic sur la grille alors qu'on veut faire une connection
-        if((this->currentItem = this->model->at(index)) == NULL) // Si il n'y a pas d'item à l'endroit séléctionné + on sauvegarde cet Item
+    case CONNECT1 : // SI c'est la premiere fois qu'on clic sur la grille alors qu'on veut faire une connection
+        if((this->currentItem = this->model->at(index)) == NULL) // Si il n'y a pas d'item a l'endroit selectionne + on sauvegarde cet Item
             QMessageBox::critical(this,tr("Error"),tr("You have to select a component.")); // On l'indique
         else {
-            this->currentAction = CONNECT2; // Sinon on peut passer  à la deuxième phase
+            this->currentAction = CONNECT2; // Sinon on peut passer  a la deuxieme phase
             this->ui->statusBar->showMessage(tr("You have to click on the second component (receiver)."));
         }
         break;
-    case CONNECT2 : // Si c'est la deuxième fois qu'on clic sur la grille alors qu'on veut faire une connection
-        if((aux = this->model->at(index)) != NULL && aux != this->currentItem) { // Si le deuxième Item séléctionné existe et qu'il est différent du premier
-            if((conn = this->autoS_connect(this->currentItem, aux)) != NULL)  // Si la connection s'est correctement crée
+    case CONNECT2 : // Si c'est la deuxieme fois qu'on clic sur la grille alors qu'on veut faire une connection
+        if((aux = this->model->at(index)) != NULL && aux != this->currentItem) { // Si le deuxieme Item selectionne existe et qu'il est different du premier
+            if((conn = this->autoS_connect(this->currentItem, aux)) != NULL)  // Si la connection s'est correctement cree
                 if(!this->model->connexion(conn))  // On le rajoute au model
                     QMessageBox::critical(this,tr("Error"),tr("Unable to connect those components.")); // On indique une erreur
         }
@@ -146,14 +146,14 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
 ////////////////////////////////////////////////////////////////////////
 
 Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) { // Affichage des options de connection
-    Item::s_connect *conn = NULL; // On crée une connection vide
+    Item::s_connect *conn = NULL; // On cree une connection vide
     QDialog *wConnOpt = new QDialog(this); // On initialise une fenetre
     Ui::ConnOpt *uConnOpt = new Ui::ConnOpt; // On initialise une interface de fenetre
 
     QVector<Item::s_connect *> outputs = sender->getOutputs(); // On recupere les connections sortantes du 1er Item
     QVector<Item::s_connect *> inputs = receiver->getInputs(); // On recupere les connections entrantes du 2eme Item
 
-    uConnOpt->setupUi(wConnOpt); // On indique à l'interface d'utiliser la fenetre des options
+    uConnOpt->setupUi(wConnOpt); // On indique a l'interface d'utiliser la fenetre des options
     uConnOpt->name_1->setText(sender->getName()); // On recupere les noms ...
     uConnOpt->name_2->setText(receiver->getName()); // ... et on les affiche
 
@@ -161,16 +161,16 @@ Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) { // Affichag
     if(receiver->getClass() == Item::Mux) {
         int i;
         for(i = 0; i < receiver->getAuxValue(); i++) // Ici ...
-            if(inputs.at(i) == NULL) // ... on indique les entrées disponibles ...
-                uConnOpt->chk_inputs->addItem(tr("Input") +" " +(QString::number(i))); // ... pour le 2eme Item (Récepteur)
+            if(inputs.at(i) == NULL) // ... on indique les entrees disponibles ...
+                uConnOpt->chk_inputs->addItem(tr("Input") +" " +(QString::number(i))); // ... pour le 2eme Item (Recepteur)
         for(i = i; i < inputs.size();i++ )
             if(inputs.at(i) == NULL)
-                uConnOpt->chk_inputs->addItem(tr("Adress") +" " +(QString::number(i))); // ... pour le 2eme Item (Récepteur)
+                uConnOpt->chk_inputs->addItem(tr("Adress") +" " +(QString::number(i))); // ... pour le 2eme Item (Recepteur)
     }
     else
         for(int i = 0; i < inputs.size(); i++) // Ici ...
-            if(inputs.at(i) == NULL) // ... on indique les entrées disponibles ...
-                uConnOpt->chk_inputs->addItem(tr("Input") +" " +(QString::number(i))); // ... pour le 2eme Item (Récepteur)
+            if(inputs.at(i) == NULL) // ... on indique les entrees disponibles ...
+                uConnOpt->chk_inputs->addItem(tr("Input") +" " +(QString::number(i))); // ... pour le 2eme Item (Recepteur)
 
     for(int i = 0; i < outputs.size(); i++) // Ici ...
         if(outputs.at(i) == NULL) // ... on indique les sorties disponibles ...
@@ -186,14 +186,14 @@ Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) { // Affichag
         conn->sender = sender; // On indique l'emetteur
         conn->output = uConnOpt->chk_outputs->currentText().split(" ").last().toInt(); // la sortie
         conn->receiver = receiver; // le recepteur
-        conn->input = uConnOpt->chk_inputs->currentText().split(" ").last().toInt(); // l'entrée
+        conn->input = uConnOpt->chk_inputs->currentText().split(" ").last().toInt(); // l'entree
         conn->value = NULL; // et la valeur
     }
     else
         return NULL;
 
 
-    delete uConnOpt; // On détruit l'interface ...
+    delete uConnOpt; // On detruit l'interface ...
     delete wConnOpt; // et la fenetre
 
     return conn;
@@ -217,7 +217,7 @@ void MApp::on_actionSettings_triggered() // Fenetre des options pour l'applicati
 
     if(wSettings->exec() == QDialog::Accepted) { // Fenetre bloquante
 
-        this->ui->tableView->setShowGrid(uSettings->grid->isChecked()); // on active/désactive la grille en fonction de la case cochée
+        this->ui->tableView->setShowGrid(uSettings->grid->isChecked()); // on active/desactive la grille en fonction de la case cochee
 
         if(uSettings->row_count->value() < this->model->rowCount())
             this->model->removeRows(0,this->model->rowCount() - uSettings->row_count->value());
@@ -233,7 +233,7 @@ void MApp::on_actionSettings_triggered() // Fenetre des options pour l'applicati
         this->ui->column_count->setText(QString::number(uSettings->column_count->value()));
     }
 
-    delete uSettings; // On détruit l'interface ...
+    delete uSettings; // On detruit l'interface ...
     delete wSettings; // ... et la fenetre
 }
 
@@ -313,8 +313,8 @@ Item* MApp::getItemInList() // Si on clic sur le placement
     QModelIndex index = ui->listWidget->currentIndex(); // On recupere l'index de l'item dans la liste
     Item *it;
 
-    switch(index.row()) { // Selon la ligne séléctionné dans la liste
-    case Item::Input : it = new Input(); // Nouvelle Entrée
+    switch(index.row()) { // Selon la ligne selectionne dans la liste
+    case Item::Input : it = new Input(); // Nouvelle Entree
         break;
     case Item::Output : it = new Output(); // Nouvelle Sortie
             break;
@@ -463,7 +463,7 @@ void MApp::modify_clicked()
          this->model->setDefValueOnInput(item, uModify->Inputs->value());
     }
 
-    delete uModify; // On détruit l'interface ...
+    delete uModify; // On detruit l'interface ...
     delete wModify; // ... et la fenetre
 }
 
@@ -546,7 +546,7 @@ void MApp::on_actionNew_triggered()
     this->ui->row_count->setText(QString::number(this->model->rowCount()));
     this->ui->column_count->setText(QString::number(this->model->columnCount()));
 
-    ui->tableView->setModel(model); //Indique à la vue d'utiliserle model crée
+    ui->tableView->setModel(model); //Indique a la vue d'utiliserle model cree
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -586,16 +586,16 @@ void MApp::on_mode_activated(int index)
 
 void MApp::on_tableView_customContextMenuRequested(const QPoint &pos)
 {
-    if(this->currentAction != VIEW) // Si le mode Vue n'est pas activé, on annulé
+    if(this->currentAction != VIEW) // Si le mode Vue n'est pas active, on annule
         return;
 
-    QMenu *menu = new QMenu("Menu", this); // On crée un nouveau menu
-    this->currentIndex = this->ui->tableView->indexAt(pos); // On recupère l'index dans la grille par rapport à la position de la souris
-    Item *item = this->model->at(this->currentIndex); // On recupère le composant par rapport à cet index
+    QMenu *menu = new QMenu("Menu", this); // On cree un nouveau menu
+    this->currentIndex = this->ui->tableView->indexAt(pos); // On recupere l'index dans la grille par rapport a la position de la souris
+    Item *item = this->model->at(this->currentIndex); // On recupere le composant par rapport a cet index
     if(item != NULL && item->getClass() == Item::Input) // Si le composant est un Input
-        QObject::connect(menu->addAction("Change value to " +QString::number(1 - item->getAuxValue())), SIGNAL(triggered()), this, SLOT(def_value_valueChanged())); // On offre la possibilité de changer la valeur par defaut
+        QObject::connect(menu->addAction("Change value to " +QString::number(1 - item->getAuxValue())), SIGNAL(triggered()), this, SLOT(def_value_valueChanged())); // On offre la possibilite de changer la valeur par defaut
 
-    menu->addAction("Edit", this, SLOT(modify_clicked()))->setEnabled((item == NULL) ? false : true); // On offre la possibilité d'accéder à la fen^etre d'édition
-    menu->move(this->ui->tableView->mapToGlobal(pos)); // On déplace le menu contexuel à la position de la souris
+    menu->addAction("Edit", this, SLOT(modify_clicked()))->setEnabled((item == NULL) ? false : true); // On offre la possibilite d'acceder a la fen^etre d'edition
+    menu->move(this->ui->tableView->mapToGlobal(pos)); // On deplace le menu contexuel a la position de la souris
     menu->show(); // On l'affiche
 }

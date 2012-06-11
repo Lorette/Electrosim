@@ -48,13 +48,18 @@
 #include "gridmodel.h"
 #include "imagedelegate.h"
 
+/*! \namespace Ui
+ *
+ * Espace de nom pour les interfaces
+ */
+
 namespace Ui {
     class MApp;
     class ConnOpt;
     class Settings;
     class Modify;
     class Verite;
-} /*!< Espace de nom pour les interfaces*/
+}
 
 /*! \class MApp
   * \brief Classe MApp :
@@ -67,7 +72,8 @@ class MApp : public QMainWindow
     Q_OBJECT
 
 public:
-    enum Modes {VIEW, PLACE, CONNECT1, DELETE, CONNECT2}; /*!< Enumération des actions*/
+    /*! \enum Modes*/
+    enum Modes {VIEW, PLACE, CONNECT1, DELETE, CONNECT2}; /*!< Enumeration des actions*/
 
     /*!
      *  \brief Constructeur.
@@ -85,15 +91,15 @@ public:
     ~MApp();
 
     /*!
-     *  \brief Récupère un item en fonction de la sélection dans la liste.
+     *  \brief Recupere un item en fonction de la selection dans la liste.
      *
-     *  \return Un item instancié prêt à être placé.
+     *  \return Un item instancie pret a etre place.
      */
     Item* getItemInList();
 
 private:
     /*!
-     *  \brief Crée une connexion de type s_connect entre 2 Items.
+     *  \brief Cree une connexion de type s_connect entre 2 Items.
      *  \param sender : pointeur sur l'Item qui envoie le signal
      *  \param receiver : pointeur sur l'Item qui reçoit le signal
      *
@@ -110,51 +116,50 @@ private slots:
     void on_tableView_clicked(const QModelIndex &index);
 
     /*!
-     *  \brief Slot pour un clic sur le bouton connect'entrée Settings.
+     *  \brief Slot pour un clic sur le menu Options -> Parametres.
      *
-     *  Ouvre une fenêtre de configuration.
+     *  Ouvre une fenetre de configuration.
      */
     void on_actionSettings_triggered();
 
     /*!
-    *  \brief Slot pour un clic sur l'entrée "Charger Un Fichier du menu File.
+    *  \brief Slot pour un clic sur l'entree "Charger Un Fichier du menu File.
     *
-    *  Ouvre une fenêtre de configuration.
+    *  Ouvre une fenetre de configuration.
     */
     void on_actionCharger_un_Fichier_triggered();
     /*!
-    *  \brief Slot pour un clic sur l'entrée "Sauvegarder Un Circuit" du menu File.
+    *  \brief Slot pour un clic sur l'entree "Sauvegarder Un Circuit" du menu File.
     *
-    *  Ouvre une fenêtre de configuration.
+    *  Ouvre une fenetre de configuration.
     */
     void on_actionSauvegarder_un_Fichier_triggered();
 
     /*!
-     *  \brief Slot pour un clic sur l'entrée Quit.
+     *  \brief Slot pour un clic sur l'entree Quit.
      *
      *  Quitte l'application.
      */
     void on_actionQuit_triggered();
 
     /*!
-     *  \brief Slot de changement de valeur par défaut.
-     *  \param arg1 : Nouvelle valeur
+     *  \brief Slot de changement de valeur par defaut.
      *
-     *  Applique la nouvelle valeur par defaut à l'item courant.
+     *  Applique la nouvelle valeur par defaut a l'item courant.
      */
     void def_value_valueChanged();
 
     /*!
      *  \brief Slot lors d'un clic sur l'icone de modification.
      *
-     *  Affiche la fenêtre de modification de l'objet courant.
+     *  Affiche la fenetre de modification de l'objet courant.
      */
     void modify_clicked();
 
     /*!
-     *  \brief Slot lors d'un clic sur le bouton de la table de vérité.
+     *  \brief Slot lors d'un clic sur le bouton de la table de verite.
      *
-     *  Affiche la fenêtre de la table de vérité.
+     *  Affiche la fenetre de la table de verite.
      */
     void on_TableDeVerite_clicked();
 
@@ -175,14 +180,14 @@ private slots:
     /*!
      *  \brief Slot lors d'un clic sur l'action Nouveau dans le menu Fichier.
      *
-     *  Crée une nouvelle grille.
+     *  Cree une nouvelle grille.
      */
     void on_actionNew_triggered();
 
     /*!
      *  \brief Slot lors d'un changement du mode.
      *
-     *  Change l'action courante et applique les modifications associées.
+     *  Change l'action courante et applique les modifications associees.
      */
     void on_mode_activated(int index);
 
@@ -196,8 +201,8 @@ private slots:
 private:
     Ui::MApp *ui; /*!< Interface de la classe*/
     GridModel *model; /*!< Instance du modele courant*/
-    Item *currentItem; /*!< Instance du composant séléctionné dans la liste*/
-    QModelIndex currentIndex; /*!< Instance de la case dans la grille sélectionné*/
+    Item *currentItem; /*!< Instance du composant selectionne dans la liste*/
+    QModelIndex currentIndex; /*!< Instance de la case dans la grille selectionne*/
     Modes currentAction; /*!< Action courante*/
 
 };

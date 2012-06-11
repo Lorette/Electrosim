@@ -20,7 +20,7 @@ Demultiplexer::Demultiplexer(int n) : Item()
     this->image = ":/Images/demux.png";
     this->classe = Item::Demux;
     this->aux = n;
-    this->inputs.resize(n); // n entrées
+    this->inputs.resize(n); // n entrees
     this->outputs.resize(qPow(2,n)); // ... et 2^n sortie
 }
 
@@ -48,7 +48,7 @@ bool Demultiplexer::_do() {
         return false;
 
     this->outputs.at(in)->value = new int;
-    *(this->outputs.at(in)->value) = 1; // !!! On met la sortie à 1
+    *(this->outputs.at(in)->value) = 1; // !!! On met la sortie a 1
 
     return true;
 

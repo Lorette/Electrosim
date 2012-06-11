@@ -18,7 +18,7 @@
 GridView::GridView(QWidget *parent) : QTableView(parent) // Constructeur
 {
     this->setMouseTracking(true); // Active la traque de la souris
-    this->tracking = false; // Désactive le suivi de la souris pour MouseMoveEvent
+    this->tracking = false; // Desactive le suivi de la souris pour MouseMoveEvent
 
 }
 
@@ -28,11 +28,11 @@ GridView::GridView(QWidget *parent) : QTableView(parent) // Constructeur
 // Return:     void
 ////////////////////////////////////////////////////////////////////////
 
-void GridView::mouseMoveEvent(QMouseEvent *event) { // Des que la souris bouge, cette fonction est appelée
-    const QModelIndex index = this->indexAt(event->pos()); // Recupère l'index à la position de la souris
+void GridView::mouseMoveEvent(QMouseEvent *event) { // Des que la souris bouge, cette fonction est appelee
+    const QModelIndex index = this->indexAt(event->pos()); // Recupere l'index a la position de la souris
 
-    if(this->tracking) // Si la suivi est activée
-        this->model()->setData(index, 0); // On l'indique au modèle
+    if(this->tracking) // Si la suivi est activee
+        this->model()->setData(index, 0); // On l'indique au modele
 
 }
 
@@ -42,7 +42,7 @@ void GridView::mouseMoveEvent(QMouseEvent *event) { // Des que la souris bouge, 
 // Return:     void
 ////////////////////////////////////////////////////////////////////////
 
-void GridView::enableTracking(bool enable) { // Active/désactive le suivi de la souris
+void GridView::enableTracking(bool enable) { // Active/desactive le suivi de la souris
     this->tracking = enable;
 
     this->model()->setData(QModelIndex(),0);

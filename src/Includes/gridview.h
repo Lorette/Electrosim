@@ -45,12 +45,9 @@ public:
     explicit GridView(QWidget *parent = 0);
 
     /*!
-     *  \brief Crée un index.
-     *  \param row : numéro de la ligne
-     *  \param column : numéro de la colonne
-     *  \param parent : index parent
+     *  \brief Active/desactive le suivi de la souris.
+     *  \param enable : activation/desactivation
      *
-     *  \return l'index crée.
      */
     void enableTracking(bool enable);
 
@@ -60,15 +57,15 @@ private:
 public slots:
 
     /*!
-     *  \brief Slot exécuté lors d'un mouvement de la souris.
-     *  \param event : Données du mouvement
+     *  \brief Slot execute lors d'un mouvement de la souris.
+     *  \param event : Donnees du mouvement
      *
      */
     void mouseMoveEvent ( QMouseEvent * event );
 
     /*!
-     *  \brief Slot exécuté lors d'une actualisation de la vue.
-     *  \param event : données d'actualisation
+     *  \brief Slot execute lors d'une actualisation de la vue.
+     *  \param event : donnees d'actualisation
      *
      */
     void paintEvent (QPaintEvent* event);

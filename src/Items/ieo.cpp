@@ -20,7 +20,7 @@ IeO::IeO(int n) : Item()
     this->image = ":/Images/ieo.png";
     this->aux = n;
     this->classe = Item::IeO;
-    this->inputs.resize(1); // 1 entrée ...
+    this->inputs.resize(1); // 1 entree ...
     this->outputs.resize(n); // ... et n sorties
 }
 
@@ -32,7 +32,7 @@ IeO::IeO(int n) : Item()
 
 bool IeO::_do() {
     for(int i = 0; i < this->outputs.size(); i++)
-        if(this->outputs.at(i) == NULL) // Si une connexion n'est pas connectée
+        if(this->outputs.at(i) == NULL) // Si une connexion n'est pas connectee
             return false; // Ba c'est pas bon ...
 
     for(int i = 0; i < this->outputs.size(); i++) {
