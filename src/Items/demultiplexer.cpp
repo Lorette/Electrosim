@@ -20,7 +20,7 @@ Demultiplexer::Demultiplexer(int n) : Item()
     this->image = ":/Images/demux.png";
     this->classe = Item::Demux;
     this->aux = n;
-    this->inputs.resize(n); // n entrees
+    this->inputs.resize(n+1); // n entrees
     this->outputs.resize(qPow(2,n)); // ... et 2^n sortie
 }
 
@@ -32,7 +32,6 @@ Demultiplexer::Demultiplexer(int n) : Item()
 
 bool Demultiplexer::_do() {
     int in = 0;
-    int s = this->inputs.size();
 
     for(int i = 0; i < qPow(2, this->aux); i++) {
         if(this->outputs.at(i) != NULL) {
@@ -41,14 +40,14 @@ bool Demultiplexer::_do() {
         }
     }
 
-    for(int i = 0; i < s; i++)
+    for(int i = 0; i < this->aux; i++)
         in += (*(this->inputs.at(i)->value)) * qPow(2,i);
 
     if(this->outputs.at(in) == NULL)
         return false;
 
     this->outputs.at(in)->value = new int;
-    *(this->outputs.at(in)->value) = 1; // !!! On met la sortie a 1
+    *(this->outputs.at(in)->value) = *(this->inputs.at(this->aux)->value); // !!! On met la sortie a la valeur de l'entree
 
     return true;
 
@@ -62,6 +61,6 @@ bool Demultiplexer::_do() {
 
 void Demultiplexer::setAuxValue(int value) {
     this->aux = value;
-    this->inputs.resize(value);
+    this->inputs.resize(value+1);
     this->outputs.resize(qPow(2,value));
 }

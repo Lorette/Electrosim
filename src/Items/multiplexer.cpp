@@ -34,19 +34,16 @@ Multiplexer::Multiplexer(int n) : Item()
 
 bool Multiplexer::_do() {
     int in = 0;
-    int s = this->inputs.size() - 1;
 
     if(this->outputs.at(0) == NULL) // Si il y'a pas de connection sur la premeire sortie
         return false; // Ba c'est pas bon ...
 
-    for(int i = 0; i < log2(this->aux); i++) // Fonction du multiplexeur et
-        in += (*(this->inputs.at(s - i)->value)) * qPow(2,i); // calcul de l'entree sur laquelle prendre la valeur
+    for(int i = 0; i < this->aux; i++)
+        in += (*(this->inputs.at(i)->value)) * qPow(2,i); // calcul de l'entree sur laquelle prendre la valeur
 
-    if(in > this->aux) // Si l'entree n'existe pas ...
-        return false; // faux
 
     this->outputs.at(0)->value = new int;
-    *(this->outputs.at(0)->value) = *(this->inputs.at(in)->value); // !!! Copie de la valeur, pas du pointeur
+    *(this->outputs.at(0)->value) = *(this->inputs.at(this->aux + in)->value); // !!! Copie de la valeur, pas du pointeur
 
     return true;
 
@@ -61,6 +58,5 @@ bool Multiplexer::_do() {
 void Multiplexer::setAuxValue(int value) {
     int i;
     this->aux = value;
-    for(i = 0; value > qPow(2,i); i++); // Calcul du nombre d'entree supplementaire (Adressage)
-    this->inputs.resize(value + i); // n entrees + nombre d'entree supplementaire
+    this->inputs.resize(value + qPow(2,value)); // n entrees + nombre d'entree supplementaire
 }

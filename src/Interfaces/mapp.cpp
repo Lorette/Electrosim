@@ -136,7 +136,7 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
         break;
     }
 
-    this->ui->tableView->update(index);
+    this->model->setData(QModelIndex(), QVariant(),0);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -158,14 +158,14 @@ Item::s_connect* MApp::autoS_connect(Item* sender, Item* receiver) { // Affichag
     uConnOpt->name_2->setText(receiver->getName()); // ... et on les affiche
 
 
-    if(receiver->getClass() == Item::Mux) {
+    if(receiver->getClass() == Item::Mux || receiver->getClass() == Item::Demux) {
         int i;
         for(i = 0; i < receiver->getAuxValue(); i++) // Ici ...
             if(inputs.at(i) == NULL) // ... on indique les entrees disponibles ...
-                uConnOpt->chk_inputs->addItem(tr("Input") +" " +(QString::number(i))); // ... pour le 2eme Item (Recepteur)
+                uConnOpt->chk_inputs->addItem(tr("Adress") +" " +(QString::number(i))); // ... pour le 2eme Item (Recepteur)
         for(i = i; i < inputs.size();i++ )
             if(inputs.at(i) == NULL)
-                uConnOpt->chk_inputs->addItem(tr("Adress") +" " +(QString::number(i))); // ... pour le 2eme Item (Recepteur)
+                uConnOpt->chk_inputs->addItem(tr("Input") +" " +(QString::number(i))); // ... pour le 2eme Item (Recepteur)
     }
     else
         for(int i = 0; i < inputs.size(); i++) // Ici ...
@@ -398,7 +398,7 @@ void MApp::modify_clicked()
     if(item->getClass() == Item::IeO)
         uModify->Inputs->setSuffix(" " +tr("Outputs"));
     else
-        uModify->Inputs->setSuffix(" " +tr("Inputs"));
+        uModify->Inputs->setSuffix(" " +tr("Adress"));
     uModify->Inputs->setValue(item->getAuxValue());
 
     plc = 0;
