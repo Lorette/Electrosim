@@ -17,12 +17,10 @@
 
 Multiplexer::Multiplexer(int n) : Item()
 {
-    int i;
     this->image = ":/Images/mux.png";
     this->classe = Item::Mux;
     this->aux = n;
-    for(i = 0; n > qPow(2,i); i++); // Calcul du nombre d'entree supplementaire (Adressage)
-    this->inputs.resize(n + i); // n entrees + nombre d'entree supplementaire
+    this->inputs.resize(n + qPow(2,n)); // n entrees + nombre d'entree supplementaire
     this->outputs.resize(1); // ... et 1 sortie
 }
 
@@ -56,7 +54,6 @@ bool Multiplexer::_do() {
 ////////////////////////////////////////////////////////////////////////
 
 void Multiplexer::setAuxValue(int value) {
-    int i;
     this->aux = value;
     this->inputs.resize(value + qPow(2,value)); // n entrees + nombre d'entree supplementaire
 }
