@@ -33,6 +33,7 @@ Demultiplexer::Demultiplexer(int n) : Item()
 bool Demultiplexer::_do() {
     int in = 0;
 
+    //met toutes les sorties à 0
     for(int i = 0; i < qPow(2, this->aux); i++) {
         if(this->outputs.at(i) != NULL) {
             this->outputs.at(i)->value = new int;
@@ -43,11 +44,10 @@ bool Demultiplexer::_do() {
     for(int i = 0; i < this->aux; i++)
         in += (*(this->inputs.at(i)->value)) * qPow(2,i);
 
-    if(this->outputs.at(in) == NULL)
-        return false;
-
-    this->outputs.at(in)->value = new int;
-    *(this->outputs.at(in)->value) = *(this->inputs.at(this->aux)->value); // !!! On met la sortie a la valeur de l'entree
+    if(this->outputs.at(in) != NULL) {
+        this->outputs.at(in)->value = new int;
+        *(this->outputs.at(in)->value) = *(this->inputs.at(this->aux)->value); // !!! On met la sortie a la valeur de l'entree
+    }
 
     return true;
 

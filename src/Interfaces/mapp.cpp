@@ -328,9 +328,9 @@ Item* MApp::getItemInList() // Si on clic sur le placement
         break;
     case Item::And : it = new And(); // And
         break;
-    case Item::Mux : it = new Multiplexer(2); // Multiplexeur avec n = 2 par defaut
+    case Item::Mux : it = new Multiplexer(1); // Multiplexeur avec n = 1 par defaut
         break;
-    case Item::Demux : it = new Demultiplexer(2); // Demultiplexeur avec n = 2 par defaut
+    case Item::Demux : it = new Demultiplexer(1); // Demultiplexeur avec n = 1 par defaut
         break;
     case Item::IeO : it = new IeO(2);
         break;

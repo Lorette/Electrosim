@@ -31,13 +31,11 @@ IeO::IeO(int n) : Item()
 ////////////////////////////////////////////////////////////////////////
 
 bool IeO::_do() {
-    for(int i = 0; i < this->outputs.size(); i++)
-        if(this->outputs.at(i) == NULL) // Si une connexion n'est pas connectee
-            return false; // Ba c'est pas bon ...
-
     for(int i = 0; i < this->outputs.size(); i++) {
-        this->outputs.at(i)->value = new int;
-        *(this->outputs.at(i)->value) = *(this->inputs.at(0)->value);
+        if(this->outputs.at(i) != NULL) {
+            this->outputs.at(i)->value = new int;
+            *(this->outputs.at(i)->value) = *(this->inputs.at(0)->value);
+        }
     }
 
     return true;
