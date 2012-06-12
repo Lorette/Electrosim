@@ -1,36 +1,36 @@
 /***********************************************************************
- * Module:  ieo.cpp
+ * Module:  Node.cpp
  * Author:  SALMON PAUL
  *          MONLOUIS Kevyn
  *          DUREUIL Brice
  * Modified: mardi 5 juin 2012 15:01:47
- * Purpose: Implementation of the class IeO
+ * Purpose: Implementation of the class Node
  ***********************************************************************/
 
-#include "ieo.h"
+#include "node.h"
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       IeO::IeO(int n) : Item()
-// Purpose:    Implementation of IeO::IeO()
+// Name:       Node::Node(int n) : Item()
+// Purpose:    Implementation of Node::Node()
 // Return:
 ////////////////////////////////////////////////////////////////////////
 
-IeO::IeO(int n) : Item()
+Node::Node(int n) : Item()
 {
-    this->image = ":/Images/ieo.png";
+    this->image = ":/Images/node.png";
     this->aux = n;
-    this->classe = Item::IeO;
+    this->classe = Item::Node;
     this->inputs.resize(1); // 1 entree ...
     this->outputs.resize(n); // ... et n sorties
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       bool IeO::_do()
-// Purpose:    Implementation of IeO::_do()
+// Name:       bool Node::_do()
+// Purpose:    Implementation of Node::_do()
 // Return:     bool
 ////////////////////////////////////////////////////////////////////////
 
-bool IeO::_do() {
+bool Node::_do() {
     for(int i = 0; i < this->outputs.size(); i++) {
         if(this->outputs.at(i) != NULL) {
             this->outputs.at(i)->value = new int;
@@ -42,12 +42,12 @@ bool IeO::_do() {
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       void IeO::setAuxValue(int value)
-// Purpose:    Implementation of IeO::setAuxValue()
+// Name:       void Node::setAuxValue(int value)
+// Purpose:    Implementation of Node::setAuxValue()
 // Return:     void
 ////////////////////////////////////////////////////////////////////////
 
-void IeO::setAuxValue(int value) {
+void Node::setAuxValue(int value) {
     this->aux = value;
     this->outputs.resize(this->aux);
 }

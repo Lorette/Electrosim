@@ -12,7 +12,8 @@
         <file>Images/mux.png</file>
         <file>Images/demux.png</file>
         <file>Images/xor.png</file>
-        <file>Images/ieo.png</file>
         <file>Images/xnor.png</file>
+        <file>Images/node.png</file>
+        <file>Images/Electrosim.ico</file>
     </qresource>
 </RCC>

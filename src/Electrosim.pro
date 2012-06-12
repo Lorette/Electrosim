@@ -30,7 +30,7 @@ HEADERS += Includes/gridmodel.h \
     Includes/multiplexer.h \
     Includes/demultiplexer.h \
     Includes/xnor.h \
-    Includes/ieo.h \
+    Includes/node.h \
     Includes/xor.h
 		   
 FORMS += Forms/mapp.ui \
@@ -54,10 +54,12 @@ SOURCES += main.cpp \
     Items/multiplexer.cpp \
     Items/demultiplexer.cpp \
     Items/xnor.cpp \
-    Items/ieo.cpp \
+    Items/node.cpp \
     Items/xor.cpp
 
 RESOURCES += Ressources/bn.qrc
+
+win32:RC_FILE += Ressources/ico.rc
 
 TRANSLATIONS = Ressources/Translations/en.ts \
                 Ressources/Translations/fr.ts

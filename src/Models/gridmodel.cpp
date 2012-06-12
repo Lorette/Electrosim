@@ -568,7 +568,7 @@ bool GridModel::setDefValueOnInput(Item *item, int value) {
     if(item == NULL)
         return false;
 
-    if(item->getClass() != Item::Input && item->getClass() != Item::Mux && item->getClass() != Item::Demux && item->getClass() != Item::IeO)
+    if(item->getClass() != Item::Input && item->getClass() != Item::Mux && item->getClass() != Item::Demux && item->getClass() != Item::Node)
         return false;
 
     item->setAuxValue(value);
@@ -615,7 +615,7 @@ bool GridModel::saveInFile(QFile* file){
                     break;
                 case Item::Demux : out << "\tDEMUX\t";
                     break;
-                case Item::IeO : out << "\tIEO\t";
+                case Item::Node : out << "\tNODE\t";
                     break;
 
                 }
@@ -723,11 +723,11 @@ GridModel* GridModel::loadFromFile(QFile* file) {
                 if(!model->addItem(model->createIndex(i,j), xnor))
                     return NULL;
             }
-            else if( list[2] == "IEO")
+            else if( list[2] == "NODE")
             {
-                IeO* ieo = new IeO(list[5].toInt());
-                ieo->setName(list[1]);
-                if(!model->addItem(model->createIndex(i,j), ieo))
+                Node* node = new Node(list[5].toInt());
+                node->setName(list[1]);
+                if(!model->addItem(model->createIndex(i,j), node))
                     return NULL;
             }
             else if( list[2] == "XOR")

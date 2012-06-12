@@ -50,7 +50,7 @@ public:
      * \brief Enumeration de la liste des composants
      *
      */
-    enum Items { Input, Output, Not, Or, Xor, XNOr, And, Mux, Demux, IeO };
+    enum Items { Input, Output, Not, Or, Xor, XNOr, And, Mux, Demux, Node };
 
 public:
     /*!

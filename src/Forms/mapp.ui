@@ -53,6 +53,10 @@
   <property name="windowTitle">
    <string>Electro' Sim</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../Ressources/bn.qrc">
+    <normaloff>:/Images/Electrosim.ico</normaloff>:/Images/Electrosim.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="2" column="1" rowspan="2" colspan="10">
@@ -287,7 +291,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1022</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -398,6 +402,8 @@ p, li { white-space: pre-wrap; }
    <header>gridview.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../Ressources/bn.qrc"/>
+ </resources>
  <connections/>
 </ui>

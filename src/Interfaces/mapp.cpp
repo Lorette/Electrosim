@@ -42,7 +42,7 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
     ui->listWidget->addItem(new QListWidgetItem(tr("And"))); // Idem
     ui->listWidget->addItem(new QListWidgetItem(tr("Multiplexer"))); // Idem
     ui->listWidget->addItem(new QListWidgetItem(tr("Demultiplexer"))); // Idem
-    ui->listWidget->addItem(new QListWidgetItem(tr("IeO"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Node"))); // Idem
 
     ui->listWidget->setCurrentRow(0);
 
@@ -333,7 +333,7 @@ Item* MApp::getItemInList() // Si on clic sur le placement
         break;
     case Item::Demux : it = new Demultiplexer(1); // Demultiplexeur avec n = 1 par defaut
         break;
-    case Item::IeO : it = new IeO(2);
+    case Item::Node : it = new Node(2);
         break;
     default: it = NULL;
     }
@@ -391,12 +391,12 @@ void MApp::modify_clicked()
     wModify->setWindowTitle(tr("Modifying") +" " +item->getName());
 
     uModify->name->setText(item->getName());
-    if(item->getClass() == Item::Mux || item->getClass() == Item::Demux || item->getClass() == Item::IeO)
+    if(item->getClass() == Item::Mux || item->getClass() == Item::Demux || item->getClass() == Item::Node)
         uModify->Inputs->setVisible(true);
     else
         uModify->Inputs->setVisible(false);
 
-    if(item->getClass() == Item::IeO)
+    if(item->getClass() == Item::Node)
         uModify->Inputs->setSuffix(" " +tr("Outputs"));
     else
         uModify->Inputs->setSuffix(" " +tr("Adress"));
@@ -457,7 +457,7 @@ void MApp::modify_clicked()
                 this->model->removeConnexion(outputs.at(i));
         }
 
-        if(item->getClass() == Item::IeO && uModify->Inputs->value() < item->getAuxValue())
+        if(item->getClass() == Item::Node && uModify->Inputs->value() < item->getAuxValue())
             for(int i = uModify->Inputs->value(); i < item->getAuxValue(); i++)
                 this->model->removeConnexion(outputs.at(i));
 
@@ -611,7 +611,7 @@ void MApp::on_actionAbout_us_triggered()
 {
     QDialog* wApropos = new QDialog (this);
     QVBoxLayout *layout = new QVBoxLayout;
-    QString propos = "<strong>"+QObject::tr("Electrosim project")+"</strong>:<br/><br/><u><i>"+QObject::tr("Made by")+"</i></u>:<ul><li>Kevyn MONLOUIS</li><li>Paul SALMON</li><li>Brice DUREUIL</li></ul><br/><u><i>"+QObject::tr("Programming language used")+"</u></i>:<ul><li>"+QObject::tr("Langage C++")+"</li></ul><br/><u><i>"+QObject::tr("Framework used")+"</u></i>:<ul><li>Qt 4.8</li></ul><br/><br/>"+QObject::tr("For more informations, visit our")+" <a href=\"http://lorette.github.com/electrosim\">"+QObject::tr("website")+"</a>.";
+    QString propos = "<strong>"+QObject::tr("Electrosim project")+"</strong>:<br/><br/><u><i>"+QObject::tr("Made by")+"</i></u>:<ul><li>Kevyn MONLOUIS</li><li>Paul SALMON</li><li>Brice DUREUIL</li></ul><br/><u><i>"+QObject::tr("Programming language used")+"</u></i>:<ul><li>"+QObject::tr("C++ Language")+"</li></ul><br/><u><i>"+QObject::tr("Framework used")+"</u></i>:<ul><li>Qt 4.8</li></ul><br/><br/>"+QObject::tr("For more informations, visit our")+" <a href=\"http://lorette.github.com/electrosim\">"+QObject::tr("website")+"</a>.";
     QLabel *text = new QLabel(propos);
     text->setOpenExternalLinks(true);
     layout->addWidget(text);
@@ -665,8 +665,8 @@ void MApp::on_listWidget_customContextMenuRequested(const QPoint&)
     case Item::Demux : uAcomponent->name->setText(tr("Demultiplexer"));
         uAcomponent->text->setText("<center><strong>" +tr("Demultiplexer") +"</strong></center><br /><p>" +tr("A demultiplexer (or demux) is component selecting one input and forward it value to the selected output by the adress inputs.") +"</p>");
         break;
-    case Item::IeO : uAcomponent->name->setText(tr("Input Egal Output"));
-        uAcomponent->text->setText("<center><strong>" +tr("Input Egal Output") +"</strong></center><br /><p>" +tr("A input egal output (or IeO) is a component taking only one input and forward it value to one or more outputs.") +"</p>");
+    case Item::Node : uAcomponent->name->setText(tr("Node"));
+        uAcomponent->text->setText("<center><strong>" +tr("Node") +"</strong></center><br /><p>" +tr("A node is a component taking only one input and forward it value to one or more outputs.") +"</p>");
         break;
     }
 

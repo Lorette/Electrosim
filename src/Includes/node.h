@@ -1,18 +1,18 @@
 /***********************************************************************
- * Module:  ieo.h
+ * Module:  node.h
  * Author:  SALMON PAUL
  *          MONLOUIS Kevyn
  *          DUREUIL Brice
  * Modified: mardi 5 juin 2012 15:01:47
- * Purpose: Declaration of the class IeO
+ * Purpose: Declaration of the class Node
  ***********************************************************************/
 
-#ifndef IEO_H
-#define IEO_H
+#ifndef NODE_H
+#define NODE_H
 
 /*!
- * \file ieo.h
- * \brief Fichier du composant IeO
+ * \file node.h
+ * \brief Fichier du composant Node
  * \author SALMON PAUL
  *         MONLOUIS Kevyn
  *         DUREUIL Brice
@@ -24,13 +24,13 @@
 
 #include "item.h"
 
-/*! \class IeO
-  * \brief Classe IeO :
+/*! \class Node
+  * \brief Classe Node :
   *
-  *  Classe du composant IeO.
+  *  Classe du composant Node.
   */
 
-class IeO : public Item
+class Node : public Item
 {
 
 public:
@@ -38,9 +38,9 @@ public:
      *  \brief Constructeur.
      *  \param n : nombre de sortie
      *
-     *  Constructeur de la classe IeO.
+     *  Constructeur de la classe Node.
      */
-    explicit IeO(int n);
+    explicit Node(int n);
 
     /*!
      *  \brief Fonction de traitement des donnees.
@@ -57,4 +57,4 @@ public:
     virtual void setAuxValue(int value);
 };
 
-#endif // IEO_H
+#endif // NODE_H
