@@ -99,6 +99,13 @@ public:
      */
     Item* getItemInList();
 
+    /*!
+     *  \brief Charge et recharge la liste.
+     *
+     *  Notemment uilisé lors du changement de langue.
+     */
+    void loadList();
+
 private:
     /*!
      *  \brief Cree une connexion de type s_connect entre 2 Items.

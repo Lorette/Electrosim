@@ -26,25 +26,12 @@ MApp::MApp(QWidget *parent) : QMainWindow(parent),ui(new Ui::MApp)
     model = new GridModel(13,20); // Initialise le model de 13x14 par defaut
     ui->setupUi(this); // Relie l'interface a cet objet
 
-    this->on_actionFrench_triggered(); // On le traduit en francais
+    this->on_actionFrench_triggered(); // On le traduit en francais et charge la liste
     this->ui->row_count->setText(QString::number(this->model->rowCount()));
     this->ui->column_count->setText(QString::number(this->model->columnCount()));
 
     ui->tableView->setModel(model); //Indique a la vue d'utiliserle model cree
     ui->tableView->setItemDelegate(new ImageDelegate(this)); // Creer un delegue
-
-    ui->listWidget->addItem(new QListWidgetItem(tr("Input"))); // Rajoute une entree a la liste des composants
-    ui->listWidget->addItem(new QListWidgetItem(tr("Output"))); // Idem
-    ui->listWidget->addItem(new QListWidgetItem(tr("Not"))); // Idem
-    ui->listWidget->addItem(new QListWidgetItem(tr("Or"))); // Idem
-    ui->listWidget->addItem(new QListWidgetItem(tr("Xor"))); // Idem
-    ui->listWidget->addItem(new QListWidgetItem(tr("Equivalence"))); // Idem
-    ui->listWidget->addItem(new QListWidgetItem(tr("And"))); // Idem
-    ui->listWidget->addItem(new QListWidgetItem(tr("Multiplexer"))); // Idem
-    ui->listWidget->addItem(new QListWidgetItem(tr("Demultiplexer"))); // Idem
-    ui->listWidget->addItem(new QListWidgetItem(tr("Node"))); // Idem
-
-    ui->listWidget->setCurrentRow(0);
 
     this->currentItem = NULL; // Indique qu'aucune selection n'est faite ...
     this->currentAction = VIEW; // Indique que l'action est la vue simple
@@ -515,6 +502,7 @@ void MApp::on_actionFrench_triggered()
     ui->actionEnglish->setChecked(false);
 
     this->ui->retranslateUi(this); // On retraduit tout !!
+    this->loadList();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -532,6 +520,7 @@ void MApp::on_actionEnglish_triggered()
     ui->actionEnglish->setChecked(true);
 
     this->ui->retranslateUi(this); // On retraduit tout !!
+    this->loadList();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -676,4 +665,28 @@ void MApp::on_listWidget_customContextMenuRequested(const QPoint&)
     delete uAcomponent; // ... tout ...
     delete wAcomponent; // ...
 
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       void MApp::loadList()
+// Purpose:    Implementation of MApp::loadList()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void MApp::loadList()
+{
+    this->ui->listWidget->clear();
+
+    ui->listWidget->addItem(new QListWidgetItem(tr("Input"))); // Rajoute une entree a la liste des composants
+    ui->listWidget->addItem(new QListWidgetItem(tr("Output"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Not"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Or"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Xor"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Equivalence"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("And"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Multiplexer"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Demultiplexer"))); // Idem
+    ui->listWidget->addItem(new QListWidgetItem(tr("Node"))); // Idem
+
+    this->ui->listWidget->setCurrentRow(0);
 }
