@@ -301,6 +301,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionNew"/>
     <addaction name="actionCharger_un_Fichier"/>
     <addaction name="actionSauvegarder_un_Fichier"/>
+    <addaction name="actionSave_as_PNG"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -391,6 +392,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>F1</string>
+   </property>
+  </action>
+  <action name="actionSave_as_PNG">
+   <property name="text">
+    <string>Save as PNG</string>
    </property>
   </action>
  </widget>

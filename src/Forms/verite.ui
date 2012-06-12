@@ -14,7 +14,7 @@
    <string>Truth Table</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="0" column="0" colspan="2">
     <widget class="QTableWidget" name="tableWidget">
      <property name="layoutDirection">
       <enum>Qt::LeftToRight</enum>
@@ -39,7 +39,7 @@
      </attribute>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="1">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

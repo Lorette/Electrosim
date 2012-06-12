@@ -221,6 +221,13 @@ private slots:
      */
     void on_listWidget_customContextMenuRequested(const QPoint &pos);
 
+    /*!
+     *  \brief Slot pour enregistrer le circuit courant an tant qu'image.
+     *
+     *  \bug Ne capture que la partie visible par l'utilisateur.
+     */
+    void on_actionSave_as_PNG_triggered();
+
 private:
     Ui::MApp *ui; /*!< Interface de la classe*/
     GridModel *model; /*!< Instance du modele courant*/

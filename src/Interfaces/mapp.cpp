@@ -690,3 +690,20 @@ void MApp::loadList()
 
     this->ui->listWidget->setCurrentRow(0);
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       void MApp::on_actionSave_as_PNG_triggered()
+// Purpose:    Implementation of MApp::on_actionSave_as_PNG_triggered()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void MApp::on_actionSave_as_PNG_triggered()
+{
+    QString s = QFileDialog::getSaveFileName(this,tr("Choose a file"),QString(),tr("PNG Files (*.png)"));
+
+    if(s == "") //cancel
+       return;
+
+    QPixmap::grabWidget(this->ui->tableView->viewport()).save(s);
+
+}
