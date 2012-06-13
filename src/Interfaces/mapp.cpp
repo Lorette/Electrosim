@@ -92,7 +92,7 @@ void MApp::on_tableView_clicked(const QModelIndex &index) // SI on clic sur la g
                     if(!this->model->addItem(index, aux)) // On le rajoute au model
                         QMessageBox::critical(0,tr("Incorrect name"), tr("A name have to be unique and without space.")); //le nom doit etre unique
                     else
-                        this->ui->statusBar->showMessage(tr("The component has been correctly place on the grid."));
+                        this->ui->statusBar->showMessage(tr("The component has been correctly placed on the grid."));
                 }
             }
         }

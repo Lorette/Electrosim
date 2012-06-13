@@ -31,6 +31,10 @@
   <property name="windowTitle">
    <string>Informations</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../Ressources/bn.qrc">
+    <normaloff>:/Images/Electrosim.ico</normaloff>:/Images/Electrosim.ico</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="1">
     <spacer name="verticalSpacer">
@@ -160,6 +164,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Ressources/bn.qrc"/>
+ </resources>
  <connections/>
 </ui>

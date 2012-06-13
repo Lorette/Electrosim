@@ -289,9 +289,8 @@ p, li { white-space: pre-wrap; }
         <translation>A name have to be unique and without space.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="95"/>
         <source>The component has been correctly place on the grid.</source>
-        <translation>The component has been correctly place on the grid.</translation>
+        <translation type="obsolete">The component has been correctly place on the grid.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="102"/>
@@ -420,6 +419,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../../Interfaces/mapp.cpp" line="105"/>
         <source>You have to click on the second component (receiver).</source>
         <translation>You have to click on the second component (receiver).</translation>
+    </message>
+    <message>
+        <location filename="../../Interfaces/mapp.cpp" line="95"/>
+        <source>The component has been correctly placed on the grid.</source>
+        <translation>The component has been correctly placed on the grid.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="115"/>

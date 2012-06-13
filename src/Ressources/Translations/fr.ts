@@ -93,7 +93,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../Forms/mapp.ui" line="264"/>
         <source>Place mode</source>
-        <translation>Mode Placement</translation>
+        <translation>Mode placement</translation>
     </message>
     <message>
         <location filename="../../Forms/mapp.ui" line="269"/>
@@ -250,7 +250,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="90"/>
         <source>Give a name to this component.</source>
-        <translation>Donnez un nom à cet élément.</translation>
+        <translation>Donnez un nom à ce composant.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="71"/>
@@ -289,9 +289,8 @@ p, li { white-space: pre-wrap; }
         <translation>Un nom doit être unique et sans espace.</translation>
     </message>
     <message>
-        <location filename="../../Interfaces/mapp.cpp" line="95"/>
         <source>The component has been correctly place on the grid.</source>
-        <translation>Le composant a été correctement placé.</translation>
+        <translation type="obsolete">Le composant a été correctement placé.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="102"/>
@@ -310,7 +309,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="565"/>
         <source>Click one of the component in the grid to delete it.</source>
-        <translation>Cliquez sur un des composants dans la grilel pour le supprimer.</translation>
+        <translation>Cliquez sur un des composants dans la grille pour le supprimer.</translation>
     </message>
     <message>
         <source>The connexion has been correctly made.</source>
@@ -435,7 +434,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="105"/>
         <source>You have to click on the second component (receiver).</source>
-        <translation>Vous devez sélectionner the second composant (récepteur).</translation>
+        <translation>Vous devez sélectionner le second composant (récepteur).</translation>
+    </message>
+    <message>
+        <location filename="../../Interfaces/mapp.cpp" line="95"/>
+        <source>The component has been correctly placed on the grid.</source>
+        <translation>Le composant a été correctement placé.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="115"/>
@@ -445,7 +449,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="118"/>
         <source>You have to click on the first component (sender).</source>
-        <translation>Vous devez sélectionner the premier composant (émetteur).</translation>
+        <translation>Vous devez sélectionner le premier composant (émetteur).</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="123"/>
@@ -539,7 +543,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="649"/>
         <source>A and gate is a component taking 2 values as inputs and puts on its output 1 if the two inputs have 1 else 0.</source>
-        <translation>Une porte Et est un composant prenant 2 valeurs en entrées et evoie sur sa sortie 1 si les valeurs sont à 1 sinon envoie 0.</translation>
+        <translation>Une porte Et est un composant prenant 2 valeurs en entrée et evoie sur sa sortie 1 si les valeurs sont à 1 sinon envoie 0.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="649"/>
