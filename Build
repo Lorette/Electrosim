@@ -1,0 +1,17 @@
+Attention à la compilation statique sous Linux : 
+	En compilant statiquement seulement, g++ va lier les librairies static de Qt avec les libraries dynamiques du système et donc le programme ne sera pas totallement static.
+
+Afin de remedier à cela : 
+	Modifier le mkspec de linux-g++ -> qmake.conf et rajouter 
+	QMAKE_LFLAGS += -static
+	au fichier
+
+Enfin avant la compilation rajouter au fichier Makefile.Electrosim dans la catégorie LIBS les librairies suivantes : 
+	-lxcb -lXau -lXdmcp
+
+Vérifiez qu'elles sont bien installées sur le système : 
+	libxcb
+	libXau
+	libXdmcp
+
+et le programme sera totallement static mais attention il ne sera pas stable !!! car certaine librairie nécessite une utilisation dynamique et non statique
