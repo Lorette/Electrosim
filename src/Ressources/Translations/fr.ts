@@ -286,7 +286,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../Interfaces/mapp.cpp" line="93"/>
         <location filename="../../Interfaces/mapp.cpp" line="423"/>
         <source>A name have to be unique and without space.</source>
-        <translation></translation>
+        <translation>Un nom doit être unique et sans espace.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="95"/>
