@@ -43,7 +43,9 @@
 /*! \class GridModel
   * \brief Classe GridModel :
   *
-  *  Classe du modele de la grille.
+  *  Classe du modele de la grille. C'est la representation du circuit et le coeur du logiciel.
+  *  C'est la classe qui implemente la plupart des fonctionnalites du logiciel telles la sauvegarde,
+  *  le chargement et la génération de table de verite.
   */
 
 class GridModel : public QAbstractItemModel
@@ -328,7 +330,7 @@ signals:
 private :
     int column_count; /*!< Nombre de colonnes*/
     int row_count; /*!< Nombre de lignes*/
-    QVector< QVector<Item*> > items; /*!< Donnees du modele*/
+    QVector< QVector<Item*> > items; /*!< Donnees du modele, represente le circuit*/
     QList <Item *> inputs; /*!< Entrees du modele*/
     QList <Item *> outputs; /*!< Sorties du modele*/
     QModelIndex current_modelIndex; /*!< Index courant*/

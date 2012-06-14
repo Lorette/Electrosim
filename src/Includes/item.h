@@ -31,7 +31,11 @@
 /*! \class Item
   * \brief Classe Item :
   *
-  *  Classe mere des composants de type Item.
+  *  Classe mere des différents composants electroniques disponibles dans le logiciel.
+  *  Elle implemente les acceusseurs communs a tous les composants et declare les outils
+  *  necessaires pour toutes ses classes filles (structure s_connect et fonction de comportement _do).
+  *  Elle implemente egalement le slot recvSign et le signal sendSign qui permettent le transfert d'information
+  *  des entrees vers les sorties quand une valeur d'entree change (commun a tous les composants).
   */
 
 class Item : public QObject
