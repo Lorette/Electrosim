@@ -20,7 +20,6 @@
  * \date 4 juin 2012
  */
 
-#include <QVector>
 #include <qmath.h>
 
 #include "item.h"

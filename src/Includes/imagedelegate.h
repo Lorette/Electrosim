@@ -24,7 +24,6 @@
 #include <QSize>
 #include <QPixmap>
 #include <QPainter>
-#include <QTransform>
 
 /*! \class ImageDelegate
   * \brief Classe ImageDelegate :

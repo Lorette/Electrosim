@@ -6,11 +6,10 @@ QT += core gui
 
 TEMPLATE = app
 TARGET = Electrosim
-CONFIG += static
 
 DEPENDPATH += . \
               Models \
-			  Views \
+              Views \
               Forms \
               Interfaces \
               Items
@@ -20,46 +19,47 @@ INCLUDEPATH += Includes
 HEADERS += Includes/gridmodel.h \
            Includes/input.h \
            Includes/output.h \
-		   Includes/mapp.h \
+           Includes/mapp.h \
            Includes/gridview.h \
-            Includes/not.h \
-    Includes/imagedelegate.h \
-    Includes/item.h \
-    Includes/or.h \
-    Includes/and.h \
-    Includes/multiplexer.h \
-    Includes/demultiplexer.h \
-    Includes/xnor.h \
-    Includes/node.h \
-    Includes/xor.h
+           Includes/not.h \
+           Includes/imagedelegate.h \
+           Includes/item.h \
+           Includes/or.h \
+           Includes/and.h \
+           Includes/multiplexer.h \
+           Includes/demultiplexer.h \
+           Includes/xnor.h \
+           Includes/node.h \
+           Includes/xor.h
 		   
 FORMS += Forms/mapp.ui \
-    Forms/conn_option.ui \
-    Forms/settings.ui \
-    Forms/modify.ui \
-    Forms/verite.ui \
-    Forms/about_component.ui
+         Forms/conn_option.ui \
+         Forms/settings.ui \
+         Forms/modify.ui \
+         Forms/verite.ui \
+         Forms/about_component.ui
 
 SOURCES += main.cpp \
            Interfaces/mapp.cpp \
            Models/gridmodel.cpp \
-		   Items/item.cpp \
-		   Items/input.cpp \
-                   Items/output.cpp \
-                   Views/gridview.cpp \
-                Items/not.cpp \
-    Views/imagedelegate.cpp \
-    Items/or.cpp \
-    Items/and.cpp \
-    Items/multiplexer.cpp \
-    Items/demultiplexer.cpp \
-    Items/xnor.cpp \
-    Items/node.cpp \
-    Items/xor.cpp
+           Views/gridview.cpp \
+           Views/imagedelegate.cpp \
+           Items/or.cpp \
+           Items/not.cpp \
+           Items/and.cpp \
+           Items/multiplexer.cpp \
+           Items/demultiplexer.cpp \
+           Items/xnor.cpp \
+           Items/node.cpp \
+           Items/xor.cpp \
+           Items/item.cpp \
+           Items/input.cpp \
+           Items/output.cpp
+
 
 RESOURCES += Ressources/bn.qrc
 
 win32:RC_FILE += Ressources/ico.rc
 
 TRANSLATIONS = Ressources/Translations/en.ts \
-                Ressources/Translations/fr.ts
+               Ressources/Translations/fr.ts

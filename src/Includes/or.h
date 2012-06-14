@@ -20,8 +20,6 @@
  * \date 18 mai 2012
  */
 
-#include <QVector>
-
 #include "item.h"
 
 /*! \class Or

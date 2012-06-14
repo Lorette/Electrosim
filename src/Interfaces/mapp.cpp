@@ -559,7 +559,7 @@ void MApp::on_mode_activated(int index)
         break;
 
     case CONNECT1 : this->currentAction = CONNECT1;
-        this->ui->statusBar->showMessage(tr("You have two click on the first component (sender)."));
+        this->ui->statusBar->showMessage(tr("You have to click on the first component (sender)."));
         break;
     case DELETE : this->currentAction = DELETE;
         this->ui->statusBar->showMessage(tr("Click one of the component in the grid to delete it."));

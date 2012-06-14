@@ -20,7 +20,6 @@
  * \date 15 mai 2012
  */
 
-#include <QMessageBox>
 #include "item.h"
 
 /*! \class Output

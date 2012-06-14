@@ -17,7 +17,7 @@
         <translation>Connexion &lt;---- ----&gt;</translation>
     </message>
     <message>
-        <location filename="../../Forms/conn_option.ui" line="82"/>
+        <location filename="../../Forms/conn_option.ui" line="86"/>
         <source>------------&gt;</source>
         <translation>------------&gt;</translation>
     </message>
@@ -28,30 +28,6 @@
         <location filename="../../Forms/mapp.ui" line="54"/>
         <source>Electro&apos; Sim</source>
         <translation>Electro&apos; Sim</translation>
-    </message>
-    <message>
-        <source>Connect</source>
-        <translation type="obsolete">Connecter</translation>
-    </message>
-    <message>
-        <source>Informations</source>
-        <translation type="obsolete">Informations</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Supprimer</translation>
-    </message>
-    <message>
-        <source>Default :</source>
-        <translation type="obsolete">Defaut :</translation>
-    </message>
-    <message>
-        <source>M</source>
-        <translation type="obsolete">M</translation>
-    </message>
-    <message>
-        <source>Place</source>
-        <translation type="obsolete">Placer</translation>
     </message>
     <message>
         <location filename="../../Forms/mapp.ui" line="165"/>
@@ -72,12 +48,8 @@ p, li { white-space: pre-wrap; }
         <translation>Lignes :</translation>
     </message>
     <message>
-        <source>0</source>
-        <translation type="obsolete">0</translation>
-    </message>
-    <message>
         <location filename="../../Forms/mapp.ui" line="193"/>
-        <source>Colmuns :</source>
+        <source>Columns :</source>
         <translation>Colonnes :</translation>
     </message>
     <message>
@@ -239,10 +211,6 @@ p, li { white-space: pre-wrap; }
         <translation>Porte Et</translation>
     </message>
     <message>
-        <source>Item</source>
-        <translation type="obsolete">Objet</translation>
-    </message>
-    <message>
         <location filename="../../Interfaces/mapp.cpp" line="90"/>
         <source>Give a name</source>
         <translation>Donnez un nom</translation>
@@ -289,17 +257,9 @@ p, li { white-space: pre-wrap; }
         <translation>Un nom doit être unique et sans espace.</translation>
     </message>
     <message>
-        <source>The component has been correctly place on the grid.</source>
-        <translation type="obsolete">Le composant a été correctement placé.</translation>
-    </message>
-    <message>
         <location filename="../../Interfaces/mapp.cpp" line="102"/>
         <source>You have to select a component.</source>
         <translation>Vous devez sélectionner un composant.</translation>
-    </message>
-    <message>
-        <source>You have two click on the second component (receiver).</source>
-        <translation type="obsolete">Vous devez sélectionner the second composant (récepteur).</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="112"/>
@@ -310,19 +270,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../../Interfaces/mapp.cpp" line="565"/>
         <source>Click one of the component in the grid to delete it.</source>
         <translation>Cliquez sur un des composants dans la grille pour le supprimer.</translation>
-    </message>
-    <message>
-        <source>The connexion has been correctly made.</source>
-        <translation type="obsolete">La connexion a été correctement établie.</translation>
-    </message>
-    <message>
-        <source>This component was already selected for connexion.</source>
-        <translation type="obsolete">Ce composant a déjà été sélectionné pour une connexion.</translation>
-    </message>
-    <message>
-        <location filename="../../Interfaces/mapp.cpp" line="562"/>
-        <source>You have two click on the first component (sender).</source>
-        <translation>Vous devez sélectionner le premier composant (émetteur).</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="236"/>
@@ -336,26 +283,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../../Interfaces/mapp.cpp" line="273"/>
         <source>Elec Files (*.elec);;Texts Files (*.txt)</source>
         <translation>Fichiers Elec (*.elec);;Fichiers Textes (*.txt)</translation>
-    </message>
-    <message>
-        <source> Outputs</source>
-        <translation type="obsolete"> Sorties</translation>
-    </message>
-    <message>
-        <source>Unable to connect those components</source>
-        <translation type="obsolete">Impossible de connecter ces composants.</translation>
-    </message>
-    <message>
-        <source>Erreur</source>
-        <translation type="obsolete">Error</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuler</translation>
-    </message>
-    <message>
-        <source>Fichiers Textes (*.txt);;Elec Files (*.elec)</source>
-        <translation type="obsolete">Texts Files (*.txt);;Elec Files(*.elec)</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="246"/>
@@ -381,16 +308,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="288"/>
         <source>A problem occured during the save.</source>
-        <translation>A problème a survenu durant la sauvegarde.</translation>
+        <translation>A problème est survenu durant la sauvegarde.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="387"/>
         <source>Outputs</source>
         <translation>Sorties</translation>
-    </message>
-    <message>
-        <source>Inputs</source>
-        <translation type="obsolete">Entrées</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="554"/>
@@ -405,7 +328,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="123"/>
         <source>The component has been deleted.</source>
-        <translation>Le composant a été supprimer.</translation>
+        <translation>Le composant a été supprimé.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="684"/>
@@ -448,13 +371,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="118"/>
+        <location filename="../../Interfaces/mapp.cpp" line="562"/>
         <source>You have to click on the first component (sender).</source>
         <translation>Vous devez sélectionner le premier composant (émetteur).</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="123"/>
         <source>A problem occured during the deletion.</source>
-        <translation>Un problème a survenu durant la suppression.</translation>
+        <translation>Un problème est survenu durant la suppression.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="153"/>
@@ -495,7 +419,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="637"/>
         <source>A not gate is a component taking a value as an input and puts the invert of this value on the only one output it has.</source>
-        <translation>Une porte Non est un composant prenant une valeur en entrée et envoie sur la seule sortie qu&apos;il l&apos;inverse de cette valeur.</translation>
+        <translation>Une porte Non est un composant prenant une valeur en entrée et envoie sur sa seule sortie l&apos;inverse de cette valeur.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="637"/>
@@ -553,26 +477,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="652"/>
         <source>A multiplexer (or mux) is component selecting one or several inputs and forward to his output the correct value of the input selected by the adress inputs.</source>
-        <translation>Un multiplexeur (ou muxà est un composant sélectionnant une ou plusieurs entrées et fait suivre sur sa sortie la valeur correcte sélectionnée grâce aux entrées d&apos;adressage.</translation>
+        <translation>Un multiplexeur (ou mux) est un composant sélectionnant une ou plusieurs entrées et fait suivre sur sa sortie la valeur correcte sélectionnée grâce aux entrées d&apos;adressage.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="655"/>
         <source>A demultiplexer (or demux) is component selecting one input and forward it value to the selected output by the adress inputs.</source>
-        <translation>Un démultiplexeur (ou démux) est un composant sélectionnant une entrée et fait suivre sa valeur sur la sortiesélèctionnée grâce auxentrées d&apos;adressage.</translation>
+        <translation>Un démultiplexeur (ou démux) est un composant sélectionnant une entrée et fait suivre sa valeur sur la sortie sélèctionnée grâce auxentrées d&apos;adressage.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="658"/>
         <source>A node is a component taking only one input and forward it value to one or more outputs.</source>
-        <translation>Un noeud est un composantprenant une seule entrée et faisant suivre sa valeur sur une ou plusieurs sorties.</translation>
+        <translation>Un noeud est un composant prenant une seule entrée et faisant suivre sa valeur sur une ou plusieurs sorties.</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="702"/>
         <source>PNG Files (*.png)</source>
         <translation>Fichiers PNG (*.png)</translation>
-    </message>
-    <message>
-        <source>Name already used.</source>
-        <translation type="obsolete">Nom déjà utilisé.</translation>
     </message>
 </context>
 <context>
@@ -583,26 +503,15 @@ p, li { white-space: pre-wrap; }
         <translation>Modification</translation>
     </message>
     <message>
-        <location filename="../../Forms/modify.ui" line="97"/>
+        <location filename="../../Forms/modify.ui" line="101"/>
         <source>Inputs</source>
         <translatorcomment>Sorties</translatorcomment>
         <translation>Entrées</translation>
     </message>
     <message>
-        <location filename="../../Forms/modify.ui" line="66"/>
+        <location filename="../../Forms/modify.ui" line="70"/>
         <source>Outputs</source>
         <translation>Sorties</translation>
-    </message>
-    <message>
-        <source> Inputs</source>
-        <translation type="obsolete"> Entrées</translation>
-    </message>
-</context>
-<context>
-    <name>Output</name>
-    <message>
-        <source>An output gets one of the final value of the circuit.</source>
-        <translation type="obsolete">Une sortie recoit une des valeurs finales du circuit.</translation>
     </message>
 </context>
 <context>
@@ -651,17 +560,17 @@ p, li { white-space: pre-wrap; }
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../../Forms/settings.ui" line="23"/>
+        <location filename="../../Forms/settings.ui" line="27"/>
         <source>Number of rows</source>
         <translation>Nombre de lignes</translation>
     </message>
     <message>
-        <location filename="../../Forms/settings.ui" line="33"/>
+        <location filename="../../Forms/settings.ui" line="37"/>
         <source>Number of columns</source>
         <translation>Nombre de colonnes</translation>
     </message>
     <message>
-        <location filename="../../Forms/settings.ui" line="40"/>
+        <location filename="../../Forms/settings.ui" line="44"/>
         <source>Show grid</source>
         <translation>Afficher la grille</translation>
     </message>

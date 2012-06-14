@@ -22,7 +22,6 @@
 
 #include <QAbstractItemModel>
 #include <QVector>
-#include <QMessageBox>
 #include <QIcon>
 #include <QPair>
 #include <qmath.h>

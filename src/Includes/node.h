@@ -20,8 +20,6 @@
  * \date 5 juin 2012
  */
 
-#include <QVector>
-
 #include "item.h"
 
 /*! \class Node

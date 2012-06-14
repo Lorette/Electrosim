@@ -18,7 +18,7 @@
         <translation>Connexion &lt;---- ----&gt;</translation>
     </message>
     <message>
-        <location filename="../../Forms/conn_option.ui" line="82"/>
+        <location filename="../../Forms/conn_option.ui" line="86"/>
         <source>------------&gt;</source>
         <translation>------------&gt;</translation>
     </message>
@@ -29,30 +29,6 @@
         <location filename="../../Forms/mapp.ui" line="54"/>
         <source>Electro&apos; Sim</source>
         <translation>Electro&apos; Sim</translation>
-    </message>
-    <message>
-        <source>Connect</source>
-        <translation type="obsolete">Connect</translation>
-    </message>
-    <message>
-        <source>Informations</source>
-        <translation type="obsolete">Informations</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Delete</translation>
-    </message>
-    <message>
-        <source>Default :</source>
-        <translation type="obsolete">Default :</translation>
-    </message>
-    <message>
-        <source>M</source>
-        <translation type="obsolete">M</translation>
-    </message>
-    <message>
-        <source>Place</source>
-        <translation type="obsolete">Place</translation>
     </message>
     <message>
         <location filename="../../Forms/mapp.ui" line="165"/>
@@ -73,13 +49,9 @@ p, li { white-space: pre-wrap; }
         <translation>Rows :</translation>
     </message>
     <message>
-        <source>0</source>
-        <translation type="obsolete">0</translation>
-    </message>
-    <message>
         <location filename="../../Forms/mapp.ui" line="193"/>
-        <source>Colmuns :</source>
-        <translation>Colmuns :</translation>
+        <source>Columns :</source>
+        <translation>Columns :</translation>
     </message>
     <message>
         <location filename="../../Forms/mapp.ui" line="233"/>
@@ -240,10 +212,6 @@ p, li { white-space: pre-wrap; }
         <translation>And</translation>
     </message>
     <message>
-        <source>Item</source>
-        <translation type="obsolete">Item</translation>
-    </message>
-    <message>
         <location filename="../../Interfaces/mapp.cpp" line="90"/>
         <source>Give a name</source>
         <translation>Give a name</translation>
@@ -289,39 +257,14 @@ p, li { white-space: pre-wrap; }
         <translation>A name have to be unique and without space.</translation>
     </message>
     <message>
-        <source>The component has been correctly place on the grid.</source>
-        <translation type="obsolete">The component has been correctly place on the grid.</translation>
-    </message>
-    <message>
         <location filename="../../Interfaces/mapp.cpp" line="102"/>
         <source>You have to select a component.</source>
         <translation>You have to select a component.</translation>
     </message>
     <message>
-        <source>You have two click on the second component (receiver).</source>
-        <translation type="obsolete">You have two click on the second component (receiver).</translation>
-    </message>
-    <message>
         <location filename="../../Interfaces/mapp.cpp" line="112"/>
         <source>Unable to connect those components.</source>
         <translation>Unable to connect those components.</translation>
-    </message>
-    <message>
-        <source>The connexion has been correctly made.</source>
-        <translation type="obsolete">The connexion has been correctly made.</translation>
-    </message>
-    <message>
-        <source>This component was already selected for connexion.</source>
-        <translation type="obsolete">This component was already selected for connexion.</translation>
-    </message>
-    <message>
-        <location filename="../../Interfaces/mapp.cpp" line="562"/>
-        <source>You have two click on the first component (sender).</source>
-        <translation>You have two click on the first component (sender).</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Cancel</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="236"/>
@@ -366,10 +309,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../../Interfaces/mapp.cpp" line="387"/>
         <source>Outputs</source>
         <translation>Outputs</translation>
-    </message>
-    <message>
-        <source>Inputs</source>
-        <translation type="obsolete">Inputs</translation>
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="554"/>
@@ -432,6 +371,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../Interfaces/mapp.cpp" line="118"/>
+        <location filename="../../Interfaces/mapp.cpp" line="562"/>
         <source>You have to click on the first component (sender).</source>
         <translation>You have to click on the first component (sender).</translation>
     </message>
@@ -554,14 +494,6 @@ p, li { white-space: pre-wrap; }
         <source>PNG Files (*.png)</source>
         <translation>PNG Files (*.png)</translation>
     </message>
-    <message>
-        <source> Outputs</source>
-        <translation type="obsolete"> Outputs</translation>
-    </message>
-    <message>
-        <source>Name already used.</source>
-        <translation type="obsolete">Name already used.</translation>
-    </message>
 </context>
 <context>
     <name>Modify</name>
@@ -571,25 +503,14 @@ p, li { white-space: pre-wrap; }
         <translation>Modifying</translation>
     </message>
     <message>
-        <location filename="../../Forms/modify.ui" line="97"/>
+        <location filename="../../Forms/modify.ui" line="101"/>
         <source>Inputs</source>
         <translation>Inputs</translation>
     </message>
     <message>
-        <location filename="../../Forms/modify.ui" line="66"/>
+        <location filename="../../Forms/modify.ui" line="70"/>
         <source>Outputs</source>
         <translation>Outputs</translation>
-    </message>
-    <message>
-        <source> Inputs</source>
-        <translation type="obsolete"> Inputs</translation>
-    </message>
-</context>
-<context>
-    <name>Output</name>
-    <message>
-        <source>An output gets one of the final value of the circuit.</source>
-        <translation type="obsolete">An output gets one of the final value of the circuit.</translation>
     </message>
 </context>
 <context>
@@ -615,10 +536,6 @@ p, li { white-space: pre-wrap; }
         <translation>C++ Language</translation>
     </message>
     <message>
-        <source>Langage C++</source>
-        <translation type="obsolete">Langage C++</translation>
-    </message>
-    <message>
         <location filename="../../Interfaces/mapp.cpp" line="603"/>
         <source>Framework used</source>
         <translation>Framework used</translation>
@@ -642,17 +559,17 @@ p, li { white-space: pre-wrap; }
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../../Forms/settings.ui" line="23"/>
+        <location filename="../../Forms/settings.ui" line="27"/>
         <source>Number of rows</source>
         <translation>Number of rows</translation>
     </message>
     <message>
-        <location filename="../../Forms/settings.ui" line="33"/>
+        <location filename="../../Forms/settings.ui" line="37"/>
         <source>Number of columns</source>
         <translation>Number of columns</translation>
     </message>
     <message>
-        <location filename="../../Forms/settings.ui" line="40"/>
+        <location filename="../../Forms/settings.ui" line="44"/>
         <source>Show grid</source>
         <translation>Show grid</translation>
     </message>
