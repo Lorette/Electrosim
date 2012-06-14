@@ -66,7 +66,9 @@ namespace Ui {
 /*! \class MApp
   * \brief Classe MApp :
   *
-  *  Classe maitresse, interface avec l'utilisateur.
+  *  Classe maitresse, interface avec l'utilisateur. MApp est un acronyme pour Main Application.
+  *  C'est ici que sont definis les modes de l'interface graphique : vue,placement,connexion,suppression.
+  *  Les fonctions on_* implemente les reactions face a une action de l'utitilisateur sur l'interface graphique.
   */
 
 class MApp : public QMainWindow

@@ -28,6 +28,8 @@
   * \brief Classe Node :
   *
   *  Classe du composant Node.
+  *  Un node est un composant qui envoie son entree sur toutes ses sorties.
+  *  Son nombre de sortie est changeable et est defini par la valeur de aux.
   */
 
 class Node : public Item

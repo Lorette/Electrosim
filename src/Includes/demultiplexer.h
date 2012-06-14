@@ -29,6 +29,11 @@
   * \brief Classe Demultiplexer :
   *
   *  Classe du composant Demultiplexer.
+  *  Un demultiplexeur possede un certain nombre de sortie en fonction de son nombre de bit d'adressage et a une entree.
+  *  Son nombre de bit d'adressage est la valeur de la variable aux.
+  *  Si aux vaut n, dans la liste des entrees (inputs) les n premiers elements sont les bits d'adressages
+  *  et le dernier element restant est l'entree du demultiplexeur.
+  *  Il donne a la sortie indiquee par les bits d'adressage la valeur de son entree.
   */
 
 class Demultiplexer : public Item
