@@ -7,7 +7,7 @@
  * Purpose: Implementation of the function main
  ***********************************************************************/
 
-#include <QtGui/QApplication>
+#include <QApplication>
 #include "mapp.h"
 
 ////////////////////////////////////////////////////////////////////////
